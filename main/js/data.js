@@ -1,10 +1,10 @@
 //updateTotalOPGraph
 function updateTotalOPGraph(startDate, endDate) {
 
-    const opGraphURL1 = `http://localhost:8080/tickets/itemName/weight-list?itemName=اسمدة عضوية&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
-    const opGraphURL2 = `http://localhost:8080/tickets/itemName/weight-list?itemName=وقود بديل&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
-    const opGraphURL3 = `http://localhost:8080/tickets/itemName/weight-list?itemName=مرفوضات&startDate=${startDate}&endDate=${endDate}`; // مفروزات
-    const opGraphURL4 = `http://localhost:8080/tickets/itemName/weight-list?itemName=مفروزات&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
+    const opGraphURL1 = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=اسمدة عضوية&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
+    const opGraphURL2 = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=وقود بديل&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
+    const opGraphURL3 = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=مرفوضات&startDate=${startDate}&endDate=${endDate}`; // مفروزات
+    const opGraphURL4 = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=مفروزات&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
 
 
     fetch(opGraphURL1)
@@ -56,8 +56,8 @@ function updateTotalOPGraph(startDate, endDate) {
 
 //updateTotalIPOPGraph
 function updateTotalIPOPGraph(startDate, endDate) {
-    const ipOpGraphURL1 = `http://localhost:8080/tickets/itemType/weight-list?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
-    const ipOpGraphURL2 = `http://localhost:8080/tickets/itemType/weight-list?itemType=مخرجات&startDate=${startDate}&endDate=${endDate}`;
+    const ipOpGraphURL1 = `http://isdom.online/dash_board/tickets/itemType/weight-list?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
+    const ipOpGraphURL2 = `http://isdom.online/dash_board/tickets/itemType/weight-list?itemType=مخرجات&startDate=${startDate}&endDate=${endDate}`;
 
     fetch(ipOpGraphURL1)
         .then(response => response.json())
@@ -92,8 +92,8 @@ function updateTotalIPOPGraph(startDate, endDate) {
 
 //updateTotalIPGraph
 function updateTotalIPGraph(startDate, endDate) {
-    const ipGraphURL1 = `http://localhost:8080/tickets/itemName/weight-list?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const ipGraphURL2 = `http://localhost:8080/tickets/itemName/weight-list?itemName=مخلفات لا تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // مخلفات لا تصلح للمعالجة
+    const ipGraphURL1 = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const ipGraphURL2 = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=مخلفات لا تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // مخلفات لا تصلح للمعالجة
 
     fetch(ipGraphURL1)
         .then(response => response.json()).catch(() => 0)
@@ -128,7 +128,7 @@ function updateTotalIPGraph(startDate, endDate) {
 
 //updateTotIPBox
 function updateTotIPBox(startDate, endDate) {
-    const url = `http://localhost:8080/tickets/itemType/weight?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
+    const url = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
 
     fetch(url)
         .then(response => response.json()).catch(() => 0)
@@ -143,8 +143,8 @@ function updateTotIPBox(startDate, endDate) {
 }
 
 function updateTotAccBox(startDate, endDate) {
-    const accUrl = `http://localhost:8080/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const totInUrl = `http://localhost:8080/tickets/itemType/weight?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
+    const accUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const totInUrl = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
 
 
     fetch(accUrl)
@@ -174,8 +174,8 @@ function updateTotAccBox(startDate, endDate) {
 }
 
 function updateTotRejBox(startDate, endDate) {
-    const accUrl = `http://localhost:8080/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const rejUrl = `http://localhost:8080/tickets/itemName/weight?itemName=مرفوضات&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
+    const accUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const rejUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مرفوضات&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
 
     fetch(rejUrl)
         .then(response => response.json()).catch(() => 0)
@@ -205,7 +205,7 @@ function updateTotRejBox(startDate, endDate) {
 
 //updateTotOPBox
 function updateTotOPBox(startDate, endDate) {
-    const url = `http://localhost:8080/tickets/itemType/weight?itemType=مخرجات&startDate=${startDate}&endDate=${endDate}`;
+    const url = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مخرجات&startDate=${startDate}&endDate=${endDate}`;
 
     fetch(url)
         .then(response => response.json()).catch(() => 0)

@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../images/favicon.ico">
 
-    <title>Site 4</title>
+    <title>Site 6</title>
 
     <!-- Vendors Style-->
     <link rel="stylesheet" href="css/vendors_css.css">
@@ -154,25 +154,25 @@
                 <div class="row">
                     <div class="col-xl-6 col-md-12 col-12">
                         <div class="box p-4">
-                            <h1 class="fw-500 text-dark" id="s4-rejected-per"></h1>
-                            <small class="fw-200 fs-2" id="s4-accepted"></small>
+                            <h1 class="fw-500 text-dark" id="s6-rejected-per"></h1>
+                            <small class="fw-200 fs-2" id="s6-accepted"></small>
                             <p class="fs-4">نسبة المرفوضات من المخلفات الصالحة للمعالجة</p>
                             <div class="progress progress-xs mt-10 mb-0 max-w-p90">
                                 <div class="progress-bar" role="progressbar"
                                      style="width: 100%; background-color: #003f5c"
-                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="s4-rej-progress"></div>
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="s6-rej-progress"></div>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-xl-6 col-md-12 col-12">
                         <div class="box p-4" style="color:#7a5195;">
-                            <h1 class="fw-500" id="s4-accepted-per"></h1>
+                            <h1 class="fw-500" id="s6-accepted-per"></h1>
                             <p class="fs-4">نسبة المخلفات الصالحة للمعالجة</p>
                             <div class="progress progress-xs mt-10 mb-0 max-w-p90">
                                 <div class="progress-bar" role="progressbar"
                                      style="width: 100%; background-color: #7a5195"
-                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="s4-acc-progress"></div>
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="s6-acc-progress"></div>
                             </div>
                         </div>
                     </div>
@@ -182,7 +182,7 @@
                             <div class="d-flex align-items-center justify-content-between">
                                 <!--                                <img src="../images/import.png" style="height: 60px">-->
                                 <div style="color: #ef5675">
-                                    <h3 class="fw-500" id="s4-ip-box"></h3>
+                                    <h3 class="fw-500" id="s6-ip-box"></h3>
                                     <p class="fs-4">اجمالى وزن المدخلات</p>
                                 </div>
                             </div>
@@ -194,7 +194,7 @@
                             <div class="d-flex align-items-center justify-content-between">
                                 <!--                                <img src="../images/export.png" style="height: 60px">-->
                                 <div style="color: #444e86">
-                                    <h3 class="fw-500" id="s4-op-box"></h3>
+                                    <h3 class="fw-500" id="s6-op-box"></h3>
                                     <p class="fs-4">اجمالى وزن المخرجات</p>
                                 </div>
                             </div>
@@ -212,17 +212,9 @@
 
 
                             <div class="row d-flex align-items-center justify-content-between">
-                                <!--                                <div>-->
-                                <!--                                    <select id="mass-dateRangeDropdown-s4" onchange="updateInputGraph_s4()">-->
-                                <!--                                        <option value="last7days">اسبوع</option>-->
-                                <!--                                        <option value="last14days">اسبوعين</option>-->
-                                <!--                                        <option value="lastMonth">الشهر الماضى</option>-->
-                                <!--                                        &lt;!&ndash;                                    <option value="lastYear">Last Year</option>&ndash;&gt;-->
-                                <!--                                    </select>-->
-                                <!--                                </div>-->
 
                                 <p class="col-6 fs-4">صافى الوزن</p>
-                                <h3 class="col-6 fw-500" id="s4-mass-box"></h3>
+                                <h3 class="col-6 fw-500" id="s6-mass-box"></h3>
                                 <div id="evapInputContainer" style="display: none;">
                                     <label for="evap_rate">نسبة التبخر</label>
                                     <input type="text" id="evap_rate" style="border-radius: 6px;width: 50px;"/>
@@ -240,7 +232,7 @@
 
                     <div class="col-xl-4 col-12">
                         <div class="box">
-                            <!--                            <a href="site4.html" style="display:block;">-->
+                            <!--                            <a href="site5.html" style="display:block;">-->
                             <div class="box-header with-border pull-up">
                                 <h5 class="box-title">نسب المدخلات</h5>
                             </div>
@@ -248,7 +240,7 @@
 
                             <div class="box-body">
                                 <div class="text-center py-20">
-                                    <canvas id="s4-ip-chart"></canvas>
+                                    <canvas id="s6-ip-chart"></canvas>
                                 </div>
 
                             </div>
@@ -259,7 +251,7 @@
                     <div class="col-xl-8 col-8">
                         <div class="box">
                             <div>
-                                <select id="ip-dateRangeDropdown-s4" onchange="updateInputGraph_s4(false)">
+                                <select id="ip-dateRangeDropdown-s6" onchange="updateInputGraph_s6(false)">
                                     <!--                                    <option value="" disabled selected>المدة</option>-->
                                     <option value="last7days">اسبوع</option>
                                     <option value="last14days">اسبوعين</option>
@@ -268,34 +260,32 @@
                             </div>
 
                             <div>
-                                <select id="ip-centerDropdown-s4" onchange="updateInputGraph_s4(false)">
+                                <select id="ip-centerDropdown-s6" onchange="updateInputGraph_s6(false)">
                                 </select>
                             </div>
 
                             <div>
-                                <select id="ip-villageDropdown-s4" style="display: none"
-                                        onchange="updateInputGraph_s4(true)">
+                                <select id="ip-villageDropdown-s6" style="display: none"
+                                        onchange="updateInputGraph_s6(true)">
                                 </select>
                             </div>
                             <div class="box-header with-border">
                                 <h4 class="box-title">المدخلات (طن)</h4>
                             </div>
                             <div class="box-body">
-                                <div id="s4-in-grph"></div>
+                                <div id="s6-in-grph"></div>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-xl-4 col-12">
                         <div class="box">
-                            <!--                            <a href="site4.html" style="display:block;">-->
                             <div class="box-header with-border pull-up">
                                 <h5 class="box-title">نسب المخرجات</h5>
                             </div>
-                            <!--                            </a>-->
                             <div class="box-body">
                                 <div class="text-center py-20">
-                                    <canvas id="s4-op-chart"></canvas>
+                                    <canvas id="s6-op-chart"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -305,7 +295,7 @@
                     <div class="col-xl-8 col-12">
                         <div class="box">
                             <div>
-                                <select id="op-dateRangeDropdown-s4" onchange="updateOutputGraph_s4(false)">
+                                <select id="op-dateRangeDropdown-s6" onchange="updateOutputGraph_s6(false)">
                                     <option value="last7days">اسبوع</option>
                                     <option value="last14days">اسبوعين</option>
                                     <option value="lastMonth">الشهر الماضى</option>
@@ -314,19 +304,19 @@
                             </div>
 
                             <div>
-                                <select id="op-centerDropdown-s4" onchange="updateOutputGraph_s4(false)">
+                                <select id="op-centerDropdown-s6" onchange="updateOutputGraph_s6(false)">
                                 </select>
                             </div>
                             <div>
-                                <select id="op-villageDropdown-s4" style="display: none"
-                                        onchange="updateOutputGraph_s4(true)">
+                                <select id="op-villageDropdown-s6" style="display: none"
+                                        onchange="updateOutputGraph_s6(true)">
                                 </select>
                             </div>
                             <div class="box-header">
                                 <h4 class="box-title">المخرجات (طن)</h4>
                             </div>
                             <div class="box-body">
-                                <div id="s4-out-grph"></div>
+                                <div id="s6-out-grph"></div>
                             </div>
                         </div>
                     </div>
@@ -337,7 +327,7 @@
                            placeholder="اختر التاريخ">
                 </div>
 
-                <table id="site4_table" class="table table-striped table-bordered">
+                <table id="site6_table" class="table table-striped table-bordered">
                     <thead>
                     <tr>
                         <th class="searchable-column">رقم التذكرة</th>
@@ -396,7 +386,7 @@
 <!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/moment/min/moment.min.js"></script>-->
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>-->
 <script src="../assets/vendor_components/moment/moment.js"></script>
-<script src="js/site4.js"></script>
+<script src="js/site6.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/ar.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/en-gb.js"></script>

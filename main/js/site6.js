@@ -3,12 +3,12 @@ const userRole = getRoleFromToken();
 const refreshFreq = 10 * 60 * 1000; // 1 MINUTE
 var startDate = moment().format('DD-MMM-YY');
 var endDate = moment().format('DD-MMM-YY');
-const ipCenterDropdown = document.getElementById('ip-centerDropdown-s3');
-const opCenterDropdown = document.getElementById('op-centerDropdown-s3');
-const ipVillageDropdown = document.getElementById('ip-villageDropdown-s3');
-const opVillageDropdown = document.getElementById('op-villageDropdown-s3');
-const opDateDropdown = document.getElementById('op-dateRangeDropdown-s3');
-const ipDateDropdown = document.getElementById('ip-dateRangeDropdown-s3');
+const ipCenterDropdown = document.getElementById('ip-centerDropdown-s6');
+const opCenterDropdown = document.getElementById('op-centerDropdown-s6');
+const ipVillageDropdown = document.getElementById('ip-villageDropdown-s6');
+const opVillageDropdown = document.getElementById('op-villageDropdown-s6');
+const opDateDropdown = document.getElementById('op-dateRangeDropdown-s6');
+const ipDateDropdown = document.getElementById('ip-dateRangeDropdown-s6');
 
 var dataTableInitialized = false;
 
@@ -16,14 +16,14 @@ var dataTableInitialized = false;
 
 function updateDatatable(selectedDate) {
 
-    const tbody = document.querySelector('#site3_table tbody');
+    const tbody = document.querySelector('#site6_table tbody');
 
 
-    fetch(`http://isdom.online/dash_board/tickets/all?siteNo=3&selectedDate=${selectedDate}`)
+    fetch(`http://isdom.online/dash_board/tickets/all?siteNo=6&selectedDate=${selectedDate}`)
         .then(response => response.json())
         .then(data => {
 
-            $('#site3_table').DataTable().destroy();
+            $('#site6_table').DataTable().destroy();
             tbody.innerHTML = '';
 
             data.forEach(rowData => {
@@ -66,7 +66,7 @@ function updateDatatable(selectedDate) {
                                     secondWeight: rowData.secondWeight
                                 }
 
-                                fetch(`http://isdom.online/dash_board/tickets/${rowData.ticketId}/3`,{
+                                fetch(`http://isdom.online/dash_board/tickets/${rowData.ticketId}/6`,{
                                     method: 'PUT',
                                     headers: {
                                         'Content-Type': 'application/json'
@@ -87,7 +87,7 @@ function updateDatatable(selectedDate) {
             // initialize DataTable
 
 
-            $('#site3_table').DataTable({
+            $('#site6_table').DataTable({
                 "dom": '<"top"lf>rt<"bottom"ip><"clear">',
                 "paging": true,
                 "searching": true,
@@ -180,7 +180,7 @@ function updateIpVillageDropdown(centerId) {
             .then(response => response.json())
             .then(data => {
 
-                document.getElementById("ip-villageDropdown-s3").style.display = "block";
+                document.getElementById("ip-villageDropdown-s6").style.display = "block";
 
                 ipVillageDropdown.innerHTML = '';
 
@@ -202,7 +202,7 @@ function updateIpVillageDropdown(centerId) {
 }
 
 const ipChartOptions = {
-    bindto: "#s3-in-grph",
+    bindto: "#s6-in-grph",
     size: {height: 350},
     legend: {},
     axis: {
@@ -225,9 +225,9 @@ const ipChartOptions = {
     },
     grid: {y: {show: true}}
 };
-const s3_in_grph = c3.generate(ipChartOptions);
+const s6_in_grph = c3.generate(ipChartOptions);
 
-function updateInputGraph_s3(isVillage) {
+function updateInputGraph_s6(isVillage) {
     const selectedDate = ipDateDropdown.value;
     const selectedCenter = ipCenterDropdown.value;
     var selectedVillage = ipVillageDropdown.value;
@@ -254,8 +254,8 @@ function updateInputGraph_s3(isVillage) {
     //     endDatex = moment().format('DD-MMM-YY');
     // }
 
-    const url1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات  تصلح للمعالجة&siteNo=3&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات تصلح للمعالجة
-    const url2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات لا تصلح للمعالجة&siteNo=3&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات لا تصلح للمعالجة
+    const url1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات  تصلح للمعالجة&siteNo=6&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات تصلح للمعالجة
+    const url2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات لا تصلح للمعالجة&siteNo=6&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات لا تصلح للمعالجة
 
     Promise.all([
         fetch(url1).then(response1 => response1.json()).catch(() => 0),
@@ -269,7 +269,7 @@ function updateInputGraph_s3(isVillage) {
             categories = Object.keys(data1).map(date => date.split('-')[0]);
         }
 
-        s3_in_grph.load({
+        s6_in_grph.load({
             columns: [
                 ['مخلفات تصلح للمعالجة', ...values1],
                 ['مخلفات لا تصلح للمعالجة', ...values2]
@@ -292,7 +292,7 @@ function updateOpVillageDropdown(centerId) {
             .then(response => response.json())
             .then(data => {
 
-                document.getElementById("op-villageDropdown-s3").style.display = "block";
+                document.getElementById("op-villageDropdown-s6").style.display = "block";
 
                 opVillageDropdown.innerHTML = '';
 
@@ -315,7 +315,7 @@ function updateOpVillageDropdown(centerId) {
 }
 
 const opChartOptions = {
-    bindto: "#s3-out-grph",
+    bindto: "#s6-out-grph",
     size: {height: 350},
     legend: {},
     axis: {
@@ -334,9 +334,9 @@ const opChartOptions = {
     },
     grid: {y: {show: true}}
 };
-const s3_out_grph = c3.generate(opChartOptions);
+const s6_out_grph = c3.generate(opChartOptions);
 
-function updateOutputGraph_s3(isVillage) {
+function updateOutputGraph_s6(isVillage) {
     const selectedDate = opDateDropdown.value;
     const selectedCenter = opCenterDropdown.value;
     var selectedVillage = opVillageDropdown.value;
@@ -363,10 +363,10 @@ function updateOutputGraph_s3(isVillage) {
     //     endDatex = moment().format('DD-MMM-YY');
     // }
 
-    const url1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=وقود بديل&siteNo=3&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; // وقود بديل
-    const url2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=اسمدة عضوية&siteNo=3&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; // اسمدة عضوية
-    const url3 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مرفوضات&siteNo=3&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مرفوضات
-    const url4 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مفروزات&siteNo=3&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مفروزات
+    const url1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=وقود بديل&siteNo=6&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; // وقود بديل
+    const url2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=اسمدة عضوية&siteNo=6&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; // اسمدة عضوية
+    const url3 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مرفوضات&siteNo=6&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مرفوضات
+    const url4 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مفروزات&siteNo=6&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مفروزات
 
     Promise.all([
         fetch(url1).then(response1 => response1.json().catch(() => 0)),
@@ -384,7 +384,7 @@ function updateOutputGraph_s3(isVillage) {
             categories = Object.keys(data1).map(date => date.split('-')[0]);
         }
 
-        s3_out_grph.load({
+        s6_out_grph.load({
             columns: [
                 ['وقود بديل', ...values1],
                 ['اسمدة عضوية', ...values2],
@@ -408,13 +408,13 @@ const initialIPChartData = {
         data: [0, 0], backgroundColor: ['#444e86', '#dd5182']
     }]
 };
-const s3_ip_chart = new Chart(document.getElementById('s3-ip-chart'), {
+const s6_ip_chart = new Chart(document.getElementById('s6-ip-chart'), {
     type: 'doughnut', data: initialIPChartData
 });
 
 function updateIPChartData(startDate, endDate) {
-    const urlIP1 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const urlIP2 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مخلفات لا تصلح للمعالجة
+    const urlIP1 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const urlIP2 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // مخلفات لا تصلح للمعالجة
     Promise.all([
         fetch(urlIP1).then(response => response.json()).catch(() => 0),
         fetch(urlIP2).then(response => response.json()).catch(() => 0)
@@ -424,10 +424,10 @@ function updateIPChartData(startDate, endDate) {
             const dataset2Value = dataset2Data;
 
             // Update the dataset values in the chart
-            s3_ip_chart.data.datasets[0].data[0] = dataset1Value || 0;
-            s3_ip_chart.data.datasets[0].data[1] = dataset2Value || 0;
+            s6_ip_chart.data.datasets[0].data[0] = dataset1Value || 0;
+            s6_ip_chart.data.datasets[0].data[1] = dataset2Value || 0;
 
-            s3_ip_chart.update();
+            s6_ip_chart.update();
         })
         .catch(error => {
             console.error('Error:', error);
@@ -443,16 +443,16 @@ const initialOPChartData = {
         backgroundColor: ['#ffa600', '#ef5675', '#003f5c', '#7a5195']
     }]
 };
-const s3_op_chart = new Chart(document.getElementById('s3-op-chart'), {
+const s6_op_chart = new Chart(document.getElementById('s6-op-chart'), {
     type: 'doughnut',
     data: initialOPChartData
 });
 
 function updateOPChartData(startDate, endDate) {
-    const urlOP1 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
-    const urlOP2 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=وقود بديل&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
-    const urlOP3 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مرفوضات&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
-    const urlOP4 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مفروزات&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مفروزات
+    const urlOP1 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
+    const urlOP2 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=وقود بديل&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
+    const urlOP3 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مرفوضات&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
+    const urlOP4 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مفروزات&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // مفروزات
 
     Promise.all([
         fetch(urlOP1).then(response => response.json()).catch(() => 0),
@@ -462,13 +462,13 @@ function updateOPChartData(startDate, endDate) {
     ])
         .then(([category1Data, category2Data, category3Data, category4Data]) => {
             // Update the dataset values in the chart
-            s3_op_chart.data.datasets[0].data[0] = category1Data || 0;
-            s3_op_chart.data.datasets[0].data[1] = category2Data || 0;
-            s3_op_chart.data.datasets[0].data[2] = category3Data || 0;
-            s3_op_chart.data.datasets[0].data[3] = category4Data || 0;
+            s6_op_chart.data.datasets[0].data[0] = category1Data || 0;
+            s6_op_chart.data.datasets[0].data[1] = category2Data || 0;
+            s6_op_chart.data.datasets[0].data[2] = category3Data || 0;
+            s6_op_chart.data.datasets[0].data[3] = category4Data || 0;
 
             // Update the chart
-            s3_op_chart.update();
+            s6_op_chart.update();
         })
         .catch(error => {
             console.error('Error:', error);
@@ -479,8 +479,8 @@ function updateOPChartData(startDate, endDate) {
 //// DATA BOXES ////
 
 function updateRejBox(startDate, endDate) {
-    const urlAcc = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const urlRej = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مرفوضات&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
+    const urlAcc = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const urlRej = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مرفوضات&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
 
     Promise.all([
         fetch(urlAcc).then(response => response.json()).catch(() => 0),
@@ -489,12 +489,12 @@ function updateRejBox(startDate, endDate) {
         .then(([accData, rejData]) => {
             const percentage = (rejData / accData) * 100;
             if (isNaN(percentage))
-                document.getElementById("s3-accepted").textContent = 0 + "%"
+                document.getElementById("s6-accepted").textContent = 0 + "%"
             else {
-                document.getElementById("s3-rejected-per").textContent = percentage.toFixed(1) + "%"
-                document.getElementById("s3-accepted").textContent = "من " + accData + " طن";
+                document.getElementById("s6-rejected-per").textContent = percentage.toFixed(1) + "%"
+                document.getElementById("s6-accepted").textContent = "من " + accData + " طن";
 
-                const progressBar = document.getElementById("s3-rej-progress");
+                const progressBar = document.getElementById("s6-rej-progress");
                 updateProgressBar(progressBar, percentage);
             }
         })
@@ -509,8 +509,8 @@ function updateRejBox(startDate, endDate) {
 }
 
 function updateAccBox(startDate, endDate) {
-    const accUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const totInUrl = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=3&startDate=${startDate}&endDate=${endDate}`;
+    const accUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const totInUrl = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=6&startDate=${startDate}&endDate=${endDate}`;
 
     Promise.all([
         fetch(accUrl).then(response => response.json()).catch(() => 0),
@@ -519,11 +519,11 @@ function updateAccBox(startDate, endDate) {
         .then(([accData, totInData]) => {
             const percentage = (accData / totInData) * 100;
             if (isNaN(percentage))
-                document.getElementById("s3-accepted-per").textContent = 0 + "%"
+                document.getElementById("s6-accepted-per").textContent = 0 + "%"
             else {
-                document.getElementById("s3-accepted-per").textContent = percentage.toFixed(1) + "%"
+                document.getElementById("s6-accepted-per").textContent = percentage.toFixed(1) + "%"
 
-                const progressBar = document.getElementById("s3-acc-progress");
+                const progressBar = document.getElementById("s6-acc-progress");
                 updateProgressBar(progressBar, percentage);
             }
         })
@@ -538,14 +538,14 @@ function updateAccBox(startDate, endDate) {
 }
 
 function updateOPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مخرجات&siteNo=3&startDate=${startDate}&endDate=${endDate}`;
+    const url = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مخرجات&siteNo=6&startDate=${startDate}&endDate=${endDate}`;
 
     fetch(url)
         .then(response => response.json()).catch(() => 0)
         .then(data => {
             const newValue = data; // Assuming the API response contains the desired value
 
-            document.getElementById("s3-op-box").textContent = newValue + " طن";
+            document.getElementById("s6-op-box").textContent = newValue + " طن";
         })
         .catch(error => {
             console.error('Error:', error);
@@ -553,14 +553,14 @@ function updateOPBox(startDate, endDate) {
 }
 
 function updateIPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=3&startDate=${startDate}&endDate=${endDate}`;
+    const url = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=6&startDate=${startDate}&endDate=${endDate}`;
 
     fetch(url)
         .then(response => response.json()).catch(() => 0)
         .then(data => {
             const newValue = data; // Assuming the API response contains the desired value
 
-            document.getElementById("s3-ip-box").textContent = newValue + " طن";
+            document.getElementById("s6-ip-box").textContent = newValue + " طن";
         })
         .catch(error => {
             console.error('Error:', error);
@@ -568,10 +568,10 @@ function updateIPBox(startDate, endDate) {
 }
 
 function updateMassBox(startDate, endDate) {
-    const totInURL = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=3&startDate=${startDate}&endDate=${endDate}`;
-    const totOutURL = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مخرجات&siteNo=3&startDate=${startDate}&endDate=${endDate}`;
-    const accURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const rejURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مخلفات لا تصلح للمعالجة
+    const totInURL = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=6&startDate=${startDate}&endDate=${endDate}`;
+    const totOutURL = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مخرجات&siteNo=6&startDate=${startDate}&endDate=${endDate}`;
+    const accURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const rejURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // مخلفات لا تصلح للمعالجة
 
     Promise.all([
         fetch(totInURL).then(response1 => response1.json()).catch(() => 0),
@@ -584,7 +584,7 @@ function updateMassBox(startDate, endDate) {
         let evapRate = localStorage.getItem('evap_rate');
         const newValue = inData - (outData + rejData + (accData * evapRate)); // Assuming the API response contains the desired value
 
-        document.getElementById("s3-mass-box").textContent = newValue.toFixed(0) + " طن";
+        document.getElementById("s6-mass-box").textContent = newValue.toFixed(0) + " طن";
     })
         .catch(error => {
             console.error('Error:', error);
@@ -607,8 +607,8 @@ $(document).ready(function () {
 
     // getOpNames();
     getCenters();
-    updateInputGraph_s3(false);
-    updateOutputGraph_s3(false);
+    updateInputGraph_s6(false);
+    updateOutputGraph_s6(false);
 
     initDateRange();
 

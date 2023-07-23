@@ -27,20 +27,20 @@ function updateDatatable(selectedDate) {
             tbody.innerHTML = '';
 
             data.forEach(rowData => {
-
+                console.log(rowData);
 
                 const row = document.createElement('tr');
 
-                // const cellValue = rowData['enterMethod'];
-                // if (cellValue === 'dashboard') {
-                //     row.style.color = 'red';
-                // }
+                const cellValue = rowData['enterMethod'];
+                if (cellValue === 'dashboard') {
+                    row.style.color = 'red';
+                }
 
                 Object.entries(rowData).forEach(([key, cellData]) => {
 
                     // to hide these columns
-                    // if (key === "ticketId" || key === "enterMethod")
-                    //     return;
+                    if (key === "enterMethod")
+                        return;
 
                     // if (key === "carTwoDate")
                     //     cellData = moment(rowData[key], 'DD-MMM-YY').format('DD MMMM YYYY');
@@ -49,11 +49,11 @@ function updateDatatable(selectedDate) {
                     cell.textContent = cellData;
 
                     if (userRole === "Admin")
-                        if (key === 'carTwoDate' || key === 'carTwoTime' || key === 'secondWeightCar') {
+                        if (key === 'carTwoDate' || key === 'carTwoTime' || key === 'secondWeight') {
                             cell.setAttribute('contenteditable', 'true');
-                            cell.addEventListener('input', function () {
+                            cell.addEventListener('blur', function () {
                                 rowData[key] = cell.textContent;
-                                const newNetWeight = Math.abs(rowData.secondWeightCar - rowData.firstWeightCar);
+                                const newNetWeight = Math.abs(rowData.secondWeight - rowData.firstWeight);
 
                                 const currentTime = moment();
                                 const formattedTime = currentTime.format('HH:mm:ss A');
@@ -63,10 +63,10 @@ function updateDatatable(selectedDate) {
                                     carTwoDate: formattedDate,
                                     netWeight: newNetWeight,
                                     carTwoTime: formattedTime,
-                                    secondWeightCar: rowData.secondWeightCar
+                                    secondWeight: rowData.secondWeight
                                 }
 
-                                fetch(`http://isdom.online/dash_board/tickets/${rowData.ticketId}`, {
+                                fetch(`http://isdom.online/dash_board/tickets/${rowData.ticketId}/1`,{
                                     method: 'PUT',
                                     headers: {
                                         'Content-Type': 'application/json'

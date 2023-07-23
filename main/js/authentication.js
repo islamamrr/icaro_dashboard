@@ -8,7 +8,7 @@ function isAuthenticated() {
     }
     console.log("hena");
 
-    return fetch('http://localhost:8080/api/protected-route', {
+    return fetch('http://isdom.online/dash_board/api/protected-route', {
         headers: {
             'Authorization': 'Bearer ' + token
         }

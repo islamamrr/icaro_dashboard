@@ -19,7 +19,7 @@ function updateDatatable(selectedDate) {
     const tbody = document.querySelector('#site1_table tbody');
 
 
-    fetch(`http://localhost:8080/tickets/all?siteNo=1&selectedDate=${selectedDate}`)
+    fetch(`http://isdom.online/dash_board/tickets/all?siteNo=1&selectedDate=${selectedDate}`)
         .then(response => response.json())
         .then(data => {
 
@@ -66,7 +66,7 @@ function updateDatatable(selectedDate) {
                                     secondWeight: rowData.secondWeight
                                 }
 
-                                fetch(`http://localhost:8080/tickets/${rowData.ticketId}/1`,{
+                                fetch(`http://isdom.online/dash_board/tickets/${rowData.ticketId}/1`,{
                                     method: 'PUT',
                                     headers: {
                                         'Content-Type': 'application/json'
@@ -135,7 +135,7 @@ function updateDatatable(selectedDate) {
 
 //Get list of centers
 function getCenters() {
-    fetch('http://localhost:8080/centers')
+    fetch('http://isdom.online/dash_board/centers')
         .then(response => response.json())
         .then(data => {
 
@@ -162,7 +162,7 @@ function getCenters() {
 
 // Get names of outputs
 // function getOpNames() {
-//     fetch('http://localhost:8080/items/items/مخرجات/item-names')
+//     fetch('http://isdom.online/dash_board/items/items/مخرجات/item-names')
 //         .then(response => response.json())
 //         .then(data => {
 //         })
@@ -176,7 +176,7 @@ function getCenters() {
 
 function updateIpVillageDropdown(centerId) {
     if (centerId !== "") {
-        fetch(`http://localhost:8080/villages?centerId=${centerId}`)
+        fetch(`http://isdom.online/dash_board/villages?centerId=${centerId}`)
             .then(response => response.json())
             .then(data => {
 
@@ -254,8 +254,8 @@ function updateInputGraph_s1(isVillage) {
     //     endDatex = moment().format('DD-MMM-YY');
     // }
 
-    const url1 = `http://localhost:8080/tickets/itemName-site/weight-date-list?itemName=مخلفات  تصلح للمعالجة&siteNo=1&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات تصلح للمعالجة
-    const url2 = `http://localhost:8080/tickets/itemName-site/weight-date-list?itemName=مخلفات لا تصلح للمعالجة&siteNo=1&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات لا تصلح للمعالجة
+    const url1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات  تصلح للمعالجة&siteNo=1&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات تصلح للمعالجة
+    const url2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات لا تصلح للمعالجة&siteNo=1&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات لا تصلح للمعالجة
 
     Promise.all([
         fetch(url1).then(response1 => response1.json()).catch(() => 0),
@@ -288,7 +288,7 @@ function updateInputGraph_s1(isVillage) {
 
 function updateOpVillageDropdown(centerId) {
     if (centerId !== "") {
-        fetch(`http://localhost:8080/villages?centerId=${centerId}`)
+        fetch(`http://isdom.online/dash_board/villages?centerId=${centerId}`)
             .then(response => response.json())
             .then(data => {
 
@@ -363,10 +363,10 @@ function updateOutputGraph_s1(isVillage) {
     //     endDatex = moment().format('DD-MMM-YY');
     // }
 
-    const url1 = `http://localhost:8080/tickets/itemName-site/weight-date-list?itemName=وقود بديل&siteNo=1&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; // وقود بديل
-    const url2 = `http://localhost:8080/tickets/itemName-site/weight-date-list?itemName=اسمدة عضوية&siteNo=1&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; // اسمدة عضوية
-    const url3 = `http://localhost:8080/tickets/itemName-site/weight-date-list?itemName=مرفوضات&siteNo=1&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مرفوضات
-    const url4 = `http://localhost:8080/tickets/itemName-site/weight-date-list?itemName=مفروزات&siteNo=1&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مفروزات
+    const url1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=وقود بديل&siteNo=1&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; // وقود بديل
+    const url2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=اسمدة عضوية&siteNo=1&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; // اسمدة عضوية
+    const url3 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مرفوضات&siteNo=1&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مرفوضات
+    const url4 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مفروزات&siteNo=1&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مفروزات
 
     Promise.all([
         fetch(url1).then(response1 => response1.json().catch(() => 0)),
@@ -413,8 +413,8 @@ const s1_ip_chart = new Chart(document.getElementById('s1-ip-chart'), {
 });
 
 function updateIPChartData(startDate, endDate) {
-    const urlIP1 = `http://localhost:8080/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const urlIP2 = `http://localhost:8080/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مخلفات لا تصلح للمعالجة
+    const urlIP1 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const urlIP2 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مخلفات لا تصلح للمعالجة
     Promise.all([
         fetch(urlIP1).then(response => response.json()).catch(() => 0),
         fetch(urlIP2).then(response => response.json()).catch(() => 0)
@@ -449,10 +449,10 @@ const s1_op_chart = new Chart(document.getElementById('s1-op-chart'), {
 });
 
 function updateOPChartData(startDate, endDate) {
-    const urlOP1 = `http://localhost:8080/tickets/itemName/weight?itemName=اسمدة عضوية&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
-    const urlOP2 = `http://localhost:8080/tickets/itemName/weight?itemName=وقود بديل&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
-    const urlOP3 = `http://localhost:8080/tickets/itemName/weight?itemName=مرفوضات&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
-    const urlOP4 = `http://localhost:8080/tickets/itemName/weight?itemName=مفروزات&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مفروزات
+    const urlOP1 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
+    const urlOP2 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=وقود بديل&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
+    const urlOP3 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مرفوضات&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
+    const urlOP4 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مفروزات&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مفروزات
 
     Promise.all([
         fetch(urlOP1).then(response => response.json()).catch(() => 0),
@@ -479,8 +479,8 @@ function updateOPChartData(startDate, endDate) {
 //// DATA BOXES ////
 
 function updateRejBox(startDate, endDate) {
-    const urlAcc = `http://localhost:8080/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const urlRej = `http://localhost:8080/tickets/itemName/weight?itemName=مرفوضات&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
+    const urlAcc = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const urlRej = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مرفوضات&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
 
     Promise.all([
         fetch(urlAcc).then(response => response.json()).catch(() => 0),
@@ -509,8 +509,8 @@ function updateRejBox(startDate, endDate) {
 }
 
 function updateAccBox(startDate, endDate) {
-    const accUrl = `http://localhost:8080/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const totInUrl = `http://localhost:8080/tickets/itemType/weight?itemType=مدخلات&siteNo=1&startDate=${startDate}&endDate=${endDate}`;
+    const accUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const totInUrl = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=1&startDate=${startDate}&endDate=${endDate}`;
 
     Promise.all([
         fetch(accUrl).then(response => response.json()).catch(() => 0),
@@ -538,7 +538,7 @@ function updateAccBox(startDate, endDate) {
 }
 
 function updateOPBox(startDate, endDate) {
-    const url = `http://localhost:8080/tickets/itemType/weight?itemType=مخرجات&siteNo=1&startDate=${startDate}&endDate=${endDate}`;
+    const url = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مخرجات&siteNo=1&startDate=${startDate}&endDate=${endDate}`;
 
     fetch(url)
         .then(response => response.json()).catch(() => 0)
@@ -553,7 +553,7 @@ function updateOPBox(startDate, endDate) {
 }
 
 function updateIPBox(startDate, endDate) {
-    const url = `http://localhost:8080/tickets/itemType/weight?itemType=مدخلات&siteNo=1&startDate=${startDate}&endDate=${endDate}`;
+    const url = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=1&startDate=${startDate}&endDate=${endDate}`;
 
     fetch(url)
         .then(response => response.json()).catch(() => 0)
@@ -568,10 +568,10 @@ function updateIPBox(startDate, endDate) {
 }
 
 function updateMassBox(startDate, endDate) {
-    const totInURL = `http://localhost:8080/tickets/itemType/weight?itemType=مدخلات&siteNo=1&startDate=${startDate}&endDate=${endDate}`;
-    const totOutURL = `http://localhost:8080/tickets/itemType/weight?itemType=مخرجات&siteNo=1&startDate=${startDate}&endDate=${endDate}`;
-    const accURL = `http://localhost:8080/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const rejURL = `http://localhost:8080/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مخلفات لا تصلح للمعالجة
+    const totInURL = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=1&startDate=${startDate}&endDate=${endDate}`;
+    const totOutURL = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مخرجات&siteNo=1&startDate=${startDate}&endDate=${endDate}`;
+    const accURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const rejURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مخلفات لا تصلح للمعالجة
 
     Promise.all([
         fetch(totInURL).then(response1 => response1.json()).catch(() => 0),
