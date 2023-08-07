@@ -261,7 +261,7 @@ $(document).ready(function () {
         axis: {
             x: {
                 type: 'category',
-                categories: ['Site 1', 'Site 2', 'Site 3', 'Site 4', 'Site 5', 'Site 6']
+                categories: ['أجا', 'سندوب', 'المدفن', 'بلقاس - المصنع', 'السمبلاوين', 'المنزلة']
             }
         },
         data: {
@@ -286,7 +286,7 @@ $(document).ready(function () {
         axis: {
             x: {
                 type: 'category',
-                categories: ['Site 1', 'Site 2', 'Site 3', 'Site 4', 'Site 5', 'Site 6']
+                categories: ['أجا', 'سندوب', 'المدفن', 'بلقاس - المصنع', 'السمبلاوين', 'المنزلة']
             }
         },
         data: {
@@ -311,7 +311,7 @@ $(document).ready(function () {
         axis: {
             x: {
                 type: 'category', // set the x-axis as category type
-                categories: ['Site 1', 'Site 2', 'Site 3', 'Site 4', 'Site 5', 'Site 6'] // specify the categories/names on the x-axis
+                categories: ['أجا', 'سندوب', 'المدفن', 'بلقاس - المصنع', 'السمبلاوين', 'المنزلة'] // specify the categories/names on the x-axis
             }
         },
         data: {

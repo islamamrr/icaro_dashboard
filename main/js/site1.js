@@ -18,6 +18,9 @@ function updateDatatable(selectedDate) {
 
     const tbody = document.querySelector('#site1_table tbody');
 
+    const datepickerInput = document.getElementById('datatableDatePicker');
+    datepickerInput.setAttribute('placeholder', moment().format('DD-MM-YYYY'));
+
 
     fetch(`http://isdom.online/dash_board/tickets/all?siteNo=1&selectedDate=${selectedDate}`)
         .then(response => response.json())
@@ -27,7 +30,7 @@ function updateDatatable(selectedDate) {
             tbody.innerHTML = '';
 
             data.forEach(rowData => {
-                console.log(rowData);
+                // console.log(rowData);
 
                 const row = document.createElement('tr');
 
@@ -91,6 +94,19 @@ function updateDatatable(selectedDate) {
                 "dom": '<"top"lf>rt<"bottom"ip><"clear">',
                 "paging": true,
                 "searching": true,
+                "language":  {
+                    "sSearch": "بحث:",
+                    "sLengthMenu": "أظهر _MENU_   تذاكر",
+                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                    "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+                    "sInfoFiltered": "(منتقاة من مجموع _MAX_ تذكرة)",
+                    "oPaginate": {
+                        "sFirst": "الأول",
+                        "sPrevious": "السابق",
+                        "sNext": "التالي",
+                        "sLast": "الأخير"
+                    }
+                },
                 "initComplete": function () {
                     // Create a new row for the search boxes
                     if (!dataTableInitialized) {
@@ -107,7 +123,6 @@ function updateDatatable(selectedDate) {
 
                             // Add an input event handler to trigger a search when the user enters text
                             searchBox.on('keyup', function () {
-                                // searchBox.on('input', function () {
                                 var searchTerm = this.value;
                                 if (searchTerm === '') {
                                     column.search('').draw();
@@ -127,7 +142,7 @@ function updateDatatable(selectedDate) {
                 }
             });
 
-            document.getElementById("datatableDatePicker").style.display = "block";
+            document.getElementById("datatableDatePickerGroup").style.display = "block";
 
         })
 }

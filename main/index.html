@@ -1,289 +1,316 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../images/favicon.ico">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="../images/favicon.ico" />
 
     <title>الرئيسية</title>
 
     <!-- Vendors Style-->
-    <link rel="stylesheet" href="css/vendors_css.css">
+    <link rel="stylesheet" href="css/vendors_css.css" />
 
     <!-- Style-->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/skin_color.css">
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/skin_color.css" />
     <!--    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>-->
 
     <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">-->
     <!--    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">-->
+  </head>
+  <!---->
+  <body class="hold-transition light-skin sidebar-mini theme-primary fixed rtl">
+    <div class="wrapper">
+      <div id="loader"></div>
 
-</head>
-<!---->
-<body class="hold-transition light-skin sidebar-mini theme-primary fixed rtl">
-
-<div class="wrapper">
-    <div id="loader"></div>
-
-    <header class="main-header">
+      <header class="main-header">
         <div class="d-flex align-items-center logo-box justify-content-start">
-            <a href="#" class="waves-effect waves-light nav-link rounded d-none d-md-inline-block mx-10 push-btn"
-               data-toggle="push-menu" role="button">
-                <i class="ti-menu"></i>
-            </a>
-            <!-- Logo -->
-            <a href="index.html" class="logo justify-content-around">
-                <!-- logo-->
-                <div class="logo-lg">
-                    <span class="light-logo"><img src="../images/millenium.jpeg" alt="logo"></span>
-                    <span class="dark-logo"><img src="../images/logo-light-text.png" alt="logo"></span>
-                </div>
-            </a>
+          <a
+            href="#"
+            class="waves-effect waves-light nav-link rounded d-none d-md-inline-block mx-10 push-btn"
+            data-toggle="push-menu"
+            role="button"
+          >
+            <i class="ti-menu"></i>
+          </a>
+          <!-- Logo -->
+          <a href="index.html" class="logo justify-content-around">
+            <!-- logo-->
+            <div class="logo-lg">
+              <span class="light-logo"
+                ><img src="../images/millenium.jpeg" alt="logo"
+              /></span>
+              <span class="dark-logo"
+                ><img src="../images/logo-light-text.png" alt="logo"
+              /></span>
+            </div>
+          </a>
         </div>
         <!-- Header Navbar -->
         <nav class="navbar navbar-static-top">
+          <div class="input-group mb-3" style="width: 200px; margin-top: auto">
+            <input type="text" class="form-control" id="dateRangePicker" />
+          </div>
 
-            <div class="input-group mb-3" style="width: 200px; margin-top: auto;">
-                <input type="text" class="form-control" id="dateRangePicker"/>
-            </div>
+          <div class="navbar-custom-menu r-side" style="display: flex">
+            <ul class="nav navbar-nav">
+              <li class="btn-group nav-item d-lg-inline-flex d-none">
+                <a
+                  href="#"
+                  data-provide="fullscreen"
+                  class="waves-effect waves-light nav-link rounded full-screen"
+                  title="Full Screen"
+                >
+                  <i class="ti-fullscreen"></i>
+                </a>
+              </li>
 
-            <div class="navbar-custom-menu r-side" style="display: flex">
+              <!-- User Account-->
+              <li class="dropdown user user-menu">
+                <a
+                  href="#"
+                  class="waves-effect waves-light rounded dropdown-toggle"
+                  title="User"
+                >
+                  <i class="ti-user"></i>
+                </a>
+              </li>
 
-                <ul class="nav navbar-nav">
-
-                    <li class="btn-group nav-item d-lg-inline-flex d-none">
-                        <a href="#" data-provide="fullscreen"
-                           class="waves-effect waves-light nav-link rounded full-screen" title="Full Screen">
-                            <i class="ti-fullscreen"></i>
-                        </a>
-                    </li>
-
-
-                    <!-- User Account-->
-                    <li class="dropdown user user-menu">
-                        <a href="#" class="waves-effect waves-light rounded dropdown-toggle" title="User">
-                            <i class="ti-user"></i>
-                        </a>
-                    </li>
-
-                    <!-- Control Sidebar Toggle Button -->
-                    <li>
-                        <a href="#" data-toggle="control-sidebar" title="Setting"
-                           class="waves-effect waves-light rounded">
-                            <i class="ti-settings"></i>
-                        </a>
-                    </li>
-
-                </ul>
-                <button id="signout">تسجيل الخروج</button>
-
-            </div>
-
+              <!-- Control Sidebar Toggle Button -->
+              <li>
+                <a
+                  href="#"
+                  data-toggle="control-sidebar"
+                  title="Setting"
+                  class="waves-effect waves-light rounded"
+                >
+                  <i class="ti-settings"></i>
+                </a>
+              </li>
+            </ul>
+            <button id="signout">تسجيل الخروج</button>
+          </div>
         </nav>
-    </header>
+      </header>
 
-    <aside class="main-sidebar">
+      <aside class="main-sidebar">
         <!-- sidebar-->
         <section class="sidebar position-relative">
-            <div class="user-profile px-10 py-15">
-                <div class="d-flex align-items-center justify-content-center">
-                    <div class="info ms-10">
-                        <h5 class="mb-0" id="signedUser"></h5>
-                    </div>
-                </div>
+          <div class="user-profile px-10 py-15">
+            <div class="d-flex align-items-center justify-content-center">
+              <div class="info ms-10">
+                <h5 class="mb-0" id="signedUser"></h5>
+              </div>
             </div>
-            <div class="multinav">
-                <div class="multinav-scroll" style="height: 100%;">
-                    <!-- sidebar menu-->
-                    <ul class="sidebar-menu" data-widget="tree">
-                        <li>
-                            <a href="index.html">
-                                <i class="ti-home"></i>
-                                <span>الرئيسية</span>
-                            </a>
-                        </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="ti-dashboard"></i>
-                                <span>Sites</span>
-                                <span class="pull-right-container">
-					                <i class="fa fa-angle-right pull-right"></i>
-					            </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="site1.html"><i class="ti-more"></i>Site 1</a></li>
-                                <li><a href="site2.html"><i class="ti-more"></i>Site 2</a></li>
-                                <li><a href="site3.html"><i class="ti-more"></i>Site 3</a></li>
-                                <li><a href="site4.html"><i class="ti-more"></i>Site 4</a></li>
-                                <li><a href="site5.html"><i class="ti-more"></i>Site 5</a></li>
-                                <li><a href="site6.html"><i class="ti-more"></i>Site 6</a></li>
-                            </ul>
-                        </li>
-
-
-                    </ul>
-                </div>
+          </div>
+          <div class="multinav">
+            <div class="multinav-scroll" style="height: 100%">
+              <!-- sidebar menu-->
+              <ul class="sidebar-menu" data-widget="tree">
+                <li>
+                  <a href="index.html">
+                    <i class="ti-home"></i>
+                    <span>الرئيسية</span>
+                  </a>
+                </li>
+                <li class="treeview">
+                  <a href="#">
+                    <i class="ti-dashboard"></i>
+                    <span>Sites</span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-right pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li>
+                      <a href="site1.html"><i class="ti-more"></i>أجا</a>
+                    </li>
+                    <li>
+                      <a href="site2.html"><i class="ti-more"></i>سندوب</a>
+                    </li>
+                    <li>
+                      <a href="site3.html"><i class="ti-more"></i>المدفن</a>
+                    </li>
+                    <li>
+                      <a href="site4.html"
+                        ><i class="ti-more"></i>بلقاس - المصنع</a
+                      >
+                    </li>
+                    <li>
+                      <a href="site5.html"><i class="ti-more"></i>السمبلاوين</a>
+                    </li>
+                    <li>
+                      <a href="site6.html"><i class="ti-more"></i>المنزلة</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
             </div>
+          </div>
         </section>
+      </aside>
 
-    </aside>
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
         <div class="container-full">
-            <!-- Main content -->
-            <section class="content">
-
-                <div class="row">
-
-                    <div class="col-xl-3 col-md-3 col-12">
-                        <div class="box pull-up">
-                            <div class="box-body">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div style="color: #ef5675; margin: auto">
-                                        <h5 class="mb-0" style="font-weight: bold;">اجمالى المدخلات</h5>
-                                        <h2 id="tot-ip-box" class="mb-0"></h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+          <!-- Main content -->
+          <section class="content">
+            <div class="row">
+              <div class="col-xl-3 col-md-3 col-12">
+                <div class="box pull-up">
+                  <div class="box-body">
+                    <div
+                      class="d-flex align-items-center justify-content-between"
+                    >
+                      <div style="color: #ef5675; margin: auto">
+                        <h5 class="mb-0" style="font-weight: bold">
+                          اجمالى المدخلات
+                        </h5>
+                        <h2 id="tot-ip-box" class="mb-0"></h2>
+                      </div>
                     </div>
-                    <div class="col-xl-3 col-md-3 col-12">
-                        <div class="box pull-up">
-                            <div class="box-body">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div style="color: #7a5195; margin: auto">
-                                        <h5 class="mb-0" style="font-weight: bold">نسبة المخلفات الصالحة للمعالجة</h5>
-                                        <h2 class="mb-0" id="accepted_per"></h2>
-                                    </div>
-                                    <!--                                    <img src="../images/trash.png" alt="" style="height: 62px">-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-3 col-12">
-                        <div class="box pull-up">
-                            <div class="box-body">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div style="color:#003f5c; margin: auto">
-                                        <h5 class="mb-0" style="font-weight: bold">نسبة المرفوضات من المخلفات الصالحة
-                                            للمعالجة
-                                        </h5>
-                                        <h2 class="mb-0" id="rejected_per"></h2>
-                                    </div>
-                                    <!--                                    <img src="../images/trash.png" alt="" style="height: 62px">-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-3 col-12">
-                        <div class="box pull-up">
-                            <div class="box-body">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div style="color:#444e86; margin: auto">
-                                        <h5 class="mb-0" style="font-weight: bold">اجمالى المخرجات</h5>
-                                        <h2 id="tot-op-box" class="mb-0"></h2>
-                                    </div>
-                                    <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-12 col-12">
-                        <div class="box">
-                            <div class="box-header with-border">
-                                <h4 class="box-title">المدخلات (طن)</h4>
-                            </div>
-                            <div class="box-body">
-                                <div id="total-input-graph"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-12 col-12">
-                        <div class="box">
-                            <div class="box-header with-border">
-                                <h4 class="box-title">المخرجات (طن)</h4>
-                            </div>
-                            <div class="box-body">
-                                <div id="total-output-graph"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-12 col-12">
-                        <div class="box">
-                            <div class="box-header with-border">
-                                <h4 class="box-title">اجمالى المدخلات والمخرجات (طن)</h4>
-                            </div>
-                            <div class="box-body">
-                                <div id="total-ip-op-graph"></div>
-                            </div>
-                        </div>
-                    </div>
-
+                  </div>
                 </div>
+              </div>
+              <div class="col-xl-3 col-md-3 col-12">
+                <div class="box pull-up">
+                  <div class="box-body">
+                    <div
+                      class="d-flex align-items-center justify-content-between"
+                    >
+                      <div style="color: #7a5195; margin: auto">
+                        <h5 class="mb-0" style="font-weight: bold">
+                          نسبة المخلفات الصالحة للمعالجة
+                        </h5>
+                        <h2 class="mb-0" id="accepted_per"></h2>
+                      </div>
+                      <!--                                    <img src="../images/trash.png" alt="" style="height: 62px">-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-md-3 col-12">
+                <div class="box pull-up">
+                  <div class="box-body">
+                    <div
+                      class="d-flex align-items-center justify-content-between"
+                    >
+                      <div style="color: #003f5c; margin: auto">
+                        <h5 class="mb-0" style="font-weight: bold">
+                          نسبة المرفوضات من المخلفات الصالحة للمعالجة
+                        </h5>
+                        <h2 class="mb-0" id="rejected_per"></h2>
+                      </div>
+                      <!--                                    <img src="../images/trash.png" alt="" style="height: 62px">-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-md-3 col-12">
+                <div class="box pull-up">
+                  <div class="box-body">
+                    <div
+                      class="d-flex align-items-center justify-content-between"
+                    >
+                      <div style="color: #444e86; margin: auto">
+                        <h5 class="mb-0" style="font-weight: bold">
+                          اجمالى المخرجات
+                        </h5>
+                        <h2 id="tot-op-box" class="mb-0"></h2>
+                      </div>
+                      <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-            </section>
-            <!-- /.content -->
+              <div class="col-xl-12 col-12">
+                <div class="box">
+                  <div class="box-header with-border">
+                    <h4 class="box-title">المدخلات (طن)</h4>
+                  </div>
+                  <div class="box-body">
+                    <div id="total-input-graph"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-12 col-12">
+                <div class="box">
+                  <div class="box-header with-border">
+                    <h4 class="box-title">المخرجات (طن)</h4>
+                  </div>
+                  <div class="box-body">
+                    <div id="total-output-graph"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-12 col-12">
+                <div class="box">
+                  <div class="box-header with-border">
+                    <h4 class="box-title">اجمالى المدخلات والمخرجات (طن)</h4>
+                  </div>
+                  <div class="box-body">
+                    <div id="total-ip-op-graph"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- /.content -->
         </div>
+      </div>
+      <!-- /.content-wrapper -->
+      <!--    <footer class="main-footer">-->
+      <!--        &copy; 2021 <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights Reserved.-->
+      <!--    </footer>-->
+
+      <!-- Control Sidebar -->
+
+      <!-- /.control-sidebar -->
+
+      <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
+      <div class="control-sidebar-bg"></div>
     </div>
-    <!-- /.content-wrapper -->
-    <!--    <footer class="main-footer">-->
-    <!--        &copy; 2021 <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights Reserved.-->
-    <!--    </footer>-->
+    <!-- ./wrapper -->
 
-    <!-- Control Sidebar -->
+    <script src="js/authentication.js"></script>
+    <script>
+      isAuthenticated().then(function (authenticated) {
+        if (!authenticated) {
+          window.location.href = "login.html";
+        }
+      });
+    </script>
 
-    <!-- /.control-sidebar -->
+    <!-- Vendor JS -->
+    <script src="js/vendors.min.js"></script>
 
-    <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
-    <div class="control-sidebar-bg"></div>
+    <script src="../assets/icons/feather-icons/feather.min.js"></script>
+    <script src="../assets/vendor_components/c3/d3.min.js"></script>
+    <script src="../assets/vendor_components/c3/c3.min.js"></script>
 
-</div>
-<!-- ./wrapper -->
+    <!--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
+    <script src="../assets/vendor_components/d3/d3.min.js"></script>
+    <script src="../assets/vendor_components/d3/d3_tooltip.js"></script>
 
-<script src="js/authentication.js"></script>
-<script>
-    isAuthenticated()
-        .then(function (authenticated) {
-            if (!authenticated) {
-                window.location.href = 'login.html';
-            }
-        });
-</script>
+    <!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/moment/min/moment.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>-->
+    <script src="../assets/vendor_components/moment/moment.js"></script>
+    <script src="../assets/vendor_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 
-<!-- Vendor JS -->
-<script src="js/vendors.min.js"></script>
+    <!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>-->
+    <!--<script src="https://unpkg.com/daterangepicker@3.0.0/daterangepicker.min.js"></script>-->
+    <!--<script src="../assets/vendor_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>-->
+    <!--<script src="../assets/vendor_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>-->
 
-<script src="../assets/icons/feather-icons/feather.min.js"></script>
-<script src="../assets/vendor_components/c3/d3.min.js"></script>
-<script src="../assets/vendor_components/c3/c3.min.js"></script>
+    <!-- Florence Admin App -->
+    <script src="js/template.js"></script>
+    <script src="js/data.js"></script>
 
-<!--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
-<script src="../assets/vendor_components/d3/d3.min.js"></script>
-<script src="../assets/vendor_components/d3/d3_tooltip.js"></script>
-
-<!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/moment/min/moment.min.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>-->
-<script src="../assets/vendor_components/moment/moment.js"></script>
-<script src="../assets/vendor_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-
-<!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>-->
-<!--<script src="https://unpkg.com/daterangepicker@3.0.0/daterangepicker.min.js"></script>-->
-<!--<script src="../assets/vendor_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>-->
-<!--<script src="../assets/vendor_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>-->
-
-
-<!-- Florence Admin App -->
-<script src="js/template.js"></script>
-<script src="js/data.js"></script>
-
-<!--<script src="js/pages/chart-widgets.js"></script>-->
-<script src="js/pages/chartjs-int.js"></script>
-
-
-</body>
+    <!--<script src="js/pages/chart-widgets.js"></script>-->
+    <script src="js/pages/chartjs-int.js"></script>
+  </body>
 </html>

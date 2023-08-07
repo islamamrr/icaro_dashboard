@@ -6,7 +6,6 @@ function isAuthenticated() {
         // No token found, return false
         return Promise.resolve(false);
     }
-    console.log("hena");
 
     return fetch('http://isdom.online/dash_board/api/protected-route', {
         headers: {
