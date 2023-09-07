@@ -19,10 +19,10 @@ function exportToExcel() {
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
     // Use XLSX.write to convert the workbook to a binary Excel file
-    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const excelBuffer = XLSX.write(workbook, {bookType: 'xlsx', type: 'array'});
 
     // Convert the array buffer to a Blob
-    const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const blob = new Blob([excelBuffer], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
 
     // Create a download link and trigger the download
     const url = URL.createObjectURL(blob);
@@ -92,7 +92,7 @@ function updateDatatable(selectedDate) {
                                     secondWeight: rowData.secondWeight
                                 }
 
-                                fetch(`http://isdom.online/dash_board/tickets/${rowData.ticketId}/1`,{
+                                fetch(`http://isdom.online/dash_board/tickets/${rowData.ticketId}/1`, {
                                     method: 'PUT',
                                     headers: {
                                         'Content-Type': 'application/json'
@@ -117,7 +117,7 @@ function updateDatatable(selectedDate) {
                 "dom": '<"top"lf>rt<"bottom"ip><"clear">',
                 "paging": true,
                 "searching": true,
-                "language":  {
+                "language": {
                     "sSearch": "بحث:",
                     "sLengthMenu": "أظهر _MENU_   تذاكر",
                     "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ تذكرة",

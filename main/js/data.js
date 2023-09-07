@@ -170,8 +170,8 @@ function updateCentersInputGraph_total() {
         });
 }
 
-
-//updateTotIPBox
+//Input boxes
+//Total input box
 function updateTotIPBox(startDate, endDate) {
     const url = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
 
@@ -187,7 +187,34 @@ function updateTotIPBox(startDate, endDate) {
         });
 }
 
-function updateTotAccBox(startDate, endDate) {
+function updateTotAccIPBox(startDate, endDate) {
+    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    fetch(url)
+        .then(response => response.json()).catch(() => 0)
+        .then(data => {
+            const newValue = data;
+            document.getElementById("tot-accepted-ip-box").textContent = newValue + " طن";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+function updateTotRejIPBox(startDate, endDate) {
+    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    fetch(url)
+        .then(response => response.json()).catch(() => 0)
+        .then(data => {
+            const newValue = data;
+            document.getElementById("tot-rejected-ip-box").textContent = newValue + " طن";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+//Rates boxes
+function updateTotAccRateBox(startDate, endDate) {
     const accUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
     const totInUrl = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
 
@@ -218,7 +245,7 @@ function updateTotAccBox(startDate, endDate) {
         });
 }
 
-function updateTotRejBox(startDate, endDate) {
+function updateTotRejRateBox(startDate, endDate) {
     const accUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
     const rejUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مرفوضات&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
 
@@ -248,7 +275,8 @@ function updateTotRejBox(startDate, endDate) {
         });
 }
 
-//updateTotOPBox
+//Output boxes
+//Total output box
 function updateTotOPBox(startDate, endDate) {
     const url = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مخرجات&startDate=${startDate}&endDate=${endDate}`;
 
@@ -262,6 +290,59 @@ function updateTotOPBox(startDate, endDate) {
             // console.error('Error:', error);
         });
 }
+
+function updateTotAsmedaOPBox(startDate, endDate) {
+    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    fetch(url)
+        .then(response => response.json()).catch(() => 0)
+        .then(data => {
+            const newValue = data;
+            document.getElementById("tot-asmeda-op-box").textContent = newValue + " طن";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+function updateTotWaqoodOPBox(startDate, endDate) {
+    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=وقود بديل&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    fetch(url)
+        .then(response => response.json()).catch(() => 0)
+        .then(data => {
+            const newValue = data;
+            document.getElementById("tot-waqood-op-box").textContent = newValue + " طن";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+function updateTotMarfoodatOPBox(startDate, endDate) {
+    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مرفوضات&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    fetch(url)
+        .then(response => response.json()).catch(() => 0)
+        .then(data => {
+            const newValue = data;
+            document.getElementById("tot-marfoodat-op-box").textContent = newValue + " طن";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+function updateTotMafroozatOPBox(startDate, endDate) {
+    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مفروزات&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    fetch(url)
+        .then(response => response.json()).catch(() => 0)
+        .then(data => {
+            const newValue = data;
+            document.getElementById("tot-mafroozat-op-box").textContent = newValue + " طن";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
 
 var tot_in_out_grph;
 var tot_out_grph;
@@ -405,10 +486,16 @@ $(document).ready(function () {
     updateTotalOPGraph(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateTotalIPGraph(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateTotalIPOPGraph(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
-    updateTotAccBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
-    updateTotRejBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
+    updateTotAccRateBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
+    updateTotRejRateBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateTotIPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
+    updateTotAccIPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
+    updateTotRejIPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateTotOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
+    updateTotAsmedaOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
+    updateTotWaqoodOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
+    updateTotMarfoodatOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
+    updateTotMafroozatOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateCentersInputGraph_total();
 
     // Listen for changes in the date range picker and update the components accordingly
@@ -419,10 +506,16 @@ $(document).ready(function () {
         updateTotalOPGraph(startDate, endDate);
         updateTotalIPGraph(startDate, endDate);
         updateTotalIPOPGraph(startDate, endDate);
-        updateTotAccBox(startDate, endDate);
-        updateTotRejBox(startDate, endDate);
+        updateTotAccRateBox(startDate, endDate);
+        updateTotRejRateBox(startDate, endDate);
         updateTotIPBox(startDate, endDate);
+        updateTotAccIPBox(startDate, endDate);
+        updateTotRejIPBox(startDate, endDate);
         updateTotOPBox(startDate, endDate);
+        updateTotAsmedaOPBox(startDate, endDate);
+        updateTotWaqoodOPBox(startDate, endDate);
+        updateTotMarfoodatOPBox(startDate, endDate);
+        updateTotMafroozatOPBox(startDate, endDate);
     });
 })
 ;

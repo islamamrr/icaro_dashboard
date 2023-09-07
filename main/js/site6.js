@@ -9,6 +9,29 @@ const opDateDropdown = document.getElementById('op-dateRangeDropdown-s6');
 const ipDateDropdown = document.getElementById('ip-dateRangeDropdown-s6');
 
 var dataTableInitialized = false;
+var dataTableJSONData;
+var datatableSelectedDate;
+
+function exportToExcel() {
+    console.log(dataTableJSONData);
+    const worksheet = XLSX.utils.json_to_sheet(dataTableJSONData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+    // Use XLSX.write to convert the workbook to a binary Excel file
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+    // Convert the array buffer to a Blob
+    const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+    // Create a download link and trigger the download
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = datatableSelectedDate + '.xlsx';
+    a.click();
+    URL.revokeObjectURL(url);
+}
 
 ////  Datatable  ////
 
@@ -22,6 +45,8 @@ function updateDatatable(selectedDate) {
     fetch(`http://isdom.online/dash_board/tickets/all?siteNo=6&selectedDate=${selectedDate}`)
         .then(response => response.json())
         .then(data => {
+
+            dataTableJSONData = data;
 
             $('#site6_table').DataTable().destroy();
             tbody.innerHTML = '';
@@ -141,7 +166,7 @@ function updateDatatable(selectedDate) {
             });
 
             document.getElementById("datatableDatePickerGroup").style.display = "block";
-
+            document.getElementById("datatableExportGroup").style.display = "block";
         })
 }
 
@@ -609,12 +634,13 @@ function updateMassBox(startDate, endDate) {
 $(document).ready(function () {
 
     updateDatatable(moment().format('DD-MMM-YY'));
+    datatableSelectedDate = moment().format('DD-MM-YYYY');
 
     $("#datatableDatePicker").datepicker({
         dateFormat: "dd-mm-yy",
         onSelect: function (selectedDate) {
             const formattedDate = moment(selectedDate, 'DD-MM-YYYY').format('DD-MMM-YY');
-
+            datatableSelectedDate = formattedDate
             updateDatatable(formattedDate);
         }
     });
