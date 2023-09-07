@@ -145,7 +145,7 @@ function updateCentersInputGraph_total() {
         endDatex = moment().subtract(1, 'months').endOf('month').format('DD-MMM-YY');
     }
 
-    const url1 = `http://localhost:8080/tickets/net-weight?itemType=مدخلات&startDate=${startDatex}&endDate=${endDatex}`; // وقود بديل
+    const url1 = `http://isdom.online/dash_board/tickets/centers-net-weight-list?itemType=مدخلات&startDate=${startDatex}&endDate=${endDatex}`; // وقود بديل
 
     Promise.all([
         fetch(url1).then(response1 => response1.json())
@@ -302,13 +302,13 @@ $(document).ready(function () {
         axis: {
             x: {
                 type: 'category',
-                categories: ['أجا', 'سندوب', 'المدفن', 'بلقاس - المصنع', 'السمبلاوين', 'المنزلة']
+                categories: ['أجا', 'سندوب', 'بلقاس - المصنع', 'السمبلاوين', 'المنزلة']
             }
         },
         data: {
             columns: [
-                ['مدخلات', 0, 0, 0, 0, 0, 0],
-                ['مخرجات', 0, 0, 0, 0, 0, 0]
+                ['مدخلات', 0, 0, 0, 0, 0],
+                ['مخرجات', 0, 0, 0, 0, 0]
             ],
             type: "bar",
             colors: {'مدخلات': "#ef601c", 'مخرجات': "#36ca0f"}
@@ -327,13 +327,13 @@ $(document).ready(function () {
         axis: {
             x: {
                 type: 'category',
-                categories: ['أجا', 'سندوب', 'المدفن', 'بلقاس - المصنع', 'السمبلاوين', 'المنزلة']
+                categories: ['أجا', 'سندوب', 'بلقاس - المصنع', 'السمبلاوين', 'المنزلة']
             }
         },
         data: {
             columns: [
-                ['مخلفات تصلح للمعالجة', 0, 0, 0, 0, 0, 0],
-                ['مخلفات لا تصلح للمعالجة', 0, 0, 0, 0, 0, 0]
+                ['مخلفات تصلح للمعالجة', 0, 0, 0, 0, 0],
+                ['مخلفات لا تصلح للمعالجة', 0, 0, 0, 0, 0]
             ],
             type: "bar",
             colors: {'مخلفات تصلح للمعالجة': "#ffd800", 'مخلفات لا تصلح للمعالجة': "#d81415"}
@@ -352,15 +352,15 @@ $(document).ready(function () {
         axis: {
             x: {
                 type: 'category', // set the x-axis as category type
-                categories: ['أجا', 'سندوب', 'المدفن', 'بلقاس - المصنع', 'السمبلاوين', 'المنزلة'] // specify the categories/names on the x-axis
+                categories: ['أجا', 'سندوب', 'بلقاس - المصنع', 'السمبلاوين', 'المنزلة'] // specify the categories/names on the x-axis
             }
         },
         data: {
             columns: [
-                ['وقود بديل', 0, 0, 0, 0, 0, 0],
-                ['مفروزات', 0, 0, 0, 0, 0, 0],
-                ['اسمدة عضوية', 0, 0, 0, 0, 0, 0],
-                ['مرفوضات', 0, 0, 0, 0, 0, 0]
+                ['وقود بديل', 0, 0, 0, 0, 0],
+                ['مفروزات', 0, 0, 0, 0, 0],
+                ['اسمدة عضوية', 0, 0, 0, 0, 0],
+                ['مرفوضات', 0, 0, 0, 0, 0]
             ],
             type: "bar",
             colors: {'اسمدة عضوية': "#2da075", 'وقود بديل': "#1427c9", 'مفروزات': "#2d66d9", 'مرفوضات': "#10d6b4"}
