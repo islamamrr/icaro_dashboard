@@ -4,9 +4,7 @@ const refreshFreq = 10 * 60 * 1000; // 1 MINUTE
 var startDate = moment().format('DD-MMM-YY');
 var endDate = moment().format('DD-MMM-YY');
 const ipCenterDropdown = document.getElementById('ip-centerDropdown-s3');
-const opCenterDropdown = document.getElementById('op-centerDropdown-s3');
 const ipVillageDropdown = document.getElementById('ip-villageDropdown-s3');
-const opVillageDropdown = document.getElementById('op-villageDropdown-s3');
 const opDateDropdown = document.getElementById('op-dateRangeDropdown-s3');
 const ipDateDropdown = document.getElementById('ip-dateRangeDropdown-s3');
 
@@ -96,7 +94,7 @@ function updateDatatable(selectedDate) {
                 "language":  {
                     "sSearch": "بحث:",
                     "sLengthMenu": "أظهر _MENU_   تذاكر",
-                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ تذكرة",
                     "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
                     "sInfoFiltered": "(منتقاة من مجموع _MAX_ تذكرة)",
                     "oPaginate": {
@@ -159,14 +157,12 @@ function getCenters() {
             defaultOption.textContent = 'كل المراكز';
             defaultOption.selected = true;
             ipCenterDropdown.appendChild(defaultOption.cloneNode(true));
-            opCenterDropdown.appendChild(defaultOption);
 
             data.forEach(option => {
                 const optionElement = document.createElement('option');
                 optionElement.value = option.centerId;
                 optionElement.textContent = option.centerName;
                 ipCenterDropdown.appendChild(optionElement.cloneNode(true));
-                opCenterDropdown.appendChild(optionElement);
             });
         })
         .catch(error => {
@@ -264,10 +260,6 @@ function updateInputGraph_s3(isVillage) {
         startDatex = moment().subtract(1, 'months').startOf('month').format('DD-MMM-YY');
         endDatex = moment().subtract(1, 'months').endOf('month').format('DD-MMM-YY');
     }
-    // else if (selectedDate === 'lastYear') {
-    //     startDatex = moment().subtract(1, 'years').format('DD-MMM-YY');
-    //     endDatex = moment().format('DD-MMM-YY');
-    // }
 
     const url1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات  تصلح للمعالجة&siteNo=3&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات تصلح للمعالجة
     const url2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات لا تصلح للمعالجة&siteNo=3&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات لا تصلح للمعالجة
@@ -301,34 +293,6 @@ function updateInputGraph_s3(isVillage) {
 
 ////  Output graph  ////
 
-function updateOpVillageDropdown(centerId) {
-    if (centerId !== "") {
-        fetch(`http://isdom.online/dash_board/villages?centerId=${centerId}`)
-            .then(response => response.json())
-            .then(data => {
-
-                document.getElementById("op-villageDropdown-s3").style.display = "block";
-
-                opVillageDropdown.innerHTML = '';
-
-                const defaultOption = document.createElement('option');
-                defaultOption.value = '';
-                defaultOption.textContent = 'كل الوحدات المحلية';
-                defaultOption.selected = true;
-                opVillageDropdown.appendChild(defaultOption);
-
-
-                data.forEach(option => {
-                    const optionElement = document.createElement('option');
-                    optionElement.value = option.villageId;
-                    optionElement.textContent = option.villageName;
-
-                    opVillageDropdown.appendChild(optionElement);
-                });
-            })
-    }
-}
-
 const opChartOptions = {
     bindto: "#s3-out-grph",
     size: {height: 350},
@@ -351,15 +315,8 @@ const opChartOptions = {
 };
 const s3_out_grph = c3.generate(opChartOptions);
 
-function updateOutputGraph_s3(isVillage) {
+function updateOutputGraph_s3() {
     const selectedDate = opDateDropdown.value;
-    const selectedCenter = opCenterDropdown.value;
-    var selectedVillage = opVillageDropdown.value;
-
-    if (isVillage === false) {
-        updateOpVillageDropdown(selectedCenter);
-        selectedVillage = "";
-    }
 
     let startDatex, endDatex;
 
@@ -373,15 +330,11 @@ function updateOutputGraph_s3(isVillage) {
         startDatex = moment().subtract(1, 'months').startOf('month').format('DD-MMM-YY');
         endDatex = moment().subtract(1, 'months').endOf('month').format('DD-MMM-YY');
     }
-    // else if (selectedDate === 'lastYear') {
-    //     startDatex = moment().subtract(1, 'years').format('DD-MMM-YY');
-    //     endDatex = moment().format('DD-MMM-YY');
-    // }
 
-    const url1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=وقود بديل&siteNo=3&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; // وقود بديل
-    const url2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=اسمدة عضوية&siteNo=3&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; // اسمدة عضوية
-    const url3 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مرفوضات&siteNo=3&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مرفوضات
-    const url4 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مفروزات&siteNo=3&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مفروزات
+    const url1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=وقود بديل&siteNo=3&startDate=${startDatex}&endDate=${endDatex}`; // وقود بديل
+    const url2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=اسمدة عضوية&siteNo=3&startDate=${startDatex}&endDate=${endDatex}`; // اسمدة عضوية
+    const url3 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مرفوضات&siteNo=3&startDate=${startDatex}&endDate=${endDatex}`; //مرفوضات
+    const url4 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مفروزات&siteNo=3&startDate=${startDatex}&endDate=${endDatex}`; //مفروزات
 
     Promise.all([
         fetch(url1).then(response1 => response1.json().catch(() => 0)),
@@ -623,7 +576,7 @@ $(document).ready(function () {
     // getOpNames();
     getCenters();
     updateInputGraph_s3(false);
-    updateOutputGraph_s3(false);
+    updateOutputGraph_s3();
 
     initDateRange();
 

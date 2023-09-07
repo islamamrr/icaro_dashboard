@@ -1,3 +1,6 @@
+const centersIPDateDropdown = document.getElementById('centersIP-dateRangeDropdown-total');
+
+
 //updateTotalOPGraph
 function updateTotalOPGraph(startDate, endDate) {
 
@@ -10,30 +13,30 @@ function updateTotalOPGraph(startDate, endDate) {
     fetch(opGraphURL1)
         .then(response => response.json())
         .then(data => {
-            const category1Values = data; // Assuming the API response contains the values for the first category
+            const category1Values = data;
 
             fetch(opGraphURL2)
                 .then(response => response.json())
                 .then(data => {
-                    const category2Values = data; // Assuming the API response contains the values for the second category
+                    const category2Values = data;
 
                     fetch(opGraphURL3)
                         .then(response => response.json())
                         .then(data => {
-                            const category3Values = data; // Assuming the API response contains the values for the second category
+                            const category3Values = data;
 
                             fetch(opGraphURL4)
                                 .then(response => response.json())
                                 .then(data => {
-                                    const category4Values = data; // Assuming the API response contains the values for the second category
+                                    const category4Values = data;
 
                                     // Update the chart data dynamically
                                     tot_out_grph.load({
                                         columns: [
                                             ['وقود بديل', ...category2Values],
-                                            ['مفروزات', ...category3Values],
+                                            ['مفروزات', ...category4Values],
                                             ['اسمدة عضوية', ...category1Values],
-                                            ['مرفوضات', ...category4Values]
+                                            ['مرفوضات', ...category3Values]
                                         ]
                                     });
                                 })
@@ -125,6 +128,48 @@ function updateTotalIPGraph(startDate, endDate) {
             // console.error('Error:', error);
         });
 }
+
+function updateCentersInputGraph_total() {
+    const selectedDate = centersIPDateDropdown.value;
+
+    let startDatex, endDatex;
+
+    if (selectedDate === 'last7days') {
+        startDatex = moment().subtract(7, 'days').format('DD-MMM-YY');
+        endDatex = moment().format('DD-MMM-YY');
+    } else if (selectedDate === 'last14days') {
+        startDatex = moment().subtract(14, 'days').format('DD-MMM-YY');
+        endDatex = moment().format('DD-MMM-YY');
+    } else if (selectedDate === 'lastMonth') {
+        startDatex = moment().subtract(1, 'months').startOf('month').format('DD-MMM-YY');
+        endDatex = moment().subtract(1, 'months').endOf('month').format('DD-MMM-YY');
+    }
+
+    const url1 = `http://localhost:8080/tickets/net-weight?itemType=مدخلات&startDate=${startDatex}&endDate=${endDatex}`; // وقود بديل
+
+    Promise.all([
+        fetch(url1).then(response1 => response1.json())
+    ]).then(([data1]) => {
+        let categories = Object.keys(data1);
+        const values1 = Object.values(data1);
+
+
+        console.log(categories);
+        console.log(values1);
+
+        centers_ip_graph.load({
+            columns: [
+                ['الوزن الحقيقى', ...values1]
+            ],
+            categories: categories
+        });
+
+    })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
 
 //updateTotIPBox
 function updateTotIPBox(startDate, endDate) {
@@ -221,15 +266,11 @@ function updateTotOPBox(startDate, endDate) {
 var tot_in_out_grph;
 var tot_out_grph;
 var tot_in_grph;
+var centers_ip_graph;
 
 $dateRangePicker = $('#dateRangePicker');
 // Initialize the date range picker
 $(document).ready(function () {
-
-// window.addEventListener('DOMContentLoaded', initializeDateRangePicker);
-//
-// function initializeDateRangePicker() {
-
 
     $dateRangePicker.daterangepicker({
         opens: 'left',
@@ -327,6 +368,41 @@ $(document).ready(function () {
         grid: {y: {show: !0}}
     });
 
+    centers_ip_graph = c3.generate({
+        bindto: "#centers-ip-graph",
+        size: {height: 350},
+        legend: {},
+        axis: {
+            x: {
+                type: 'category',
+                categories: [],
+                tick: {
+                    rotate: -20,
+                    multiline: false
+                },
+                legend: {
+                    inset: {
+                        anchor: 'bottom-right',
+                        x: 90,
+                        y: 10,
+                        step: 2
+                    }
+                },
+                height: 35
+            }
+        },
+        data: {
+            columns: [],
+            type: "line",
+            colors: {
+                'الوزن الحقيقى': "#ef601c"
+            }
+        },
+        grid: {y: {show: true}}
+    });
+
+    // const centers_ip_graph = c3.generate(centersIPChartOptions);
+
 
     // Set the initial values for the components
     updateTotalOPGraph(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
@@ -336,6 +412,7 @@ $(document).ready(function () {
     updateTotRejBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateTotIPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateTotOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
+    updateCentersInputGraph_total();
 
     // Listen for changes in the date range picker and update the components accordingly
     $dateRangePicker.on('apply.daterangepicker', function (ev, picker) {
@@ -350,4 +427,5 @@ $(document).ready(function () {
         updateTotIPBox(startDate, endDate);
         updateTotOPBox(startDate, endDate);
     });
-});
+})
+;

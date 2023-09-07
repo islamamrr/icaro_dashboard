@@ -32073,7 +32073,7 @@ select#ip-villageDropdown-s5, select#ip-villageDropdown-s6 {
   font-size: initial;
 }
 
-select#op-dateRangeDropdown-s1, select#op-dateRangeDropdown-s2, select#op-dateRangeDropdown-s3, select#op-dateRangeDropdown-s4,
+select#centersIP-dateRangeDropdown-total, select#op-dateRangeDropdown-s1, select#op-dateRangeDropdown-s2, select#op-dateRangeDropdown-s3, select#op-dateRangeDropdown-s4,
 select#op-dateRangeDropdown-s5, select#op-dateRangeDropdown-s6 {
   position: relative;
   right: 2%;
@@ -32123,4 +32123,16 @@ select#op-villageDropdown-s5, select#op-villageDropdown-s6 {
 
 #datatableDatePicker::placeholder {
   color: white;
+}
+
+#datatableExport {
+  display: flex;
+  border-radius: 5px;
+  background-color: #003f5c;
+  color: white;
+  border: 0;
+  padding: 0.375rem 0.75rem;
+  width: 85px;
+  justify-content: space-around;
+  align-items: center;
 }

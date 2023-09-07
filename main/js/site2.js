@@ -4,13 +4,32 @@ const refreshFreq = 10 * 60 * 1000; // 1 MINUTE
 var startDate = moment().format('DD-MMM-YY');
 var endDate = moment().format('DD-MMM-YY');
 const ipCenterDropdown = document.getElementById('ip-centerDropdown-s2');
-const opCenterDropdown = document.getElementById('op-centerDropdown-s2');
 const ipVillageDropdown = document.getElementById('ip-villageDropdown-s2');
-const opVillageDropdown = document.getElementById('op-villageDropdown-s2');
 const opDateDropdown = document.getElementById('op-dateRangeDropdown-s2');
 const ipDateDropdown = document.getElementById('ip-dateRangeDropdown-s2');
 
 var dataTableInitialized = false;
+
+function exportToExcel(data) {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+    // Use XLSX.write to convert the workbook to a binary Excel file
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+    // Convert the array buffer to a Blob
+    const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+    // Create a download link and trigger the download
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'data.xlsx';
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
 
 ////  Datatable  ////
 
@@ -24,6 +43,8 @@ function updateDatatable(selectedDate) {
     fetch(`http://isdom.online/dash_board/tickets/all?siteNo=2&selectedDate=${selectedDate}`)
         .then(response => response.json())
         .then(data => {
+
+            // exportToExcel(data);
 
             $('#site2_table').DataTable().destroy();
             tbody.innerHTML = '';
@@ -96,7 +117,7 @@ function updateDatatable(selectedDate) {
                 "language":  {
                     "sSearch": "بحث:",
                     "sLengthMenu": "أظهر _MENU_   تذاكر",
-                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ تذكرة",
                     "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
                     "sInfoFiltered": "(منتقاة من مجموع _MAX_ تذكرة)",
                     "oPaginate": {
@@ -159,33 +180,18 @@ function getCenters() {
             defaultOption.textContent = 'كل المراكز';
             defaultOption.selected = true;
             ipCenterDropdown.appendChild(defaultOption.cloneNode(true));
-            opCenterDropdown.appendChild(defaultOption);
 
             data.forEach(option => {
                 const optionElement = document.createElement('option');
                 optionElement.value = option.centerId;
                 optionElement.textContent = option.centerName;
                 ipCenterDropdown.appendChild(optionElement.cloneNode(true));
-                opCenterDropdown.appendChild(optionElement);
             });
         })
         .catch(error => {
             console.error('Error:', error);
         });
 }
-
-
-// Get names of outputs
-// function getOpNames() {
-//     fetch('http://isdom.online/dash_board/items/items/مخرجات/item-names')
-//         .then(response => response.json())
-//         .then(data => {
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-// }
-
 
 ////  Input graph  ////
 
@@ -234,8 +240,8 @@ const ipChartOptions = {
         columns: [],
         type: "line",
         colors: {
-            'مخلفات تصلح للمعالجة': "#444e86",
-            'مخلفات لا تصلح للمعالجة': "#dd5182"
+            'مخلفات تصلح للمعالجة': "#ffd800",
+            'مخلفات لا تصلح للمعالجة': "#d81415"
         }
     },
     grid: {y: {show: true}}
@@ -264,10 +270,6 @@ function updateInputGraph_s2(isVillage) {
         startDatex = moment().subtract(1, 'months').startOf('month').format('DD-MMM-YY');
         endDatex = moment().subtract(1, 'months').endOf('month').format('DD-MMM-YY');
     }
-    // else if (selectedDate === 'lastYear') {
-    //     startDatex = moment().subtract(1, 'years').format('DD-MMM-YY');
-    //     endDatex = moment().format('DD-MMM-YY');
-    // }
 
     const url1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات  تصلح للمعالجة&siteNo=2&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات تصلح للمعالجة
     const url2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات لا تصلح للمعالجة&siteNo=2&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات لا تصلح للمعالجة
@@ -301,34 +303,6 @@ function updateInputGraph_s2(isVillage) {
 
 ////  Output graph  ////
 
-function updateOpVillageDropdown(centerId) {
-    if (centerId !== "") {
-        fetch(`http://isdom.online/dash_board/villages?centerId=${centerId}`)
-            .then(response => response.json())
-            .then(data => {
-
-                document.getElementById("op-villageDropdown-s2").style.display = "block";
-
-                opVillageDropdown.innerHTML = '';
-
-                const defaultOption = document.createElement('option');
-                defaultOption.value = '';
-                defaultOption.textContent = 'كل الوحدات المحلية';
-                defaultOption.selected = true;
-                opVillageDropdown.appendChild(defaultOption);
-
-
-                data.forEach(option => {
-                    const optionElement = document.createElement('option');
-                    optionElement.value = option.villageId;
-                    optionElement.textContent = option.villageName;
-
-                    opVillageDropdown.appendChild(optionElement);
-                });
-            })
-    }
-}
-
 const opChartOptions = {
     bindto: "#s2-out-grph",
     size: {height: 350},
@@ -345,21 +319,14 @@ const opChartOptions = {
     data: {
         columns: [],
         type: "line",
-        colors: {'اسمدة عضوية': "#ffa600", 'وقود بديل': "#ef5675", 'مفروزات': "#7a5195", 'مرفوضات': "#003f5c"}
+        colors: {'اسمدة عضوية': "#2da075", 'وقود بديل': "#1427c9", 'مفروزات': "#2d66d9", 'مرفوضات': "#10d6b4"}
     },
     grid: {y: {show: true}}
 };
 const s2_out_grph = c3.generate(opChartOptions);
 
-function updateOutputGraph_s2(isVillage) {
+function updateOutputGraph_s2() {
     const selectedDate = opDateDropdown.value;
-    const selectedCenter = opCenterDropdown.value;
-    var selectedVillage = opVillageDropdown.value;
-
-    if (isVillage === false) {
-        updateOpVillageDropdown(selectedCenter);
-        selectedVillage = "";
-    }
 
     let startDatex, endDatex;
 
@@ -373,15 +340,11 @@ function updateOutputGraph_s2(isVillage) {
         startDatex = moment().subtract(1, 'months').startOf('month').format('DD-MMM-YY');
         endDatex = moment().subtract(1, 'months').endOf('month').format('DD-MMM-YY');
     }
-    // else if (selectedDate === 'lastYear') {
-    //     startDatex = moment().subtract(1, 'years').format('DD-MMM-YY');
-    //     endDatex = moment().format('DD-MMM-YY');
-    // }
 
-    const url1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=وقود بديل&siteNo=2&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; // وقود بديل
-    const url2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=اسمدة عضوية&siteNo=2&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; // اسمدة عضوية
-    const url3 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مرفوضات&siteNo=2&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مرفوضات
-    const url4 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مفروزات&siteNo=2&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مفروزات
+    const url1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=وقود بديل&siteNo=2&startDate=${startDatex}&endDate=${endDatex}`; // وقود بديل
+    const url2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=اسمدة عضوية&siteNo=2&startDate=${startDatex}&endDate=${endDatex}`; // اسمدة عضوية
+    const url3 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مرفوضات&siteNo=2&startDate=${startDatex}&endDate=${endDatex}`; //مرفوضات
+    const url4 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مفروزات&siteNo=2&startDate=${startDatex}&endDate=${endDatex}`; //مفروزات
 
     Promise.all([
         fetch(url1).then(response1 => response1.json().catch(() => 0)),
@@ -420,7 +383,7 @@ function updateOutputGraph_s2(isVillage) {
 
 const initialIPChartData = {
     labels: ['مخلفات تصلح للمعالجة', 'مخلفات لا تصلح للمعالجة'], datasets: [{
-        data: [0, 0], backgroundColor: ['#444e86', '#dd5182']
+        data: [0, 0], backgroundColor: ['#ffd800', '#d81415']
     }]
 };
 const s2_ip_chart = new Chart(document.getElementById('s2-ip-chart'), {
@@ -455,7 +418,7 @@ const initialOPChartData = {
     labels: ['اسمدة عضوية', 'وقود بديل', 'مرفوضات', 'مفروزات'],
     datasets: [{
         data: [0, 0, 0, 0],
-        backgroundColor: ['#ffa600', '#ef5675', '#003f5c', '#7a5195']
+        backgroundColor: ['#2da075', '#1427c9', '#10d6b4', '#2d66d9']
     }]
 };
 const s2_op_chart = new Chart(document.getElementById('s2-op-chart'), {
@@ -623,7 +586,7 @@ $(document).ready(function () {
     // getOpNames();
     getCenters();
     updateInputGraph_s2(false);
-    updateOutputGraph_s2(false);
+    updateOutputGraph_s2();
 
     initDateRange();
 
