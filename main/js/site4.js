@@ -230,8 +230,8 @@ const ipChartOptions = {
         columns: [],
         type: "line",
         colors: {
-            'مخلفات تصلح للمعالجة': "#444e86",
-            'مخلفات لا تصلح للمعالجة': "#dd5182"
+            'مخلفات تصلح للمعالجة': "#ffd800",
+            'مخلفات لا تصلح للمعالجة': "#d81415"
         }
     },
     grid: {y: {show: true}}
@@ -313,7 +313,7 @@ const opChartOptions = {
     data: {
         columns: [],
         type: "line",
-        colors: {'اسمدة عضوية': "#ffa600", 'وقود بديل': "#ef5675", 'مفروزات': "#7a5195", 'مرفوضات': "#003f5c"}
+        colors: {'اسمدة عضوية': "#2da075", 'وقود بديل': "#1427c9", 'مفروزات': "#2d66d9", 'مرفوضات': "#10d6b4"}
     },
     grid: {y: {show: true}}
 };
@@ -377,7 +377,7 @@ function updateOutputGraph_s4() {
 
 const initialIPChartData = {
     labels: ['مخلفات تصلح للمعالجة', 'مخلفات لا تصلح للمعالجة'], datasets: [{
-        data: [0, 0], backgroundColor: ['#444e86', '#dd5182']
+        data: [0, 0], backgroundColor: ['#ffd800', '#d81415']
     }]
 };
 const s4_ip_chart = new Chart(document.getElementById('s4-ip-chart'), {
@@ -412,7 +412,7 @@ const initialOPChartData = {
     labels: ['اسمدة عضوية', 'وقود بديل', 'مرفوضات', 'مفروزات'],
     datasets: [{
         data: [0, 0, 0, 0],
-        backgroundColor: ['#ffa600', '#ef5675', '#003f5c', '#7a5195']
+        backgroundColor: ['#2da075', '#1427c9', '#10d6b4', '#2d66d9']
     }]
 };
 const s4_op_chart = new Chart(document.getElementById('s4-op-chart'), {

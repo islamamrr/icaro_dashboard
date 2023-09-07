@@ -311,7 +311,7 @@ $(document).ready(function () {
                 ['مخرجات', 0, 0, 0, 0, 0, 0]
             ],
             type: "bar",
-            colors: {'مدخلات': "#dd5182", 'مخرجات': "#444e86"}
+            colors: {'مدخلات': "#ef601c", 'مخرجات': "#36ca0f"}
         },
         grid: {y: {show: true}}
     });
@@ -336,7 +336,7 @@ $(document).ready(function () {
                 ['مخلفات لا تصلح للمعالجة', 0, 0, 0, 0, 0, 0]
             ],
             type: "bar",
-            colors: {'مخلفات تصلح للمعالجة': "#dd5182", 'مخلفات لا تصلح للمعالجة': "#444e86"}
+            colors: {'مخلفات تصلح للمعالجة': "#ffd800", 'مخلفات لا تصلح للمعالجة': "#d81415"}
         },
         grid: {y: {show: true}}
     });
@@ -363,7 +363,7 @@ $(document).ready(function () {
                 ['مرفوضات', 0, 0, 0, 0, 0, 0]
             ],
             type: "bar",
-            colors: {'اسمدة عضوية': "#ffa600", 'وقود بديل': "#ef5675", 'مفروزات': "#7a5195", 'مرفوضات': "#003f5c"}
+            colors: {'اسمدة عضوية': "#2da075", 'وقود بديل': "#1427c9", 'مفروزات': "#2d66d9", 'مرفوضات': "#10d6b4"}
         },
         grid: {y: {show: !0}}
     });
@@ -400,9 +400,6 @@ $(document).ready(function () {
         },
         grid: {y: {show: true}}
     });
-
-    // const centers_ip_graph = c3.generate(centersIPChartOptions);
-
 
     // Set the initial values for the components
     updateTotalOPGraph(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
