@@ -13,19 +13,41 @@ var dataTableInitialized = false;
 var dataTableJSONData;
 var datatableSelectedDate;
 
+const headerMapping = {
+    ticketId : "رقم التذكرة",
+    itemType : "نوع الشحنة",
+    itemName : "اسم الصنف",
+    clientName : "العميل",
+    driverName : "اسم السائق",
+    vehicleNumber : "رقم السيارة",
+    firstWeight : "الوزن الاول (كجم)",
+    secondWeight : "الوزن الثاني (كجم)",
+    netWeight : "صافي الوزن (كجم)",
+    carTwoDate : "التاريخ",
+    carOneTime : "وقت الوزن الأول",
+    carTwoTime : "وقت الوزن الثانى",
+    enterMethod : ""
+};
+
 function exportToExcel() {
-    console.log(dataTableJSONData);
-    const worksheet = XLSX.utils.json_to_sheet(dataTableJSONData);
+    const transformedData = dataTableJSONData.map(item => {
+        const transformedItem = {};
+        for (const key in item) {
+            if (headerMapping.hasOwnProperty(key)) {
+                transformedItem[headerMapping[key]] = item[key];
+            }
+        }
+        return transformedItem;
+    });
+
+    const worksheet = XLSX.utils.json_to_sheet(transformedData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
-    // Use XLSX.write to convert the workbook to a binary Excel file
-    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const excelBuffer = XLSX.write(workbook, {bookType: 'xlsx', type: 'array'});
 
-    // Convert the array buffer to a Blob
-    const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const blob = new Blob([excelBuffer], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
 
-    // Create a download link and trigger the download
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
