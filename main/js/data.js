@@ -134,7 +134,15 @@ function updateCentersInputGraph_total() {
 
     let startDatex, endDatex;
 
-    if (selectedDate === 'last7days') {
+    if (selectedDate === 'today') {
+        startDatex = moment().format('DD-MMM-YY');
+        endDatex = moment().format('DD-MMM-YY');
+    }
+    else if (selectedDate === 'yesterday') {
+        startDatex = moment().subtract(1, 'days').format('DD-MMM-YY');
+        endDatex = moment().format('DD-MMM-YY');
+    }
+    else if (selectedDate === 'last7days') {
         startDatex = moment().subtract(7, 'days').format('DD-MMM-YY');
         endDatex = moment().format('DD-MMM-YY');
     } else if (selectedDate === 'last14days') {
@@ -417,7 +425,7 @@ $(document).ready(function () {
                 ['مخلفات لا تصلح للمعالجة', 0, 0, 0, 0, 0]
             ],
             type: "bar",
-            colors: {'مخلفات تصلح للمعالجة': "#ffd800", 'مخلفات لا تصلح للمعالجة': "#d81415"}
+            colors: {'مخلفات تصلح للمعالجة': "#ffa014", 'مخلفات لا تصلح للمعالجة': "#d81415"}
         },
         grid: {y: {show: true}}
     });

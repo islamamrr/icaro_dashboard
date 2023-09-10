@@ -8,6 +8,7 @@ const ipVillageDropdown = document.getElementById('ip-villageDropdown-s1');
 const opDateDropdown = document.getElementById('op-dateRangeDropdown-s1');
 const ipDateDropdown = document.getElementById('ip-dateRangeDropdown-s1');
 
+const currentClientType = 'مصنع اجا';
 var dataTableInitialized = false;
 var dataTableJSONData;
 var datatableSelectedDate;
@@ -243,7 +244,7 @@ const ipChartOptions = {
         columns: [],
         type: "line",
         colors: {
-            'مخلفات تصلح للمعالجة': "#ffd800",
+            'مخلفات تصلح للمعالجة': "#ffa014",
             'مخلفات لا تصلح للمعالجة': "#d81415"
         }
     },
@@ -350,9 +351,8 @@ function updateOutputGraph_s1() {
 
     const url1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=وقود بديل&siteNo=1&startDate=${startDatex}&endDate=${endDatex}`; // وقود بديل
     const url2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=اسمدة عضوية&siteNo=1&startDate=${startDatex}&endDate=${endDatex}`; // اسمدة عضوية
-    const url3 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مرفوضات&siteNo=1&startDate=${startDatex}&endDate=${endDatex}`; //مرفوضات
+    const url3 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${selectedClient}&startDate=${startDatex}&endDate=${endDatex}`; // مرفوضات
     const url4 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مفروزات&siteNo=1&startDate=${startDatex}&endDate=${endDatex}`; //مفروزات
-
     Promise.all([
         fetch(url1).then(response1 => response1.json().catch(() => 0)),
         fetch(url2).then(response2 => response2.json().catch(() => 0)),
@@ -390,7 +390,7 @@ function updateOutputGraph_s1() {
 
 const initialIPChartData = {
     labels: ['مخلفات تصلح للمعالجة', 'مخلفات لا تصلح للمعالجة'], datasets: [{
-        data: [0, 0], backgroundColor: ['#ffd800', '#d81415']
+        data: [0, 0], backgroundColor: ['#ffa014', '#d81415']
     }]
 };
 const s1_ip_chart = new Chart(document.getElementById('s1-ip-chart'), {
@@ -434,9 +434,10 @@ const s1_op_chart = new Chart(document.getElementById('s1-op-chart'), {
 });
 
 function updateOPChartData(startDate, endDate) {
+
     const urlOP1 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
     const urlOP2 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=وقود بديل&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
-    const urlOP3 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مرفوضات&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
+    const urlOP3 = `http://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
     const urlOP4 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مفروزات&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مفروزات
 
     Promise.all([
@@ -465,7 +466,7 @@ function updateOPChartData(startDate, endDate) {
 
 function updateRejBox(startDate, endDate) {
     const urlAcc = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const urlRej = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مرفوضات&siteNo=1&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
+    const urlRej = `http://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
 
     Promise.all([
         fetch(urlAcc).then(response => response.json()).catch(() => 0),

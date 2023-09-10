@@ -3,240 +3,31 @@ const userRole = getRoleFromToken();
 const refreshFreq = 10 * 60 * 1000; // 1 MINUTE
 var startDate = moment().format('DD-MMM-YY');
 var endDate = moment().format('DD-MMM-YY');
-const ipCenterDropdown = document.getElementById('ip-centerDropdown-s3');
+const ipClientDropdown = document.getElementById('ip-clientDropdown-s3');
 const ipVillageDropdown = document.getElementById('ip-villageDropdown-s3');
-const opDateDropdown = document.getElementById('op-dateRangeDropdown-s3');
 const ipDateDropdown = document.getElementById('ip-dateRangeDropdown-s3');
 
-var dataTableInitialized = false;
-var dataTableJSONData;
-var datatableSelectedDate;
 
-function exportToExcel() {
-    console.log(dataTableJSONData);
-    const worksheet = XLSX.utils.json_to_sheet(dataTableJSONData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+function populateClientTypes() {
 
-    // Use XLSX.write to convert the workbook to a binary Excel file
-    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.textContent = 'كل المرافق';
+    defaultOption.selected = true;
+    ipClientDropdown.appendChild(defaultOption.cloneNode(true));
 
-    // Convert the array buffer to a Blob
-    const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    data = ['مصنع اجا', 'مصنع سندوب', 'مصنع بلقاس', 'مصنع السمبلاوين', 'مصنع المنزلة']
 
-    // Create a download link and trigger the download
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = datatableSelectedDate + '.xlsx';
-    a.click();
-    URL.revokeObjectURL(url);
+    data.forEach(option => {
+        const optionElement = document.createElement('option');
+        optionElement.value = option;
+        optionElement.textContent = option;
+        ipClientDropdown.appendChild(optionElement.cloneNode(true));
+    });
 }
-
-////  Datatable  ////
-
-function updateDatatable(selectedDate) {
-
-    const tbody = document.querySelector('#site3_table tbody');
-
-    const datepickerInput = document.getElementById('datatableDatePicker');
-    datepickerInput.setAttribute('placeholder', moment().format('DD-MM-YYYY'));
-
-    fetch(`http://isdom.online/dash_board/tickets/all?siteNo=3&selectedDate=${selectedDate}`)
-        .then(response => response.json())
-        .then(data => {
-
-            dataTableJSONData = data;
-
-            $('#site3_table').DataTable().destroy();
-            tbody.innerHTML = '';
-
-            data.forEach(rowData => {
-                // console.log(rowData);
-
-                const row = document.createElement('tr');
-
-                const cellValue = rowData['enterMethod'];
-                if (cellValue === 'dashboard') {
-                    row.style.color = 'red';
-                }
-
-                Object.entries(rowData).forEach(([key, cellData]) => {
-
-                    // to hide these columns
-                    if (key === "enterMethod")
-                        return;
-
-                    // if (key === "carTwoDate")
-                    //     cellData = moment(rowData[key], 'DD-MMM-YY').format('DD MMMM YYYY');
-
-                    const cell = document.createElement('td');
-                    cell.textContent = cellData;
-
-                    if (userRole === "Admin")
-                        if (key === 'carTwoDate' || key === 'carTwoTime' || key === 'secondWeight') {
-                            cell.setAttribute('contenteditable', 'true');
-                            cell.addEventListener('blur', function () {
-                                rowData[key] = cell.textContent;
-                                const newNetWeight = Math.abs(rowData.secondWeight - rowData.firstWeight);
-
-                                const currentTime = moment();
-                                const formattedTime = currentTime.format('HH:mm:ss A');
-                                const formattedDate = currentTime.format('DD-MMM-YY');
-
-                                var updatedRow = {
-                                    carTwoDate: formattedDate,
-                                    netWeight: newNetWeight,
-                                    carTwoTime: formattedTime,
-                                    secondWeight: rowData.secondWeight
-                                }
-
-                                fetch(`http://isdom.online/dash_board/tickets/${rowData.ticketId}/3`,{
-                                    method: 'PUT',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify(updatedRow)
-                                })
-
-                            });
-                        }
-
-                    row.appendChild(cell);
-                });
-
-                tbody.appendChild(row);
-
-            });
-
-            // initialize DataTable
-
-
-            $('#site3_table').DataTable({
-                "dom": '<"top"lf>rt<"bottom"ip><"clear">',
-                "paging": true,
-                "searching": true,
-                "language":  {
-                    "sSearch": "بحث:",
-                    "sLengthMenu": "أظهر _MENU_   تذاكر",
-                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ تذكرة",
-                    "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
-                    "sInfoFiltered": "(منتقاة من مجموع _MAX_ تذكرة)",
-                    "oPaginate": {
-                        "sFirst": "الأول",
-                        "sPrevious": "السابق",
-                        "sNext": "التالي",
-                        "sLast": "الأخير"
-                    }
-                },
-                "initComplete": function () {
-                    // Create a new row for the search boxes
-                    if (!dataTableInitialized) {
-                        dataTableInitialized = true;
-
-                        var searchRow = $('<tr class="search-row"></tr>');
-
-                        // Add search boxes for each column
-                        this.api().columns('.searchable-column').every(function () {
-                            var column = this;
-
-                            // Create a new input element for the search box
-                            var searchBox = $(`<input type="text" placeholder="بحث ${column.header().textContent}" class="form-control form-control-sm mb-2 mx-2 d-inline-block" style="width: auto" />`);
-
-                            // Add an input event handler to trigger a search when the user enters text
-                            searchBox.on('keyup', function () {
-                                // searchBox.on('input', function () {
-                                var searchTerm = this.value;
-                                if (searchTerm === '') {
-                                    column.search('').draw();
-                                } else {
-                                    column.search('^' + searchTerm + '$', true, false).draw();
-                                }
-                            });
-
-                            // Create a new cell in the search row and append the search box to it
-                            var searchCell = $('<th></th>').append(searchBox);
-                            searchRow.append(searchCell);
-                        });
-
-                        // Insert the search row before the header row
-                        $('.dataTable thead').prepend(searchRow);
-                    }
-                }
-            });
-
-            document.getElementById("datatableDatePickerGroup").style.display = "block";
-            document.getElementById("datatableExportGroup").style.display = "block";
-        })
-}
-
-
-//Get list of centers
-function getCenters() {
-    fetch('http://isdom.online/dash_board/centers')
-        .then(response => response.json())
-        .then(data => {
-
-            const defaultOption = document.createElement('option');
-            defaultOption.value = '';
-            defaultOption.textContent = 'كل المراكز';
-            defaultOption.selected = true;
-            ipCenterDropdown.appendChild(defaultOption.cloneNode(true));
-
-            data.forEach(option => {
-                const optionElement = document.createElement('option');
-                optionElement.value = option.centerId;
-                optionElement.textContent = option.centerName;
-                ipCenterDropdown.appendChild(optionElement.cloneNode(true));
-            });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}
-
-
-// Get names of outputs
-// function getOpNames() {
-//     fetch('http://isdom.online/dash_board/items/items/مخرجات/item-names')
-//         .then(response => response.json())
-//         .then(data => {
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-// }
 
 
 ////  Input graph  ////
-
-function updateIpVillageDropdown(centerId) {
-    if (centerId !== "") {
-        fetch(`http://isdom.online/dash_board/villages?centerId=${centerId}`)
-            .then(response => response.json())
-            .then(data => {
-
-                document.getElementById("ip-villageDropdown-s3").style.display = "block";
-
-                ipVillageDropdown.innerHTML = '';
-
-                const defaultOption = document.createElement('option');
-                defaultOption.value = '';
-                defaultOption.textContent = 'كل الوحدات المحلية';
-                defaultOption.selected = true;
-                ipVillageDropdown.appendChild(defaultOption);
-
-                data.forEach(option => {
-                    const optionElement = document.createElement('option');
-                    optionElement.value = option.villageId;
-                    optionElement.textContent = option.villageName;
-
-                    ipVillageDropdown.appendChild(optionElement);
-                });
-            })
-    }
-}
-
 const ipChartOptions = {
     bindto: "#s3-in-grph",
     size: {height: 350},
@@ -255,23 +46,16 @@ const ipChartOptions = {
         columns: [],
         type: "line",
         colors: {
-            'مخلفات تصلح للمعالجة': "#ffd800",
-            'مخلفات لا تصلح للمعالجة': "#d81415"
+            'اجمالى المدخلات': "#ef601c"
         }
     },
     grid: {y: {show: true}}
 };
 const s3_in_grph = c3.generate(ipChartOptions);
 
-function updateInputGraph_s3(isVillage) {
+function updateInputGraph_s3() {
     const selectedDate = ipDateDropdown.value;
-    const selectedCenter = ipCenterDropdown.value;
-    var selectedVillage = ipVillageDropdown.value;
-
-    if (isVillage === false) {
-        updateIpVillageDropdown(selectedCenter);
-        selectedVillage = "";
-    }
+    const selectedClient = ipClientDropdown.value;
 
     let startDatex, endDatex;
 
@@ -286,188 +70,62 @@ function updateInputGraph_s3(isVillage) {
         endDatex = moment().subtract(1, 'months').endOf('month').format('DD-MMM-YY');
     }
 
-    const url1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات  تصلح للمعالجة&siteNo=3&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات تصلح للمعالجة
-    const url2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات لا تصلح للمعالجة&siteNo=3&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات لا تصلح للمعالجة
+    const url = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${selectedClient}&startDate=${startDatex}&endDate=${endDatex}`;
 
-    Promise.all([
-        fetch(url1).then(response1 => response1.json()).catch(() => 0),
-        fetch(url2).then(response2 => response2.json()).catch(() => 0)
-    ]).then(([data1, data2]) => {
-        let categories = Object.keys(data1);
-        const values1 = Object.values(data1);
-        const values2 = Object.values(data2);
+    fetch(url).then(response1 => response1.json()).catch(() => 0)
+        .then(data1 => {
+            let categories = Object.keys(data1);
+            const values1 = Object.values(data1);
 
-        if (selectedDate === 'lastMonth') {
-            categories = Object.keys(data1).map(date => date.split('-')[0]);
-        }
-
-        s3_in_grph.load({
-            columns: [
-                ['مخلفات تصلح للمعالجة', ...values1],
-                ['مخلفات لا تصلح للمعالجة', ...values2]
-            ],
-            categories: categories
-        });
-
-    })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}
-
-
-////  Output graph  ////
-
-const opChartOptions = {
-    bindto: "#s3-out-grph",
-    size: {height: 350},
-    legend: {},
-    axis: {
-        x: {
-            type: 'category',
-            categories: [],
-            tick: {
-                multiline: false
+            if (selectedDate === 'lastMonth') {
+                categories = Object.keys(data1).map(date => date.split('-')[0]);
             }
-        }
-    },
-    data: {
-        columns: [],
-        type: "line",
-        colors: {'اسمدة عضوية': "#2da075", 'وقود بديل': "#1427c9", 'مفروزات': "#2d66d9", 'مرفوضات': "#10d6b4"}
-    },
-    grid: {y: {show: true}}
-};
-const s3_out_grph = c3.generate(opChartOptions);
 
-function updateOutputGraph_s3() {
-    const selectedDate = opDateDropdown.value;
+            s3_in_grph.load({
+                columns: [
+                    ['اجمالى المدخلات', ...values1]
+                ],
+                categories: categories
+            });
 
-    let startDatex, endDatex;
-
-    if (selectedDate === 'last7days') {
-        startDatex = moment().subtract(7, 'days').format('DD-MMM-YY');
-        endDatex = moment().format('DD-MMM-YY');
-    } else if (selectedDate === 'last14days') {
-        startDatex = moment().subtract(14, 'days').format('DD-MMM-YY');
-        endDatex = moment().format('DD-MMM-YY');
-    } else if (selectedDate === 'lastMonth') {
-        startDatex = moment().subtract(1, 'months').startOf('month').format('DD-MMM-YY');
-        endDatex = moment().subtract(1, 'months').endOf('month').format('DD-MMM-YY');
-    }
-
-    const url1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=وقود بديل&siteNo=3&startDate=${startDatex}&endDate=${endDatex}`; // وقود بديل
-    const url2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=اسمدة عضوية&siteNo=3&startDate=${startDatex}&endDate=${endDatex}`; // اسمدة عضوية
-    const url3 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مرفوضات&siteNo=3&startDate=${startDatex}&endDate=${endDatex}`; //مرفوضات
-    const url4 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مفروزات&siteNo=3&startDate=${startDatex}&endDate=${endDatex}`; //مفروزات
-
-    Promise.all([
-        fetch(url1).then(response1 => response1.json().catch(() => 0)),
-        fetch(url2).then(response2 => response2.json().catch(() => 0)),
-        fetch(url3).then(response2 => response2.json().catch(() => 0)),
-        fetch(url4).then(response2 => response2.json().catch(() => 0))
-    ]).then(([data1, data2, data3, data4]) => {
-        let categories = Object.keys(data1);
-        const values1 = Object.values(data1);
-        const values2 = Object.values(data2);
-        const values3 = Object.values(data3);
-        const values4 = Object.values(data4);
-
-        if (selectedDate === 'lastMonth') {
-            categories = Object.keys(data1).map(date => date.split('-')[0]);
-        }
-
-        s3_out_grph.load({
-            columns: [
-                ['وقود بديل', ...values1],
-                ['اسمدة عضوية', ...values2],
-                ['مرفوضات', ...values3],
-                ['مفروزات', ...values4]
-            ],
-            categories: categories
-        });
-
-    })
+        })
         .catch(error => {
             console.error('Error:', error);
         });
 }
-
 
 ////  INPUT DONUT CHART  ////
 
 const initialIPChartData = {
-    labels: ['مخلفات تصلح للمعالجة', 'مخلفات لا تصلح للمعالجة'], datasets: [{
-        data: [0, 0], backgroundColor: ['#ffd800', '#d81415']
+    labels: ['اجمالى المدخلات'], datasets: [{
+        data: [0], backgroundColor: ['#ffa014']
     }]
 };
 const s3_ip_chart = new Chart(document.getElementById('s3-ip-chart'), {
     type: 'doughnut', data: initialIPChartData
 });
 
-function updateIPChartData(startDate, endDate) {
-    const urlIP1 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const urlIP2 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مخلفات لا تصلح للمعالجة
-    Promise.all([
-        fetch(urlIP1).then(response => response.json()).catch(() => 0),
-        fetch(urlIP2).then(response => response.json()).catch(() => 0)
-    ])
-        .then(([dataset1Data, dataset2Data]) => {
-            const dataset1Value = dataset1Data;
-            const dataset2Value = dataset2Data;
-
-            // Update the dataset values in the chart
-            s3_ip_chart.data.datasets[0].data[0] = dataset1Value || 0;
-            s3_ip_chart.data.datasets[0].data[1] = dataset2Value || 0;
-
-            s3_ip_chart.update();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}
-
-////  OUTPUT DONUT CHART  ////
-
-const initialOPChartData = {
-    labels: ['اسمدة عضوية', 'وقود بديل', 'مرفوضات', 'مفروزات'],
-    datasets: [{
-        data: [0, 0, 0, 0],
-        backgroundColor: ['#2da075', '#1427c9', '#10d6b4', '#2d66d9']
-    }]
-};
-const s3_op_chart = new Chart(document.getElementById('s3-op-chart'), {
-    type: 'doughnut',
-    data: initialOPChartData
-});
-
-function updateOPChartData(startDate, endDate) {
-    const urlOP1 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
-    const urlOP2 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=وقود بديل&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
-    const urlOP3 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مرفوضات&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
-    const urlOP4 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مفروزات&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مفروزات
-
-    Promise.all([
-        fetch(urlOP1).then(response => response.json()).catch(() => 0),
-        fetch(urlOP2).then(response => response.json()).catch(() => 0),
-        fetch(urlOP3).then(response => response.json()).catch(() => 0),
-        fetch(urlOP4).then(response => response.json()).catch(() => 0)
-    ])
-        .then(([category1Data, category2Data, category3Data, category4Data]) => {
-            // Update the dataset values in the chart
-            s3_op_chart.data.datasets[0].data[0] = category1Data || 0;
-            s3_op_chart.data.datasets[0].data[1] = category2Data || 0;
-            s3_op_chart.data.datasets[0].data[2] = category3Data || 0;
-            s3_op_chart.data.datasets[0].data[3] = category4Data || 0;
-
-            // Update the chart
-            s3_op_chart.update();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}
-
+// function updateIPChartData(startDate, endDate) {
+//     const urlIP1 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+//     const urlIP2 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مخلفات لا تصلح للمعالجة
+//     Promise.all([
+//         fetch(urlIP1).then(response => response.json()).catch(() => 0),
+//         fetch(urlIP2).then(response => response.json()).catch(() => 0)
+//     ])
+//         .then(([dataset1Data, dataset2Data]) => {
+//             const dataset1Value = dataset1Data;
+//             const dataset2Value = dataset2Data;
+//
+//             // Update the dataset values in the chart
+//             s3_ip_chart.data.datasets[0].data[0] = dataset1Value || 0;
+//             s3_ip_chart.data.datasets[0].data[1] = dataset2Value || 0;
+//
+//             s3_ip_chart.update();
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
+// }
 
 //// DATA BOXES ////
 
@@ -587,22 +245,8 @@ function updateMassBox(startDate, endDate) {
 
 $(document).ready(function () {
 
-    updateDatatable(moment().format('DD-MMM-YY'));
-    datatableSelectedDate = moment().format('DD-MM-YYYY');
-
-    $("#datatableDatePicker").datepicker({
-        dateFormat: "dd-mm-yy",
-        onSelect: function (selectedDate) {
-            const formattedDate = moment(selectedDate, 'DD-MM-YYYY').format('DD-MMM-YY');
-            datatableSelectedDate = formattedDate
-            updateDatatable(formattedDate);
-        }
-    });
-
-    // getOpNames();
-    getCenters();
+    populateClientTypes();
     updateInputGraph_s3(false);
-    updateOutputGraph_s3();
 
     initDateRange();
 
@@ -616,7 +260,6 @@ $(document).ready(function () {
     updateRejBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateIPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
-    updateOPChartData(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateIPChartData(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
 });
 
@@ -648,7 +291,6 @@ function updateAllByTime() {
     updateRejBox(startDate, endDate);
     updateOPBox(startDate, endDate);
     updateIPBox(startDate, endDate);
-    updateOPChartData(startDate, endDate);
     updateIPChartData(startDate, endDate);
 }
 

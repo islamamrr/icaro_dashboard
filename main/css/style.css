@@ -32053,7 +32053,7 @@ select#ip-dateRangeDropdown-s5, select#ip-dateRangeDropdown-s6 {
   font-size: initial;
 }
 
-select#ip-centerDropdown-s1, select#ip-centerDropdown-s2, select#ip-centerDropdown-s3, select#ip-centerDropdown-s4,
+select#ip-centerDropdown-s1, select#ip-centerDropdown-s2, select#ip-clientDropdown-s3, select#ip-centerDropdown-s4,
 select#ip-centerDropdown-s5, select#ip-centerDropdown-s6 {
   position: relative;
   right: 19%;
