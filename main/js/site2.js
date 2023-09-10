@@ -42,7 +42,7 @@ function updateDatatable(selectedDate) {
     const datepickerInput = document.getElementById('datatableDatePicker');
     datepickerInput.setAttribute('placeholder', moment().format('DD-MM-YYYY'));
 
-    fetch(`http://localhost:8080/tickets/all?siteNo=2&selectedDate=${selectedDate}`)
+    fetch(`http://isdom.online/dash_board/tickets/all?siteNo=2&selectedDate=${selectedDate}`)
         .then(response => response.json())
         .then(data => {
 
