@@ -351,7 +351,7 @@ function updateOutputGraph_s1() {
 
     const url1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=وقود بديل&siteNo=1&startDate=${startDatex}&endDate=${endDatex}`; // وقود بديل
     const url2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=اسمدة عضوية&siteNo=1&startDate=${startDatex}&endDate=${endDatex}`; // اسمدة عضوية
-    const url3 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${selectedClient}&startDate=${startDatex}&endDate=${endDatex}`; // مرفوضات
+    const url3 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${currentClientType}&startDate=${startDatex}&endDate=${endDatex}`; // مرفوضات
     const url4 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مفروزات&siteNo=1&startDate=${startDatex}&endDate=${endDatex}`; //مفروزات
     Promise.all([
         fetch(url1).then(response1 => response1.json().catch(() => 0)),
