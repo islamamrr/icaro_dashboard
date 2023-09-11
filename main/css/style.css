@@ -32136,3 +32136,58 @@ select#op-villageDropdown-s5, select#op-villageDropdown-s6 {
   justify-content: space-around;
   align-items: center;
 }
+
+.popup-content {
+  background-color: #fff;
+  padding: 20px;
+  width: 285px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#popupContainer {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-height: 65%;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+#openPopupBtn {
+  position: relative;
+  right: 85%;
+  top: 35px;
+  border-radius: 11px;
+  color: white;
+  font-size: initial;
+  background: #003f5c;
+  width: 110px;
+  border: 0;
+  padding: 6px;
+}
+
+#formButton {
+  position: relative;
+  top: 8px;
+  border-radius: 11px;
+  color: white;
+  font-size: initial;
+  background: #003f5c;
+  width: 100%;
+  border: 0;
+  padding: 6px;
+}

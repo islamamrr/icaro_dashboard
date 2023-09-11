@@ -1,12 +1,12 @@
 const centersIPDateDropdown = document.getElementById('centersIP-dateRangeDropdown-total');
-
+var centersList = [];
 
 //updateTotalOPGraph
 function updateTotalOPGraph(startDate, endDate) {
 
     const opGraphURL1 = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=اسمدة عضوية&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
     const opGraphURL2 = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=وقود بديل&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
-    const opGraphURL3 = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=مرفوضات&startDate=${startDate}&endDate=${endDate}`; // مفروزات
+    const opGraphURL3 = `http://isdom.online/dash_board/tickets/output-rejected/weight-list?startDate=${startDate}&endDate=${endDate}`; // مفروزات
     const opGraphURL4 = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=مفروزات&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
 
 
@@ -49,24 +49,24 @@ function updateTotalOPGraph(startDate, endDate) {
                         });
                 })
                 .catch(error => {
-                    // console.error('Error:', error);
+                    console.error('Error:', error);
                 });
         })
         .catch(error => {
-            // console.error('Error:', error);
+            console.error('Error:', error);
         });
 }
 
 //updateTotalIPOPGraph
 function updateTotalIPOPGraph(startDate, endDate) {
     const ipOpGraphURL1 = `http://isdom.online/dash_board/tickets/itemType/weight-list?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
-    const ipOpGraphURL2 = `http://isdom.online/dash_board/tickets/itemType/weight-list?itemType=مخرجات&startDate=${startDate}&endDate=${endDate}`;
+    const ipOpGraphURL2 = `http://isdom.online/dash_board/tickets/output/weight-list?startDate=${startDate}&endDate=${endDate}`;
 
     fetch(ipOpGraphURL1)
         .then(response => response.json())
         .then(data => {
             // console.log(data);
-            const category1Values = data; // Assuming the API response contains the values for the first category
+            const category1Values = data;
 
             // Fetch data for category2 values
             fetch(ipOpGraphURL2)
@@ -74,7 +74,7 @@ function updateTotalIPOPGraph(startDate, endDate) {
                 .then(data => {
                     // console.log(data);
 
-                    const category2Values = data; // Assuming the API response contains the values for the second category
+                    const category2Values = data;
 
                     // Update the chart data dynamically
                     tot_in_out_grph.load({
@@ -133,43 +133,51 @@ function updateCentersInputGraph_total() {
     const selectedDate = centersIPDateDropdown.value;
 
     let startDatex, endDatex;
+    var numberOfDays;
 
     if (selectedDate === 'today') {
+        numberOfDays = 1;
         startDatex = moment().format('DD-MMM-YY');
         endDatex = moment().format('DD-MMM-YY');
-    }
-    else if (selectedDate === 'yesterday') {
+    } else if (selectedDate === 'yesterday') {
+        numberOfDays = 1;
         startDatex = moment().subtract(1, 'days').format('DD-MMM-YY');
-        endDatex = moment().format('DD-MMM-YY');
-    }
-    else if (selectedDate === 'last7days') {
+        endDatex = moment().subtract(1, 'days').format('DD-MMM-YY');
+    } else if (selectedDate === 'last7days') {
+        numberOfDays = 7;
         startDatex = moment().subtract(7, 'days').format('DD-MMM-YY');
         endDatex = moment().format('DD-MMM-YY');
     } else if (selectedDate === 'last14days') {
+        numberOfDays = 14;
         startDatex = moment().subtract(14, 'days').format('DD-MMM-YY');
         endDatex = moment().format('DD-MMM-YY');
     } else if (selectedDate === 'lastMonth') {
         startDatex = moment().subtract(1, 'months').startOf('month').format('DD-MMM-YY');
         endDatex = moment().subtract(1, 'months').endOf('month').format('DD-MMM-YY');
+
+        const startDate = moment(startDatex, 'DD-MMM-YY');
+        const endDate = moment(endDatex, 'DD-MMM-YY');
+        numberOfDays = endDate.diff(startDate, 'days') + 1;
     }
 
     const url1 = `http://isdom.online/dash_board/tickets/centers-net-weight-list?itemType=مدخلات&startDate=${startDatex}&endDate=${endDatex}`; // وقود بديل
 
+    const storedData = JSON.parse(localStorage.getItem('labelData')) || [];
+
+    const modifiedData = storedData.map(value => value * numberOfDays);
+
     Promise.all([
         fetch(url1).then(response1 => response1.json())
     ]).then(([data1]) => {
-        let categories = Object.keys(data1);
+        centersList = Object.keys(data1);
         const values1 = Object.values(data1);
-
-
-        console.log(categories);
-        console.log(values1);
 
         centers_ip_graph.load({
             columns: [
-                ['الوزن الحقيقى', ...values1]
+                ['الوزن الحقيقى', ...values1],
+                ['الأهداف', ...modifiedData]
             ],
-            categories: categories
+            categories: centersList
         });
 
     })
@@ -177,6 +185,7 @@ function updateCentersInputGraph_total() {
             console.error('Error:', error);
         });
 }
+
 
 //Input boxes
 //Total input box
@@ -255,7 +264,7 @@ function updateTotAccRateBox(startDate, endDate) {
 
 function updateTotRejRateBox(startDate, endDate) {
     const accUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const rejUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مرفوضات&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
+    const rejUrl = `http://isdom.online/dash_board/tickets/output-rejected/weight?startDate=${startDate}&endDate=${endDate}`;
 
     fetch(rejUrl)
         .then(response => response.json()).catch(() => 0)
@@ -275,18 +284,18 @@ function updateTotRejRateBox(startDate, endDate) {
                         document.getElementById("rejected_per").textContent = percentage.toFixed(1) + "%";
                 })
                 .catch(error => {
-                    // console.error('Error:', error);
+                    console.error('Error:', error);
                 });
         })
         .catch(error => {
-            // console.error('Error:', error);
+            console.error('Error:', error);
         });
 }
 
 //Output boxes
 //Total output box
 function updateTotOPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مخرجات&startDate=${startDate}&endDate=${endDate}`;
+    const url = `http://isdom.online/dash_board/tickets/output/weight?startDate=${startDate}&endDate=${endDate}`;
 
     fetch(url)
         .then(response => response.json()).catch(() => 0)
@@ -326,7 +335,7 @@ function updateTotWaqoodOPBox(startDate, endDate) {
 }
 
 function updateTotMarfoodatOPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مرفوضات&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const url = `http://isdom.online/dash_board/tickets/output-rejected/weight?startDate=${startDate}&endDate=${endDate}`;
     fetch(url)
         .then(response => response.json()).catch(() => 0)
         .then(data => {
@@ -481,10 +490,14 @@ $(document).ready(function () {
             }
         },
         data: {
-            columns: [],
+            columns: [
+                ['الوزن الحقيقى', []],
+                ['الأهداف', []] // Initialize with an empty array
+            ],
             type: "line",
             colors: {
-                'الوزن الحقيقى': "#ef601c"
+                'الوزن الحقيقى': "#ef601c",
+                'الأهداف': "#6C0C0C"
             }
         },
         grid: {y: {show: true}}
@@ -525,5 +538,78 @@ $(document).ready(function () {
         updateTotMarfoodatOPBox(startDate, endDate);
         updateTotMafroozatOPBox(startDate, endDate);
     });
-})
-;
+});
+
+document.getElementById('openPopupBtn').addEventListener('click', function () {
+    const popupContainer = document.getElementById("popupContainer");
+    const form = document.getElementById("dataInputForm");
+
+    // Clear any existing form elements
+    form.innerHTML = '';
+
+    // Retrieve data from local storage
+    const storedData = JSON.parse(localStorage.getItem('labelData'));
+
+    // Loop to generate input fields with labels
+    for (let i = 0; i < centersList.length; i++) {
+        const label = document.createElement("label");
+        label.style.marginBottom = "10px";
+        label.textContent = centersList[i];
+
+        const input = document.createElement("input");
+        input.style.width = "50px";
+        input.style.position = "absolute";
+        input.style.right = "170px";
+
+        input.type = "text";
+        input.name = `data${i}`;
+
+        // Set the input value from the stored data
+        if (storedData && storedData[i]) {
+            input.value = storedData[i];
+        }
+
+        form.appendChild(label);
+        form.appendChild(input);
+        form.appendChild(document.createElement("br"));
+    }
+
+    // Add the "Save" button
+    const saveButton = document.createElement("button");
+    saveButton.id = "formButton";
+    saveButton.textContent = "حفظ";
+    form.appendChild(saveButton);
+
+    popupContainer.style.display = "block";
+
+    // Add an event listener for form submission
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Get data from input fields
+        const labelData = [];
+        for (let i = 0; i < centersList.length; i++) {
+            const inputField = form.querySelector(`input[name="data${i}"]`);
+            const value = inputField.value;
+            labelData.push(value);
+        }
+
+        // Store data in local storage
+        localStorage.setItem('labelData', JSON.stringify(labelData));
+
+        // Close the popup
+        popupContainer.style.display = 'none';
+
+        const goalsData = JSON.parse(localStorage.getItem('labelData'));
+        centers_ip_graph.load({
+            columns: [
+                ['الأهداف', ...goalsData]
+            ],
+        });
+    });
+});
+
+
+document.getElementById('closePopupBtn').addEventListener('click', function () {
+    document.getElementById('popupContainer').style.display = 'none';
+});

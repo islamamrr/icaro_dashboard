@@ -8,24 +8,25 @@ const ipVillageDropdown = document.getElementById('ip-villageDropdown-s2');
 const opDateDropdown = document.getElementById('op-dateRangeDropdown-s2');
 const ipDateDropdown = document.getElementById('ip-dateRangeDropdown-s2');
 
+const currentClientType = 'مصنع سندوب';
 var dataTableInitialized = false;
 var dataTableJSONData;
 var datatableSelectedDate;
 
 const headerMapping = {
-    ticketId : "رقم التذكرة",
-    itemType : "نوع الشحنة",
-    itemName : "اسم الصنف",
-    clientName : "العميل",
-    driverName : "اسم السائق",
-    vehicleNumber : "رقم السيارة",
-    firstWeight : "الوزن الاول (كجم)",
-    secondWeight : "الوزن الثاني (كجم)",
-    netWeight : "صافي الوزن (كجم)",
-    carTwoDate : "التاريخ",
-    carOneTime : "وقت الوزن الأول",
-    carTwoTime : "وقت الوزن الثانى",
-    enterMethod : ""
+    ticketId: "رقم التذكرة",
+    itemType: "نوع الشحنة",
+    itemName: "اسم الصنف",
+    clientName: "العميل",
+    driverName: "اسم السائق",
+    vehicleNumber: "رقم السيارة",
+    firstWeight: "الوزن الاول (كجم)",
+    secondWeight: "الوزن الثاني (كجم)",
+    netWeight: "صافي الوزن (كجم)",
+    carTwoDate: "التاريخ",
+    carOneTime: "وقت الوزن الأول",
+    carTwoTime: "وقت الوزن الثانى",
+    enterMethod: ""
 };
 
 function exportToExcel() {
@@ -39,7 +40,17 @@ function exportToExcel() {
         return transformedItem;
     });
 
-    const worksheet = XLSX.utils.json_to_sheet(transformedData);
+// Reverse the order of columns in the transformed data
+    const reversedData = transformedData.map(item => {
+        const reversedItem = {};
+        const keys = Object.keys(item).reverse();
+        for (const key of keys) {
+            reversedItem[key] = item[key];
+        }
+        return reversedItem;
+    });
+
+    const worksheet = XLSX.utils.json_to_sheet(reversedData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
@@ -50,7 +61,7 @@ function exportToExcel() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = datatableSelectedDate + '.xlsx';
+    a.download = "سندوب " + datatableSelectedDate + '.xlsx';
     a.click();
     URL.revokeObjectURL(url);
 }
@@ -367,7 +378,7 @@ function updateOutputGraph_s2() {
 
     const url1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=وقود بديل&siteNo=2&startDate=${startDatex}&endDate=${endDatex}`; // وقود بديل
     const url2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=اسمدة عضوية&siteNo=2&startDate=${startDatex}&endDate=${endDatex}`; // اسمدة عضوية
-    const url3 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مرفوضات&siteNo=2&startDate=${startDatex}&endDate=${endDatex}`; //مرفوضات
+    const url3 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${currentClientType}&startDate=${startDatex}&endDate=${endDatex}`; // مرفوضات
     const url4 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مفروزات&siteNo=2&startDate=${startDatex}&endDate=${endDatex}`; //مفروزات
 
     Promise.all([

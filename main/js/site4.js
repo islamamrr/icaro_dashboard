@@ -14,19 +14,19 @@ var dataTableJSONData;
 var datatableSelectedDate;
 
 const headerMapping = {
-    ticketId : "رقم التذكرة",
-    itemType : "نوع الشحنة",
-    itemName : "اسم الصنف",
-    clientName : "العميل",
-    driverName : "اسم السائق",
-    vehicleNumber : "رقم السيارة",
-    firstWeight : "الوزن الاول (كجم)",
-    secondWeight : "الوزن الثاني (كجم)",
-    netWeight : "صافي الوزن (كجم)",
-    carTwoDate : "التاريخ",
-    carOneTime : "وقت الوزن الأول",
-    carTwoTime : "وقت الوزن الثانى",
-    enterMethod : ""
+    ticketId: "رقم التذكرة",
+    itemType: "نوع الشحنة",
+    itemName: "اسم الصنف",
+    clientName: "العميل",
+    driverName: "اسم السائق",
+    vehicleNumber: "رقم السيارة",
+    firstWeight: "الوزن الاول (كجم)",
+    secondWeight: "الوزن الثاني (كجم)",
+    netWeight: "صافي الوزن (كجم)",
+    carTwoDate: "التاريخ",
+    carOneTime: "وقت الوزن الأول",
+    carTwoTime: "وقت الوزن الثانى",
+    enterMethod: ""
 };
 
 function exportToExcel() {
@@ -40,7 +40,17 @@ function exportToExcel() {
         return transformedItem;
     });
 
-    const worksheet = XLSX.utils.json_to_sheet(transformedData);
+// Reverse the order of columns in the transformed data
+    const reversedData = transformedData.map(item => {
+        const reversedItem = {};
+        const keys = Object.keys(item).reverse();
+        for (const key of keys) {
+            reversedItem[key] = item[key];
+        }
+        return reversedItem;
+    });
+
+    const worksheet = XLSX.utils.json_to_sheet(reversedData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
@@ -51,7 +61,7 @@ function exportToExcel() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = datatableSelectedDate + '.xlsx';
+    a.download = "بلقاس " + datatableSelectedDate + '.xlsx';
     a.click();
     URL.revokeObjectURL(url);
 }
@@ -114,7 +124,7 @@ function updateDatatable(selectedDate) {
                                     secondWeight: rowData.secondWeight
                                 }
 
-                                fetch(`http://isdom.online/dash_board/tickets/${rowData.ticketId}/1`,{
+                                fetch(`http://isdom.online/dash_board/tickets/${rowData.ticketId}/1`, {
                                     method: 'PUT',
                                     headers: {
                                         'Content-Type': 'application/json'
@@ -139,7 +149,7 @@ function updateDatatable(selectedDate) {
                 "dom": '<"top"lf>rt<"bottom"ip><"clear">',
                 "paging": true,
                 "searching": true,
-                "language":  {
+                "language": {
                     "sSearch": "بحث:",
                     "sLengthMenu": "أظهر _MENU_   تذاكر",
                     "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ تذكرة",

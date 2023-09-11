@@ -40,7 +40,17 @@ function exportToExcel() {
         return transformedItem;
     });
 
-    const worksheet = XLSX.utils.json_to_sheet(transformedData);
+    // Reverse the order of columns in the transformed data
+    const reversedData = transformedData.map(item => {
+        const reversedItem = {};
+        const keys = Object.keys(item).reverse();
+        for (const key of keys) {
+            reversedItem[key] = item[key];
+        }
+        return reversedItem;
+    });
+
+    const worksheet = XLSX.utils.json_to_sheet(reversedData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
@@ -51,7 +61,7 @@ function exportToExcel() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = datatableSelectedDate + '.xlsx';
+    a.download = "أجا " + datatableSelectedDate + '.xlsx';
     a.click();
     URL.revokeObjectURL(url);
 }

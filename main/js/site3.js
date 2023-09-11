@@ -4,7 +4,6 @@ const refreshFreq = 10 * 60 * 1000; // 1 MINUTE
 var startDate = moment().format('DD-MMM-YY');
 var endDate = moment().format('DD-MMM-YY');
 const ipClientDropdown = document.getElementById('ip-clientDropdown-s3');
-const ipVillageDropdown = document.getElementById('ip-villageDropdown-s3');
 const ipDateDropdown = document.getElementById('ip-dateRangeDropdown-s3');
 
 
@@ -105,103 +104,29 @@ const s3_ip_chart = new Chart(document.getElementById('s3-ip-chart'), {
     type: 'doughnut', data: initialIPChartData
 });
 
-// function updateIPChartData(startDate, endDate) {
-//     const urlIP1 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-//     const urlIP2 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مخلفات لا تصلح للمعالجة
-//     Promise.all([
-//         fetch(urlIP1).then(response => response.json()).catch(() => 0),
-//         fetch(urlIP2).then(response => response.json()).catch(() => 0)
-//     ])
-//         .then(([dataset1Data, dataset2Data]) => {
-//             const dataset1Value = dataset1Data;
-//             const dataset2Value = dataset2Data;
-//
-//             // Update the dataset values in the chart
-//             s3_ip_chart.data.datasets[0].data[0] = dataset1Value || 0;
-//             s3_ip_chart.data.datasets[0].data[1] = dataset2Value || 0;
-//
-//             s3_ip_chart.update();
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-// }
-
-//// DATA BOXES ////
-
-function updateRejBox(startDate, endDate) {
-    const urlAcc = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const urlRej = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مرفوضات&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
-
+function updateIPChartData(startDate, endDate) {
+    const urlIP1 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const urlIP2 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مخلفات لا تصلح للمعالجة
     Promise.all([
-        fetch(urlAcc).then(response => response.json()).catch(() => 0),
-        fetch(urlRej).then(response => response.json()).catch(() => 0),
+        fetch(urlIP1).then(response => response.json()).catch(() => 0),
+        fetch(urlIP2).then(response => response.json()).catch(() => 0)
     ])
-        .then(([accData, rejData]) => {
-            const percentage = (rejData / accData) * 100;
-            if (isNaN(percentage))
-                document.getElementById("s3-accepted").textContent = 0 + "%"
-            else {
-                document.getElementById("s3-rejected-per").textContent = percentage.toFixed(1) + "%"
-                document.getElementById("s3-accepted").textContent = "من " + accData + " طن";
+        .then(([dataset1Data, dataset2Data]) => {
+            const dataset1Value = dataset1Data;
+            const dataset2Value = dataset2Data;
 
-                const progressBar = document.getElementById("s3-rej-progress");
-                updateProgressBar(progressBar, percentage);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+            // Update the dataset values in the chart
+            s3_ip_chart.data.datasets[0].data[0] = dataset1Value || 0;
+            s3_ip_chart.data.datasets[0].data[1] = dataset2Value || 0;
 
-    function updateProgressBar(progressBar, percentage) {
-        progressBar.style.width = `${percentage}%`; // Set the width of the progress bar
-        progressBar.setAttribute('aria-valuenow', percentage); // Set the current value of the progress bar
-    }
-}
-
-function updateAccBox(startDate, endDate) {
-    const accUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const totInUrl = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=3&startDate=${startDate}&endDate=${endDate}`;
-
-    Promise.all([
-        fetch(accUrl).then(response => response.json()).catch(() => 0),
-        fetch(totInUrl).then(response => response.json()).catch(() => 0),
-    ])
-        .then(([accData, totInData]) => {
-            const percentage = (accData / totInData) * 100;
-            if (isNaN(percentage))
-                document.getElementById("s3-accepted-per").textContent = 0 + "%"
-            else {
-                document.getElementById("s3-accepted-per").textContent = percentage.toFixed(1) + "%"
-
-                const progressBar = document.getElementById("s3-acc-progress");
-                updateProgressBar(progressBar, percentage);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
-    function updateProgressBar(progressBar, percentage) {
-        progressBar.style.width = `${percentage}%`; // Set the width of the progress bar
-        progressBar.setAttribute('aria-valuenow', percentage); // Set the current value of the progress bar
-    }
-}
-
-function updateOPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مخرجات&siteNo=3&startDate=${startDate}&endDate=${endDate}`;
-
-    fetch(url)
-        .then(response => response.json()).catch(() => 0)
-        .then(data => {
-            const newValue = data; // Assuming the API response contains the desired value
-
-            document.getElementById("s3-op-box").textContent = newValue + " طن";
+            s3_ip_chart.update();
         })
         .catch(error => {
             console.error('Error:', error);
         });
 }
+
+// DATA BOXES ////
 
 function updateIPBox(startDate, endDate) {
     const url = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=3&startDate=${startDate}&endDate=${endDate}`;
@@ -256,9 +181,6 @@ $(document).ready(function () {
 
     // Initial data update
     updateMassBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
-    updateAccBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
-    updateRejBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
-    updateOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateIPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateIPChartData(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
 });
@@ -287,9 +209,6 @@ function updateAllByTime() {
 
     // Call the update functions with the start and end dates
     updateMassBox(startDate, endDate);
-    updateAccBox(startDate, endDate);
-    updateRejBox(startDate, endDate);
-    updateOPBox(startDate, endDate);
     updateIPBox(startDate, endDate);
     updateIPChartData(startDate, endDate);
 }

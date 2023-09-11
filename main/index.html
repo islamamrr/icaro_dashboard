@@ -174,7 +174,7 @@
                                                 <h5 class="mb-0" style="font-size: small">
                                                     مخلفات تصلح للمعالجة
                                                 </h5>
-                                                <h2 id="tot-accepted-ip-box" class="mb-0 fs-4"></h2>
+                                                <h2 id="tot-accepted-ip-box" class="mb-0 fs-5"></h2>
                                             </div>
                                         </div>
                                     </div>
@@ -188,7 +188,7 @@
                                                 <h5 class="mb-0" style="font-size: small">
                                                     مخلفات لا تصلح للمعالجة
                                                 </h5>
-                                                <h2 id="tot-rejected-ip-box" class="mb-0 fs-4"></h2>
+                                                <h2 id="tot-rejected-ip-box" class="mb-0 fs-5"></h2>
                                             </div>
                                         </div>
                                     </div>
@@ -247,7 +247,7 @@
                                             <h5 class="mb-0" style="font-weight: bold">
                                                 اجمالى المخرجات
                                             </h5>
-                                            <h2 id="tot-op-box" class="mb-0 fs-4"></h2>
+                                            <h2 id="tot-op-box" class="mb-0"></h2>
                                         </div>
                                         <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
                                     </div>
@@ -265,7 +265,7 @@
                                                 <h5 class="mb-0" style="font-size: small">
                                                     اسمدة عضوية
                                                 </h5>
-                                                <h2 id="tot-asmeda-op-box" class="mb-0 fs-4"></h2>
+                                                <h2 id="tot-asmeda-op-box" class="mb-0 fs-5"></h2>
                                             </div>
                                             <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
                                         </div>
@@ -282,7 +282,7 @@
                                                 <h5 class="mb-0" style="font-size: small">
                                                     وقود بديل
                                                 </h5>
-                                                <h2 id="tot-waqood-op-box" class="mb-0 fs-4"></h2>
+                                                <h2 id="tot-waqood-op-box" class="mb-0 fs-5"></h2>
                                             </div>
                                             <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
                                         </div>
@@ -301,7 +301,7 @@
                                                 <h5 class="mb-0" style="font-size: small">
                                                     مرفوضات
                                                 </h5>
-                                                <h2 id="tot-marfoodat-op-box" class="mb-0 fs-4"></h2>
+                                                <h2 id="tot-marfoodat-op-box" class="mb-0 fs-5"></h2>
                                             </div>
                                             <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
                                         </div>
@@ -318,7 +318,7 @@
                                                 <h5 class="mb-0" style="font-size: small">
                                                     مفروزات
                                                 </h5>
-                                                <h2 id="tot-mafroozat-op-box" class="mb-0 fs-4"></h2>
+                                                <h2 id="tot-mafroozat-op-box" class="mb-0 fs-5"></h2>
                                             </div>
                                             <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
                                         </div>
@@ -362,19 +362,31 @@
 
                     <div class="col-xl-12 col-12">
                         <div class="box">
-                            <div>
-                                <select
-                                        id="centersIP-dateRangeDropdown-total"
-                                        onchange="updateCentersInputGraph_total()"
-                                >
 
-                                    <option value="today">اليوم</option>
-                                    <option value="yesterday">أمس</option>
-                                    <option value="last7days">اسبوع</option>
-                                    <option value="last14days">اسبوعين</option>
-                                    <option value="lastMonth">الشهر الماضى</option>
-                                </select>
+                            <button id="openPopupBtn">تغيير الأهداف</button>
+
+                            <div id="popupContainer" class="popup">
+                                <div class="popup-content">
+                                    <span class="close" id="closePopupBtn">&times;</span>
+                                    <h2 style="font-size: 21px;">
+                                        تغيير أهداف المدخلات لكل مركز
+                                    </h2>
+                                    <form id="dataInputForm">
+                                    </form>
+                                </div>
                             </div>
+
+                            <select
+                                    style="width: 100px;"
+                                    id="centersIP-dateRangeDropdown-total"
+                                    onchange="updateCentersInputGraph_total()">
+
+                                <option value="today">اليوم</option>
+                                <option value="yesterday">أمس</option>
+                                <option value="last7days">اسبوع</option>
+                                <option value="last14days">اسبوعين</option>
+                                <option value="lastMonth">الشهر الماضى</option>
+                            </select>
 
                             <div class="box-header with-border">
                                 <h4 class="box-title">مدخلات المراكز (طن)</h4>
