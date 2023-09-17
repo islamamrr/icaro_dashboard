@@ -32169,13 +32169,13 @@ select#op-villageDropdown-s5, select#op-villageDropdown-s6 {
 
 #openPopupBtn {
   position: relative;
-  right: 85%;
+  right: 84%;
   top: 35px;
   border-radius: 11px;
   color: white;
   font-size: initial;
   background: #003f5c;
-  width: 110px;
+  width: 145px;
   border: 0;
   padding: 6px;
 }

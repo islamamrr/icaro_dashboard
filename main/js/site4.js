@@ -636,7 +636,6 @@ $(document).ready(function () {
         }
     });
 
-    // getOpNames();
     getCenters();
     updateInputGraph_s4(false);
     updateOutputGraph_s4();

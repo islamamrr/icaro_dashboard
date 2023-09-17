@@ -8,7 +8,7 @@ const ipVillageDropdown = document.getElementById('ip-villageDropdown-s5');
 const opDateDropdown = document.getElementById('op-dateRangeDropdown-s5');
 const ipDateDropdown = document.getElementById('ip-dateRangeDropdown-s5');
 
-const currentClientType = 'مصنع السمبلاوين';
+const currentClientType = 'مصنع السنبلاوين';
 var dataTableInitialized = false;
 var dataTableJSONData;
 var datatableSelectedDate;
@@ -61,7 +61,7 @@ function exportToExcel() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = "السمبلاوين " + datatableSelectedDate + '.xlsx';
+    a.download = "السنبلاوين " + datatableSelectedDate + '.xlsx';
     a.click();
     URL.revokeObjectURL(url);
 }

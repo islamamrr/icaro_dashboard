@@ -174,8 +174,8 @@ function updateCentersInputGraph_total() {
 
         centers_ip_graph.load({
             columns: [
-                ['الوزن الحقيقى', ...values1],
-                ['الأهداف', ...modifiedData]
+                ['الكميات الموردة', ...values1],
+                ['الكميات المستهدفة', ...modifiedData]
             ],
             categories: centersList
         });
@@ -400,7 +400,7 @@ $(document).ready(function () {
         axis: {
             x: {
                 type: 'category',
-                categories: ['أجا', 'سندوب', 'بلقاس - المصنع', 'السمبلاوين', 'المنزلة']
+                categories: ['أجا', 'سندوب', 'بلقاس', 'السنبلاوين', 'المنزلة']
             }
         },
         data: {
@@ -425,7 +425,7 @@ $(document).ready(function () {
         axis: {
             x: {
                 type: 'category',
-                categories: ['أجا', 'سندوب', 'بلقاس - المصنع', 'السمبلاوين', 'المنزلة']
+                categories: ['أجا', 'سندوب', 'بلقاس', 'السنبلاوين', 'المنزلة']
             }
         },
         data: {
@@ -449,8 +449,8 @@ $(document).ready(function () {
         },
         axis: {
             x: {
-                type: 'category', // set the x-axis as category type
-                categories: ['أجا', 'سندوب', 'بلقاس - المصنع', 'السمبلاوين', 'المنزلة'] // specify the categories/names on the x-axis
+                type: 'category',
+                categories: ['أجا', 'سندوب', 'بلقاس', 'السنبلاوين', 'المنزلة'] // specify the categories/names on the x-axis
             }
         },
         data: {
@@ -491,13 +491,13 @@ $(document).ready(function () {
         },
         data: {
             columns: [
-                ['الوزن الحقيقى', []],
-                ['الأهداف', []] // Initialize with an empty array
+                ['الكميات الموردة', []],
+                ['الكميات المستهدفة', []] // Initialize with an empty array
             ],
-            type: "line",
+            type: "bar",
             colors: {
-                'الوزن الحقيقى': "#ef601c",
-                'الأهداف': "#6C0C0C"
+                'الكميات الموردة': "#ef601c",
+                'الكميات المستهدفة': "#6C0C0C"
             }
         },
         grid: {y: {show: true}}
@@ -574,7 +574,6 @@ document.getElementById('openPopupBtn').addEventListener('click', function () {
         form.appendChild(document.createElement("br"));
     }
 
-    // Add the "Save" button
     const saveButton = document.createElement("button");
     saveButton.id = "formButton";
     saveButton.textContent = "حفظ";
@@ -582,7 +581,6 @@ document.getElementById('openPopupBtn').addEventListener('click', function () {
 
     popupContainer.style.display = "block";
 
-    // Add an event listener for form submission
     form.addEventListener('submit', function (e) {
         e.preventDefault();
 
@@ -594,16 +592,14 @@ document.getElementById('openPopupBtn').addEventListener('click', function () {
             labelData.push(value);
         }
 
-        // Store data in local storage
         localStorage.setItem('labelData', JSON.stringify(labelData));
 
-        // Close the popup
         popupContainer.style.display = 'none';
 
         const goalsData = JSON.parse(localStorage.getItem('labelData'));
         centers_ip_graph.load({
             columns: [
-                ['الأهداف', ...goalsData]
+                ['الكميات المستهدفة', ...goalsData]
             ],
         });
     });

@@ -493,7 +493,7 @@ function updateOPChartData(startDate, endDate) {
 
 function updateRejBox(startDate, endDate) {
     const urlAcc = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const urlRej = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مرفوضات&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
+    const urlRej = `http://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
 
     Promise.all([
         fetch(urlAcc).then(response => response.json()).catch(() => 0),
