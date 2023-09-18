@@ -68,15 +68,12 @@ function exportToExcel() {
 
 ////  Datatable  ////
 
-function updateDatatable(selectedDate) {
+function updateDatatable(startDate, endDate) {
 
     const tbody = document.querySelector('#site5_table tbody');
 
-    const datepickerInput = document.getElementById('datatableDatePicker');
-    datepickerInput.setAttribute('placeholder', moment().format('DD-MM-YYYY'));
 
-
-    fetch(`http://isdom.online/dash_board/tickets/all?siteNo=5&selectedDate=${selectedDate}`)
+    fetch(`http://isdom.online/dash_board/tickets/all?siteNo=5&startDate=${startDate}&endDate=${endDate}`)
         .then(response => response.json())
         .then(data => {
 
@@ -199,7 +196,7 @@ function updateDatatable(selectedDate) {
                 }
             });
 
-            document.getElementById("datatableDatePickerGroup").style.display = "block";
+            // document.getElementById("datatableDatePickerGroup").style.display = "block";
             document.getElementById("datatableExportGroup").style.display = "block";
         })
 }
@@ -625,19 +622,8 @@ function updateMassBox(startDate, endDate) {
 
 $(document).ready(function () {
 
-    updateDatatable(moment().format('DD-MMM-YY'));
-    datatableSelectedDate = moment().format('DD-MM-YYYY');
+    initDatatableDateRange();
 
-    $("#datatableDatePicker").datepicker({
-        dateFormat: "dd-mm-yy",
-        onSelect: function (selectedDate) {
-            const formattedDate = moment(selectedDate, 'DD-MM-YYYY').format('DD-MMM-YY');
-            datatableSelectedDate = formattedDate
-            updateDatatable(formattedDate);
-        }
-    });
-
-    // getOpNames();
     getCenters();
     updateInputGraph_s5(false);
     updateOutputGraph_s5();
@@ -656,6 +642,7 @@ $(document).ready(function () {
     updateIPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateOPChartData(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateIPChartData(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
+    updateDatatable(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
 });
 
 
@@ -671,6 +658,23 @@ function initDateRange() {
         // startDate = start.format('DD-MMM-YY');
         // endDate = end.format('DD-MMM-YY');
         updateAllByTime();
+    });
+}
+
+function initDatatableDateRange() {
+    $('#datatableDateRangePicker').daterangepicker({
+        opens: 'left',
+        startDate: moment(),
+        endDate: moment(),
+        locale: {
+            format: 'DD-MM-YYYY'
+        }
+    }, function () {
+        var start = moment($('#datatableDateRangePicker').data('daterangepicker').startDate);
+        var end = moment($('#datatableDateRangePicker').data('daterangepicker').endDate);
+        var startDate = start.format('DD-MMM-YY');
+        var endDate = end.format('DD-MMM-YY');
+        updateDatatable(startDate, endDate);
     });
 }
 

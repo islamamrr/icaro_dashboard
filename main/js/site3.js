@@ -6,11 +6,10 @@ var endDate = moment().format('DD-MMM-YY');
 const ipDateDropdown = document.getElementById('ip-dateRangeDropdown-s3');
 
 const clients = ['مصنع اجا', 'مصنع سندوب', '', 'مصنع بلقاس', 'مصنع السنبلاوين', 'مصنع المنزلة'];
-const otherClient = 'وحدة محلية';
+const otherClient = 'اخري';
 
 var dataTableInitialized = false;
 var dataTableJSONData;
-var datatableSelectedDate;
 
 const headerMapping = {
     ticketId: "رقم التذكرة",
@@ -67,14 +66,12 @@ function exportToExcel() {
 
 ////  Datatable  ////
 
-function updateDatatable(selectedDate) {
+function updateDatatable(startDate, endDate) {
 
     const tbody = document.querySelector('#site3_table tbody');
 
-    const datepickerInput = document.getElementById('datatableDatePicker');
-    datepickerInput.setAttribute('placeholder', moment().format('DD-MM-YYYY'));
 
-    fetch(`http://isdom.online/dash_board/tickets/all?siteNo=3&selectedDate=${selectedDate}`)
+    fetch(`http://isdom.online/dash_board/tickets/all?siteNo=3&startDate=${startDate}&endDate=${endDate}`)
         .then(response => response.json())
         .then(data => {
 
@@ -197,10 +194,11 @@ function updateDatatable(selectedDate) {
                 }
             });
 
-            document.getElementById("datatableDatePickerGroup").style.display = "block";
+            // document.getElementById("datatableDatePickerGroup").style.display = "block";
             document.getElementById("datatableExportGroup").style.display = "block";
         })
 }
+
 // function populateClientTypes() {
 //
 //     const defaultOption = document.createElement('option');
@@ -239,7 +237,13 @@ const ipChartOptions = {
         columns: [],
         type: "line",
         colors: {
-            'اجمالى المدخلات': "#ef601c"
+            'اجمالى المدخلات': "#ef601c",
+            'اجا': "#d9938c",
+            'سندوب': "#885A5A",
+            'بلقاس': "#6096BA",
+            'السنبلاوين': "#567a44",
+            'المنزلة': "#DC136C",
+            'اخري': "#394565"
         }
     },
     grid: {y: {show: true}}
@@ -302,7 +306,7 @@ function updateInputGraph_s3() {
                 ['بلقاس', ...values4],
                 ['السنبلاوين', ...values5],
                 ['المنزلة', ...values6],
-                ['أخرى', ...valuesOthers]
+                ['اخري', ...valuesOthers]
             ],
             categories: categories
         });
@@ -316,10 +320,10 @@ function updateInputGraph_s3() {
 ////  INPUT DONUT CHART  ////
 
 const initialIPChartData = {
-    labels: ['مصنع اجا', 'مصنع سندوب', 'مصنع بلقاس', 'مصنع السنبلاوين', 'مصنع المنزلة', 'أخرى'],
+    labels: ['مصنع اجا', 'مصنع سندوب', 'مصنع بلقاس', 'مصنع السنبلاوين', 'مصنع المنزلة', 'اخري'],
     datasets: [{
         data: [0, 0, 0, 0, 0, 0],
-        backgroundColor: ['#ffa014', '#6c0c0c', '#bb4fd9', '#ffa014', '#ffa014', '#ffa014', ]
+        backgroundColor: ['#d9938c', '#885A5A', '#6096BA', '#567a44', '#DC136C', '#394565']
     }]
 };
 const s3_ip_chart = new Chart(document.getElementById('s3-ip-chart'), {
@@ -387,18 +391,7 @@ function updateIPBox(startDate, endDate) {
 
 $(document).ready(function () {
 
-    // populateClientTypes();
-    updateDatatable(moment().format('DD-MMM-YY'));
-    datatableSelectedDate = moment().format('DD-MM-YYYY');
-
-    $("#datatableDatePicker").datepicker({
-        dateFormat: "dd-mm-yy",
-        onSelect: function (selectedDate) {
-            const formattedDate = moment(selectedDate, 'DD-MM-YYYY').format('DD-MMM-YY');
-            datatableSelectedDate = formattedDate
-            updateDatatable(formattedDate);
-        }
-    });
+    initDatatableDateRange();
 
     updateInputGraph_s3(false);
 
@@ -411,6 +404,7 @@ $(document).ready(function () {
     // Initial data update
     updateIPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateIPChartData(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
+    updateDatatable(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
 });
 
 
@@ -426,6 +420,23 @@ function initDateRange() {
         // startDate = start.format('DD-MMM-YY');
         // endDate = end.format('DD-MMM-YY');
         updateAllByTime();
+    });
+}
+
+function initDatatableDateRange() {
+    $('#datatableDateRangePicker').daterangepicker({
+        opens: 'left',
+        startDate: moment(),
+        endDate: moment(),
+        locale: {
+            format: 'DD-MM-YYYY'
+        }
+    }, function () {
+        var start = moment($('#datatableDateRangePicker').data('daterangepicker').startDate);
+        var end = moment($('#datatableDateRangePicker').data('daterangepicker').endDate);
+        var startDate = start.format('DD-MMM-YY');
+        var endDate = end.format('DD-MMM-YY');
+        updateDatatable(startDate, endDate);
     });
 }
 
