@@ -17,6 +17,8 @@ const headerMapping = {
     itemType: "نوع الشحنة",
     itemName: "اسم الصنف",
     clientName: "العميل",
+    clientType: "العميل",
+    villageName: "الوحدة المحلية",
     driverName: "اسم السائق",
     vehicleNumber: "رقم السيارة",
     firstWeight: "الوزن الاول (كجم)",

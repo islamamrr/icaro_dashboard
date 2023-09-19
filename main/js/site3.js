@@ -14,8 +14,9 @@ var dataTableJSONData;
 const headerMapping = {
     ticketId: "رقم التذكرة",
     itemType: "نوع الشحنة",
-    itemName: "اسم الصنف",
     clientName: "العميل",
+    clientType: "العميل",
+    villageName: "الوحدة المحلية",
     driverName: "اسم السائق",
     vehicleNumber: "رقم السيارة",
     firstWeight: "الوزن الاول (كجم)",
@@ -59,7 +60,7 @@ function exportToExcel() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = "بلقاس " + datatableSelectedDate + '.xlsx';
+    a.download = "بلقاس " + startDate + "_" + endDate + '.xlsx';
     a.click();
     URL.revokeObjectURL(url);
 }
@@ -95,9 +96,6 @@ function updateDatatable(startDate, endDate) {
                     // to hide these columns
                     if (key === "enterMethod" || key === "clientName")
                         return;
-
-                    console.log(key)
-                    console.log(cellData)
 
                     // if (key === "carTwoDate")
                     //     cellData = moment(rowData[key], 'DD-MMM-YY').format('DD MMMM YYYY');

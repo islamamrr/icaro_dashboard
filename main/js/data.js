@@ -1,6 +1,6 @@
 const centersIPDateDropdown = document.getElementById('centersIP-dateRangeDropdown-total');
 var centersList = [];
-
+var modifiedDataTarget = 0;
 //updateTotalOPGraph
 function updateTotalOPGraph(startDate, endDate) {
 
@@ -160,22 +160,26 @@ function updateCentersInputGraph_total() {
         numberOfDays = endDate.diff(startDate, 'days') + 1;
     }
 
-    const url1 = `http://isdom.online/dash_board/tickets/centers-net-weight-list?itemType=مدخلات&startDate=${startDatex}&endDate=${endDatex}`; // وقود بديل
+    const urlReal = `http://isdom.online/dash_board/tickets/centers-net-weight-list?itemType=مدخلات&startDate=${startDatex}&endDate=${endDatex}`; // وقود بديل
+    const urlTarget = `http://isdom.online/dash_board/targets`; // وقود بديل
 
-    const storedData = JSON.parse(localStorage.getItem('labelData')) || [];
-
-    const modifiedData = storedData.map(value => value * numberOfDays);
+    // const storedData = JSON.parse(localStorage.getItem('labelData')) || [];
+    //
+    // const modifiedData = storedData.map(value => value * numberOfDays);
 
     Promise.all([
-        fetch(url1).then(response1 => response1.json())
-    ]).then(([data1]) => {
-        centersList = Object.keys(data1);
-        const values1 = Object.values(data1);
+        fetch(urlReal).then(responseReal => responseReal.json()),
+        fetch(urlTarget).then(responseTarget => responseTarget.json())
+    ]).then(([dataReal, dataTarget]) => {
+        centersList = Object.keys(dataReal);
+        const valuesReal = Object.values(dataReal);
+        const valuesTarget = Object.values(dataTarget);
+        modifiedDataTarget = valuesTarget.map(value => value * numberOfDays);
 
         centers_ip_graph.load({
             columns: [
-                ['الكميات الموردة', ...values1],
-                ['الكميات المستهدفة', ...modifiedData]
+                ['الكميات الموردة', ...valuesReal],
+                ['الكميات المستهدفة', ...modifiedDataTarget]
             ],
             categories: centersList
         });
@@ -565,8 +569,8 @@ document.getElementById('openPopupBtn').addEventListener('click', function () {
         input.name = `data${i}`;
 
         // Set the input value from the stored data
-        if (storedData && storedData[i]) {
-            input.value = storedData[i];
+        if (modifiedDataTarget && modifiedDataTarget[i]) {
+            input.value = modifiedDataTarget[i];
         }
 
         form.appendChild(label);
@@ -584,25 +588,46 @@ document.getElementById('openPopupBtn').addEventListener('click', function () {
     form.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        // Get data from input fields
-        const labelData = [];
+        // Create an object to represent the data
+        const dataObject = {};
         for (let i = 0; i < centersList.length; i++) {
             const inputField = form.querySelector(`input[name="data${i}"]`);
             const value = inputField.value;
-            labelData.push(value);
+            dataObject[i + 1] = parseFloat(value); // Assuming you want to send numeric values
         }
 
-        localStorage.setItem('labelData', JSON.stringify(labelData));
+        const url = 'http://isdom.online/dash_board/update-targets'
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataObject),
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Data successfully saved to the database.');
+                } else {
+                    console.error('Failed to save data to the database.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
 
         popupContainer.style.display = 'none';
 
-        const goalsData = JSON.parse(localStorage.getItem('labelData'));
+        console.log('modifiedDataTarget')
+        console.log(modifiedDataTarget)
+
         centers_ip_graph.load({
             columns: [
-                ['الكميات المستهدفة', ...goalsData]
+                ['الكميات المستهدفة', ...modifiedDataTarget]
             ],
         });
     });
+
 });
 
 

@@ -18,6 +18,8 @@ const headerMapping = {
     itemType: "نوع الشحنة",
     itemName: "اسم الصنف",
     clientName: "العميل",
+    clientType: "العميل",
+    villageName: "الوحدة المحلية",
     driverName: "اسم السائق",
     vehicleNumber: "رقم السيارة",
     firstWeight: "الوزن الاول (كجم)",
@@ -61,7 +63,7 @@ function exportToExcel() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = "السنبلاوين " + datatableSelectedDate + '.xlsx';
+    a.download = "السنبلاوين " + startDate + "_" + endDate + '.xlsx';
     a.click();
     URL.revokeObjectURL(url);
 }
