@@ -71,9 +71,6 @@ function updateDatatable(startDate, endDate) {
 
     const tbody = document.querySelector('#site2_table tbody');
 
-    // const datepickerInput = document.getElementById('datatableDatePicker');
-    // datepickerInput.setAttribute('placeholder', moment().format('DD-MM-YYYY'));
-
     fetch(`http://isdom.online/dash_board/tickets/all?siteNo=2&startDate=${startDate}&endDate=${endDate}`)
         .then(response => response.json())
         .then(data => {
@@ -96,7 +93,7 @@ function updateDatatable(startDate, endDate) {
                 Object.entries(rowData).forEach(([key, cellData]) => {
 
                     // to hide these columns
-                    if (key === "enterMethod")
+                    if (key === "enterMethod" || key === "clientType")
                         return;
 
                     // if (key === "carTwoDate")

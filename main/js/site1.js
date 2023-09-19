@@ -96,7 +96,7 @@ function updateDatatable(startDate, endDate) {
                 Object.entries(rowData).forEach(([key, cellData]) => {
 
                     // to hide these columns
-                    if (key === "enterMethod")
+                    if (key === "enterMethod" || key === "clientType")
                         return;
 
                     // if (key === "carTwoDate")
