@@ -221,35 +221,57 @@ function updateDatatable(startDate, endDate) {
 
 ////  Input graph  ////
 const ipChartOptions = {
-    bindto: "#s3-in-grph",
-    size: {height: 350},
-    legend: {},
-    axis: {
-        x: {
-            type: 'category',
-            categories: [],
-            tick: {
-                multiline: false,
-                show: false
-            }
+    labels: [],
+    datasets: [
+        {
+            label: 'اجمالى المدخلات',
+            backgroundColor: '#ef601c',
+            borderColor: '#ef601c',
+            data: []
+        },
+        {
+            label: 'اجا',
+            backgroundColor: '#d9938c',
+            borderColor: '#d9938c',
+            data: []
+        },
+        {
+            label: 'سندوب',
+            backgroundColor: '#885A5A',
+            borderColor: '#885A5A',
+            data: []
+        },
+        {
+            label: 'بلقاس',
+            backgroundColor: '#6096BA',
+            borderColor: '#6096BA',
+            data: []
+        },
+        {
+            label: 'السنبلاوين',
+            backgroundColor: '#567a44',
+            borderColor: '#567a44',
+            data: []
+        },
+        {
+            label: 'المنزلة',
+            backgroundColor: '#DC136C',
+            borderColor: '#DC136C',
+            data: []
+        },
+        {
+            label: 'اخري',
+            backgroundColor: '#394565',
+            borderColor: '#394565',
+            data: []
         }
-    },
-    data: {
-        columns: [],
-        type: "line",
-        colors: {
-            'اجمالى المدخلات': "#ef601c",
-            'اجا': "#d9938c",
-            'سندوب': "#885A5A",
-            'بلقاس': "#6096BA",
-            'السنبلاوين': "#567a44",
-            'المنزلة': "#DC136C",
-            'اخري': "#394565"
-        }
-    },
-    grid: {y: {show: true}}
+    ]
 };
-const s3_in_grph = c3.generate(ipChartOptions);
+
+const s3_in_grph = new Chart(document.getElementById('s3-in-grph'), {
+    type: 'line', data: ipChartOptions
+});
+
 
 function updateInputGraph_s3() {
     const selectedDate = ipDateDropdown.value;
@@ -299,18 +321,16 @@ function updateInputGraph_s3() {
             categories = Object.keys(data1).map(date => date.split('-')[0]);
         }
 
-        s3_in_grph.load({
-            columns: [
-                ['اجمالى المدخلات', ...valuesTotal],
-                ['اجا', ...values1],
-                ['سندوب', ...values2],
-                ['بلقاس', ...values4],
-                ['السنبلاوين', ...values5],
-                ['المنزلة', ...values6],
-                ['اخري', ...valuesOthers]
-            ],
-            categories: categories
-        });
+        s3_in_grph.data.datasets[0].data = valuesTotal || 0;
+        s3_in_grph.data.datasets[1].data = values1 || 0;
+        s3_in_grph.data.datasets[2].data = values2 || 0;
+        s3_in_grph.data.datasets[3].data = values4 || 0;
+        s3_in_grph.data.datasets[4].data = values5 || 0;
+        s3_in_grph.data.datasets[5].data = values6 || 0;
+        s3_in_grph.data.datasets[6].data = valuesOthers || 0;
+        s3_in_grph.data.labels = categories || 0;
+
+        s3_in_grph.update();
 
     })
         .catch(error => {

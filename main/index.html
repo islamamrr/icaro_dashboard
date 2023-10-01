@@ -195,45 +195,103 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!--rates-->
+                        <!--                    <div class="col-xl-4 col-md-4 col-12">-->
+                        <div class="row">
+
+                            <div class="col-xl-6 col-md-6 col-12">
+                                <div class="box pull-up">
+                                    <div class="box-body">
+                                        <div
+                                                class="d-flex align-items-center justify-content-between"
+                                        >
+                                            <div style="color: #003f5c; margin: auto">
+                                                <h5 class="mb-0" style="font-weight: bold; font-size: small">
+                                                    نسبة المخلفات الصالحة للمعالجة
+                                                </h5>
+                                                <h2 class="mb-0" id="accepted_per"></h2>
+                                            </div>
+                                            <!--                                    <img src="../images/trash.png" alt="" style="height: 62px">-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6 col-12">
+                                <div class="box pull-up">
+                                    <div class="box-body">
+                                        <div
+                                                class="d-flex align-items-center justify-content-between"
+                                        >
+                                            <div style="color: #003f5c; margin: auto">
+                                                <h5 class="mb-0" style="font-weight: bold; font-size: small">
+                                                    نسبة المرفوضات من المخلفات الصالحة للمعالجة
+                                                </h5>
+                                                <h2 class="mb-0" id="rejected_per"></h2>
+                                            </div>
+                                            <!--                                    <img src="../images/trash.png" alt="" style="height: 62px">-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--                    </div>-->
                     </div>
 
-                    <!--rates-->
+                    <!--taht el tashgheel-->
                     <div class="col-xl-4 col-md-4 col-12">
-                        <div class="col-xl-12 col-md-12 col-12">
-                            <div class="box pull-up">
-                                <div class="box-body">
-                                    <div
-                                            class="d-flex align-items-center justify-content-between"
-                                    >
-                                        <div style="color: #003f5c; margin: auto">
-                                            <h5 class="mb-0" style="font-weight: bold">
-                                                نسبة المخلفات الصالحة للمعالجة
-                                            </h5>
-                                            <h2 class="mb-0" id="accepted_per"></h2>
-                                        </div>
-                                        <!--                                    <img src="../images/trash.png" alt="" style="height: 62px">-->
-                                    </div>
+                        <div id="popupContainerOperations" class="popup">
+                            <div class="popup-content-operations">
+                                        <span class="close"
+                                              id="closeOperationsPopupBtn">&times;</span>
+                                <h2 style="font-size: 21px;margin-bottom: 35px;">تغيير الكميات التراكمية والنسب من
+                                    المخلفات الصالحة للمعالجة
+                                    لليوم</h2>
+                                <span style="position:relative;font-size:medium;right: 160px">النسبة</span>
+                                <span style="position:absolute;font-size:medium;right: 275px">الكمية المتراكمة</span>
+                                <div class="row" style="margin-top: 10px;">
+                                    <form id="percentageForm">
+                                    </form>
+                                    <form id="accuWeightForm">
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-12 col-md-12 col-12">
-                            <div class="box pull-up">
-                                <div class="box-body">
-                                    <div
-                                            class="d-flex align-items-center justify-content-between"
-                                    >
-                                        <div style="color: #003f5c; margin: auto">
-                                            <h5 class="mb-0" style="font-weight: bold">
-                                                نسبة المرفوضات من المخلفات الصالحة للمعالجة
-                                            </h5>
-                                            <h2 class="mb-0" id="rejected_per"></h2>
-                                        </div>
-                                        <!--                                    <img src="../images/trash.png" alt="" style="height: 62px">-->
+                        <div class="box pull-up">
+                            <div class="box-body">
+                                <div class="d-flex flex-column">
+
+                                    <h5 class="fs-4 mb-0" style="color: #003F5C; font-weight: bold; margin: auto">
+                                        تحت التشغيل اليوم
+                                    </h5>
+                                    <button id="openOperationPopupBtn">تعديل</button>
+                                    <div class="d-flex justify-content-between" style="color: #2da075">
+                                        <span class="operations-label fs-4 fw-500">اسمدة عضوية<span
+                                                id="asmeda-percentage" style="font-size: medium"></span></span>
+                                        <span class="operations-value fs-4 fw-500" id="asmeda-operation-weight"></span>
+                                    </div>
+                                    <div class="d-flex justify-content-between" style="color: #10d6b4">
+                                        <span class="operations-label fs-4 fw-500">مرفوضات<span
+                                                id="marfoodat-percentage" style="font-size: medium"></span></span>
+                                        <span class="operations-value fs-4 fw-500"
+                                              id="marfoodat-operation-weight"></span>
+                                    </div>
+                                    <div class="d-flex justify-content-between" style="color: #1427c9">
+                                        <span class="operations-label fs-4 fw-500">وقود بديل<span
+                                                id="waqood-percentage" style="font-size: medium"></span></span>
+                                        <span class="operations-value fs-4 fw-500" id="waqood-operation-weight"></span>
+                                    </div>
+                                    <div class="d-flex justify-content-between" style="color: #85a6e9">
+                                        <span class="operations-label fs-4 fw-500">مفروزات<span
+                                                id="mafroozat-percentage" style="font-size: medium"></span></span>
+                                        <span class="operations-value fs-4 fw-500"
+                                              id="mafroozat-operation-weight"></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
 
                     <!--outputs-->
                     <div class="col-xl-4 col-md-4 col-12">
@@ -262,7 +320,7 @@
                                                 class="d-flex align-items-center justify-content-between"
                                         >
                                             <div style="color: #2da075; margin: auto">
-                                                <h5 class="mb-0" style="font-size: small">
+                                                <h5 class="mb-0" style="font-size: medium">
                                                     اسمدة عضوية
                                                 </h5>
                                                 <h2 id="tot-asmeda-op-box" class="mb-0 fs-5"></h2>
@@ -279,7 +337,7 @@
                                                 class="d-flex align-items-center justify-content-between"
                                         >
                                             <div style="color: #1427c9; margin: auto">
-                                                <h5 class="mb-0" style="font-size: small">
+                                                <h5 class="mb-0" style="font-size: medium">
                                                     وقود بديل
                                                 </h5>
                                                 <h2 id="tot-waqood-op-box" class="mb-0 fs-5"></h2>
@@ -298,7 +356,7 @@
                                                 class="d-flex align-items-center justify-content-between"
                                         >
                                             <div style="color: #10d6b4; margin: auto">
-                                                <h5 class="mb-0" style="font-size: small">
+                                                <h5 class="mb-0" style="font-size: medium">
                                                     مرفوضات
                                                 </h5>
                                                 <h2 id="tot-marfoodat-op-box" class="mb-0 fs-5"></h2>
@@ -314,8 +372,8 @@
                                         <div
                                                 class="d-flex align-items-center justify-content-between"
                                         >
-                                            <div style="color: #2d66d9; margin: auto">
-                                                <h5 class="mb-0" style="font-size: small">
+                                            <div style="color: #85a6e9; margin: auto">
+                                                <h5 class="mb-0" style="font-size: medium">
                                                     مفروزات
                                                 </h5>
                                                 <h2 id="tot-mafroozat-op-box" class="mb-0 fs-5"></h2>
@@ -334,7 +392,7 @@
                                 <h4 class="box-title">المدخلات (طن)</h4>
                             </div>
                             <div class="box-body">
-                                <div id="total-input-graph"></div>
+                                <canvas id="total-input-graph"></canvas>
                             </div>
                         </div>
                     </div>
@@ -344,7 +402,7 @@
                                 <h4 class="box-title">المخرجات (طن)</h4>
                             </div>
                             <div class="box-body">
-                                <div id="total-output-graph"></div>
+                                <canvas id="total-output-graph"></canvas>
                             </div>
                         </div>
                     </div>
@@ -354,7 +412,7 @@
                                 <h4 class="box-title">اجمالى المدخلات والمخرجات (طن)</h4>
                             </div>
                             <div class="box-body">
-                                <div id="total-ip-op-graph"></div>
+                                <canvas id="total-ip-op-graph"></canvas>
                             </div>
                         </div>
                     </div>
@@ -363,8 +421,9 @@
                     <div class="col-xl-12 col-12">
                         <div class="box">
 
-                            <button id="openPopupBtn">تغيير الكميات المستهدفة</button>
-
+                            <div style="right: 84%;top: 35px;">
+                                <button id="openPopupBtn">تغيير الكميات المستهدفة</button>
+                            </div>
                             <div id="popupContainer" class="popup">
                                 <div class="popup-content">
                                     <span class="close" id="closePopupBtn">&times;</span>
@@ -376,23 +435,11 @@
                                 </div>
                             </div>
 
-                            <select
-                                    style="width: 100px;"
-                                    id="centersIP-dateRangeDropdown-total"
-                                    onchange="updateCentersInputGraph_total()">
-
-                                <option value="today">اليوم</option>
-                                <option value="yesterday">أمس</option>
-                                <option value="last7days">اسبوع</option>
-                                <option value="last14days">اسبوعين</option>
-                                <option value="lastMonth">الشهر الماضى</option>
-                            </select>
-
                             <div class="box-header with-border">
                                 <h4 class="box-title">مدخلات المراكز (طن)</h4>
                             </div>
                             <div class="box-body">
-                                <div id="centers-ip-graph"></div>
+                                <canvas id="centers-ip-graph"></canvas>
                             </div>
                         </div>
                     </div>
@@ -436,6 +483,8 @@
 <!--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
 <script src="../assets/vendor_components/d3/d3.min.js"></script>
 <script src="../assets/vendor_components/d3/d3_tooltip.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+
 
 <!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/moment/min/moment.min.js"></script>-->
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>-->

@@ -12,6 +12,10 @@ const currentClientType = 'مصنع سندوب';
 var dataTableInitialized = false;
 var dataTableJSONData;
 
+var operationsPercentages;
+var operationsAccumulatedWeights;
+
+
 const headerMapping = {
     ticketId: "رقم التذكرة",
     itemType: "نوع الشحنة",
@@ -228,6 +232,27 @@ function getCenters() {
 
 ////  Input graph  ////
 
+const ipGraphData = {
+    labels: [],
+    datasets: [
+        {
+            label: 'مخلفات تصلح للمعالجة',
+            backgroundColor: '#ffa014',
+            borderColor: '#ffa014',
+            data: []
+        },
+        {
+            label: 'مخلفات لا تصلح للمعالجة',
+            backgroundColor: '#d81415',
+            borderColor: '#d81415',
+            data: []
+        }]
+};
+const s2_in_grph = new Chart(document.getElementById('s2-in-grph'), {
+    type: 'line', data: ipGraphData
+});
+
+
 function updateIpVillageDropdown(centerId) {
     if (centerId !== "") {
         fetch(`http://isdom.online/dash_board/villages?centerId=${centerId}`)
@@ -255,32 +280,6 @@ function updateIpVillageDropdown(centerId) {
     }
 }
 
-const ipChartOptions = {
-    bindto: "#s2-in-grph",
-    size: {height: 350},
-    legend: {},
-    axis: {
-        x: {
-            type: 'category',
-            categories: [],
-            tick: {
-                multiline: false,
-                show: false
-            }
-        }
-    },
-    data: {
-        columns: [],
-        type: "line",
-        colors: {
-            'مخلفات تصلح للمعالجة': "#ffd800",
-            'مخلفات لا تصلح للمعالجة': "#d81415"
-        }
-    },
-    grid: {y: {show: true}}
-};
-const s2_in_grph = c3.generate(ipChartOptions);
-
 function updateInputGraph_s2(isVillage) {
     const selectedDate = ipDateDropdown.value;
     const selectedCenter = ipCenterDropdown.value;
@@ -303,6 +302,10 @@ function updateInputGraph_s2(isVillage) {
         startDatex = moment().subtract(1, 'months').startOf('month').format('DD-MMM-YY');
         endDatex = moment().subtract(1, 'months').endOf('month').format('DD-MMM-YY');
     }
+    // else if (selectedDate === 'lastYear') {
+    //     startDatex = moment().subtract(1, 'years').format('DD-MMM-YY');
+    //     endDatex = moment().format('DD-MMM-YY');
+    // }
 
     const url1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات  تصلح للمعالجة&siteNo=2&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات تصلح للمعالجة
     const url2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات لا تصلح للمعالجة&siteNo=2&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات لا تصلح للمعالجة
@@ -319,14 +322,11 @@ function updateInputGraph_s2(isVillage) {
             categories = Object.keys(data1).map(date => date.split('-')[0]);
         }
 
-        s2_in_grph.load({
-            columns: [
-                ['مخلفات تصلح للمعالجة', ...values1],
-                ['مخلفات لا تصلح للمعالجة', ...values2]
-            ],
-            categories: categories
-        });
+        s2_in_grph.data.datasets[0].data = values1 || 0;
+        s2_in_grph.data.datasets[1].data = values2 || 0;
+        s2_in_grph.data.labels = categories || 0;
 
+        s2_in_grph.update();
     })
         .catch(error => {
             console.error('Error:', error);
@@ -336,27 +336,40 @@ function updateInputGraph_s2(isVillage) {
 
 ////  Output graph  ////
 
-const opChartOptions = {
-    bindto: "#s2-out-grph",
-    size: {height: 350},
-    legend: {},
-    axis: {
-        x: {
-            type: 'category',
-            categories: [],
-            tick: {
-                multiline: false
-            }
+const opGraphData = {
+    labels: [],
+    datasets: [
+        {
+            label: 'وقود بديل',
+            backgroundColor: '#1427c9',
+            borderColor: '#1427c9',
+            data: []
+        },
+        {
+            label: 'اسمدة عضوية',
+            backgroundColor: '#2da075',
+            borderColor: '#2da075',
+            data: []
+        },
+        {
+            label: 'مرفوضات',
+            backgroundColor: '#10d6b4',
+            borderColor: '#10d6b4',
+            data: []
+        },
+        {
+            label: 'مفروزات',
+            backgroundColor: '#85a6e9',
+            borderColor: '#85a6e9',
+            data: []
         }
-    },
-    data: {
-        columns: [],
-        type: "line",
-        colors: {'اسمدة عضوية': "#2da075", 'وقود بديل': "#1427c9", 'مفروزات': "#2d66d9", 'مرفوضات': "#10d6b4"}
-    },
-    grid: {y: {show: true}}
+    ]
 };
-const s2_out_grph = c3.generate(opChartOptions);
+
+const s2_out_grph = new Chart(document.getElementById('s2-out-grph'), {
+    type: 'line', data: opGraphData
+});
+
 
 function updateOutputGraph_s2() {
     const selectedDate = opDateDropdown.value;
@@ -374,36 +387,33 @@ function updateOutputGraph_s2() {
         endDatex = moment().subtract(1, 'months').endOf('month').format('DD-MMM-YY');
     }
 
-    const url1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=وقود بديل&siteNo=2&startDate=${startDatex}&endDate=${endDatex}`; // وقود بديل
-    const url2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=اسمدة عضوية&siteNo=2&startDate=${startDatex}&endDate=${endDatex}`; // اسمدة عضوية
-    const url3 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${currentClientType}&startDate=${startDatex}&endDate=${endDatex}`; // مرفوضات
-    const url4 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مفروزات&siteNo=2&startDate=${startDatex}&endDate=${endDatex}`; //مفروزات
-
+    const waqoodURL = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=وقود بديل&siteNo=2&startDate=${startDatex}&endDate=${endDatex}`; // وقود بديل
+    const asmedaURL = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=اسمدة عضوية&siteNo=2&startDate=${startDatex}&endDate=${endDatex}`; // اسمدة عضوية
+    const marfoodatURL = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${currentClientType}&startDate=${startDatex}&endDate=${endDatex}`; // مرفوضات
+    const mafroozatURL = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مفروزات&siteNo=2&startDate=${startDatex}&endDate=${endDatex}`; //مفروزات
     Promise.all([
-        fetch(url1).then(response1 => response1.json().catch(() => 0)),
-        fetch(url2).then(response2 => response2.json().catch(() => 0)),
-        fetch(url3).then(response2 => response2.json().catch(() => 0)),
-        fetch(url4).then(response2 => response2.json().catch(() => 0))
-    ]).then(([data1, data2, data3, data4]) => {
-        let categories = Object.keys(data1);
-        const values1 = Object.values(data1);
-        const values2 = Object.values(data2);
-        const values3 = Object.values(data3);
-        const values4 = Object.values(data4);
+        fetch(waqoodURL).then(responseWaqood => responseWaqood.json().catch(() => 0)),
+        fetch(asmedaURL).then(responseAsmeda => responseAsmeda.json().catch(() => 0)),
+        fetch(marfoodatURL).then(responseMarfoodat => responseMarfoodat.json().catch(() => 0)),
+        fetch(mafroozatURL).then(responseMafroozat => responseMafroozat.json().catch(() => 0))
+    ]).then(([dataWaqood, dataAsmeda, dataMarfoodat, dataMafroozat]) => {
+        let categories = Object.keys(dataWaqood);
+        const valuesWaqood = Object.values(dataWaqood);
+        const valuesAsmeda = Object.values(dataAsmeda);
+        const valuesMarfoodat = Object.values(dataMarfoodat);
+        const valuesMafroozat = Object.values(dataMafroozat);
 
         if (selectedDate === 'lastMonth') {
-            categories = Object.keys(data1).map(date => date.split('-')[0]);
+            categories = Object.keys(dataWaqood).map(date => date.split('-')[0]);
         }
 
-        s2_out_grph.load({
-            columns: [
-                ['وقود بديل', ...values1],
-                ['اسمدة عضوية', ...values2],
-                ['مرفوضات', ...values3],
-                ['مفروزات', ...values4]
-            ],
-            categories: categories
-        });
+        s2_out_grph.data.datasets[0].data = valuesWaqood || 0;
+        s2_out_grph.data.datasets[1].data = valuesAsmeda || 0;
+        s2_out_grph.data.datasets[2].data = valuesMarfoodat || 0;
+        s2_out_grph.data.datasets[3].data = valuesMafroozat || 0;
+        s2_out_grph.data.labels = categories || 0;
+
+        s2_out_grph.update();
 
     })
         .catch(error => {
@@ -413,17 +423,27 @@ function updateOutputGraph_s2() {
 
 
 ////  INPUT DONUT CHART  ////
-
 const initialIPChartData = {
-    labels: ['مخلفات تصلح للمعالجة', 'مخلفات لا تصلح للمعالجة'],
-    datasets: [{
-        data: [0, 0],
-        backgroundColor: ['#ffd800', '#d81415']
-    }]
+    bindto: "#s2-ip-chart",
+    size: {height: 350},
+    legend: {},
+    data: {
+        columns: [],
+        type: "pie",
+        colors: {
+            'مخلفات تصلح للمعالجة': "#ffa014",
+            'مخلفات لا تصلح للمعالجة': "#d81415"
+        }
+    },
+    tooltip: {
+        format: {
+            value: function (value, ratio, id, index) {
+                return value;
+            }
+        }
+    }
 };
-const s2_ip_chart = new Chart(document.getElementById('s2-ip-chart'), {
-    type: 'doughnut', data: initialIPChartData
-});
+const s2_ip_chart = c3.generate(initialIPChartData);
 
 function updateIPChartData(startDate, endDate) {
     const urlIP1 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
@@ -436,11 +456,13 @@ function updateIPChartData(startDate, endDate) {
             const dataset1Value = dataset1Data;
             const dataset2Value = dataset2Data;
 
-            // Update the dataset values in the chart
-            s2_ip_chart.data.datasets[0].data[0] = dataset1Value || 0;
-            s2_ip_chart.data.datasets[0].data[1] = dataset2Value || 0;
+            s2_ip_chart.load({
+                columns: [
+                    ['مخلفات تصلح للمعالجة', dataset1Value],
+                    ['مخلفات لا تصلح للمعالجة', dataset2Value]
+                ]
+            });
 
-            s2_ip_chart.update();
         })
         .catch(error => {
             console.error('Error:', error);
@@ -448,18 +470,30 @@ function updateIPChartData(startDate, endDate) {
 }
 
 ////  OUTPUT DONUT CHART  ////
-
 const initialOPChartData = {
-    labels: ['اسمدة عضوية', 'وقود بديل', 'مرفوضات', 'مفروزات'],
-    datasets: [{
-        data: [0, 0, 0, 0],
-        backgroundColor: ['#2da075', '#1427c9', '#10d6b4', '#2d66d9']
-    }]
+    bindto: "#s2-op-chart",
+    size: {height: 350},
+    legend: {},
+    data: {
+        columns: [],
+        type: "pie",
+        colors: {
+            'اسمدة عضوية': "#2da075",
+            'وقود بديل': "#1427c9",
+            'مرفوضات': "#10d6b4",
+            'مفروزات': "#85a6e9"
+        }
+    },
+    tooltip: {
+        format: {
+            value: function (value, ratio, id, index) {
+                return value;
+            }
+        }
+    }
 };
-const s2_op_chart = new Chart(document.getElementById('s2-op-chart'), {
-    type: 'doughnut',
-    data: initialOPChartData
-});
+const s2_op_chart = c3.generate(initialOPChartData);
+
 
 function updateOPChartData(startDate, endDate) {
     const urlOP1 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
@@ -474,14 +508,18 @@ function updateOPChartData(startDate, endDate) {
         fetch(urlOP4).then(response => response.json()).catch(() => 0)
     ])
         .then(([category1Data, category2Data, category3Data, category4Data]) => {
-            // Update the dataset values in the chart
-            s2_op_chart.data.datasets[0].data[0] = category1Data || 0;
-            s2_op_chart.data.datasets[0].data[1] = category2Data || 0;
-            s2_op_chart.data.datasets[0].data[2] = category3Data || 0;
-            s2_op_chart.data.datasets[0].data[3] = category4Data || 0;
-
-            // Update the chart
-            s2_op_chart.update();
+            const category1Value = category1Data;
+            const category2Value = category2Data;
+            const category3Value = category3Data;
+            const category4Value = category4Data;
+            s2_op_chart.load({
+                columns: [
+                    ['اسمدة عضوية', category1Value],
+                    ['وقود بديل', category2Value],
+                    ['مرفوضات', category3Value],
+                    ['مفروزات', category4Value]
+                ]
+            });
         })
         .catch(error => {
             console.error('Error:', error);
@@ -504,7 +542,7 @@ function updateRejBox(startDate, endDate) {
             if (isNaN(percentage))
                 document.getElementById("s2-accepted").textContent = 0 + "%"
             else {
-                document.getElementById("s2-rejected-per").textContent = percentage.toFixed(1) + "%"
+                document.getElementById("s2-rejected-per").textContent = percentage.toFixed(0) + "%"
                 document.getElementById("s2-accepted").textContent = "من " + accData + " طن";
 
                 const progressBar = document.getElementById("s2-rej-progress");
@@ -534,7 +572,7 @@ function updateAccBox(startDate, endDate) {
             if (isNaN(percentage))
                 document.getElementById("s2-accepted-per").textContent = 0 + "%"
             else {
-                document.getElementById("s2-accepted-per").textContent = percentage.toFixed(1) + "%"
+                document.getElementById("s2-accepted-per").textContent = percentage.toFixed(0) + "%"
 
                 const progressBar = document.getElementById("s2-acc-progress");
                 updateProgressBar(progressBar, percentage);
@@ -580,24 +618,52 @@ function updateIPBox(startDate, endDate) {
         });
 }
 
-function updateMassBox(startDate, endDate) {
-    const totInURL = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=2&startDate=${startDate}&endDate=${endDate}`;
-    const totOutURL = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مخرجات&siteNo=2&startDate=${startDate}&endDate=${endDate}`;
-    const accURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const rejURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات لا تصلح للمعالجة
+function updateInOperationBox() {
+    const startDate = moment().format('DD-MMM-YY');
+    const endDate = moment().format('DD-MMM-YY');
+
+    const percentagesURL = 'http://isdom.online/dash_board/accumulated/percentage?siteNo=2';
+    const accumulatedWeightsURL = 'http://isdom.online/dash_board/accumulated/weight?siteNo=2'
+    const acceptedInputURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const asmedaURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
+    const waqoodURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=وقود بديل&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
+    const marfoodatURL = `http://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
+    const mafroozatURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مفروزات&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مفروزات
+
 
     Promise.all([
-        fetch(totInURL).then(response1 => response1.json()).catch(() => 0),
-        fetch(totOutURL).then(response1 => response1.json()).catch(() => 0),
-        fetch(accURL).then(response1 => response1.json()).catch(() => 0),
-        fetch(rejURL).then(response2 => response2.json()).catch(() => 0)
-    ]).then(([inData, outData, accData, rejData]) => {
+        fetch(percentagesURL).then(responsePercentages => responsePercentages.json()).catch(() => 0),
+        fetch(accumulatedWeightsURL).then(responseAccumulatedWeights => responseAccumulatedWeights.json()).catch(() => 0),
+        fetch(acceptedInputURL).then(responseAcceptedInput => responseAcceptedInput.json()).catch(() => 0),
+        fetch(asmedaURL).then(responseAsmeda => responseAsmeda.json()).catch(() => 0),
+        fetch(waqoodURL).then(responseWaqood => responseWaqood.json()).catch(() => 0),
+        fetch(marfoodatURL).then(responseMarfoodat => responseMarfoodat.json()).catch(() => 0),
+        fetch(mafroozatURL).then(responseMafroozat => responseMafroozat.json()).catch(() => 0)
+    ]).then(([dataPercentages, dataAccumulatedWeights, dataAcceptedInput,
+                 dataAsmeda, dataWaqood, dataMarfoodat,
+                 dataMafroozat]) => {
+        operationsPercentages = dataPercentages;
+        operationsAccumulatedWeights = dataAccumulatedWeights;
 
-        // let evapRate = 0.2;
-        let evapRate = localStorage.getItem('evap_rate');
-        const newValue = inData - (outData + rejData + (accData * evapRate)); // Assuming the API response contains the desired value
+        document.getElementById('asmeda-percentage').textContent = ' (' + dataPercentages['اسمدة عضوية'] + '%)';
+        document.getElementById('waqood-percentage').textContent = ' (' + dataPercentages['وقود بديل'] + '%)';
+        document.getElementById('marfoodat-percentage').textContent = ' (' + dataPercentages['مرفوضات'] + '%)';
+        document.getElementById('mafroozat-percentage').textContent = ' (' + dataPercentages['مفروزات'] + '%)';
 
-        document.getElementById("s2-mass-box").textContent = newValue.toFixed(0) + " طن";
+        const asmeda_operation_weight = (dataAcceptedInput * dataPercentages['اسمدة عضوية'] / 100) + dataAccumulatedWeights['اسمدة عضوية'] -
+            dataAsmeda;
+        const waqood_operation_weight = (dataAcceptedInput * dataPercentages['وقود بديل'] / 100) + dataAccumulatedWeights['وقود بديل'] -
+            dataWaqood;
+        const marfoodat_operation_weight = (dataAcceptedInput * dataPercentages['مرفوضات'] / 100) + dataAccumulatedWeights['مرفوضات'] -
+            dataMarfoodat;
+        const mafroozat_operation_weight = (dataAcceptedInput * dataPercentages['مفروزات'] / 100) + dataAccumulatedWeights['مفروزات'] -
+            dataMafroozat;
+
+        document.getElementById('asmeda-operation-weight').textContent = asmeda_operation_weight.toFixed(0) + ' طن';
+        document.getElementById('waqood-operation-weight').textContent = waqood_operation_weight.toFixed(0) + ' طن';
+        document.getElementById('marfoodat-operation-weight').textContent = marfoodat_operation_weight.toFixed(0) + ' طن';
+        document.getElementById('mafroozat-operation-weight').textContent = mafroozat_operation_weight.toFixed(0) + ' طن';
+
     })
         .catch(error => {
             console.error('Error:', error);
@@ -607,19 +673,8 @@ function updateMassBox(startDate, endDate) {
 
 $(document).ready(function () {
 
+    updateInOperationBox();
     initDatatableDateRange();
-    // updateDatatable(moment().format('DD-MMM-YY'));
-    // datatableSelectedDate = moment().format('DD-MM-YYYY');
-
-    // $("#datatableDatePicker").datepicker({
-    //     dateFormat: "dd-mm-yy",
-    //     onSelect: function (selectedDate) {
-    //         const formattedDate = moment(selectedDate, 'DD-MM-YYYY').format('DD-MMM-YY');
-    //         datatableSelectedDate = formattedDate
-    //         updateDatatable(formattedDate);
-    //     }
-    // });
-
 
     // getOpNames();
     getCenters();
@@ -633,7 +688,6 @@ $(document).ready(function () {
     // }, refreshFreq);
 
     // Initial data update
-    updateMassBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateAccBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateRejBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
@@ -683,7 +737,6 @@ function updateAllByTime() {
     var endDate = end.format('DD-MMM-YY');
 
     // Call the update functions with the start and end dates
-    updateMassBox(startDate, endDate);
     updateAccBox(startDate, endDate);
     updateRejBox(startDate, endDate);
     updateOPBox(startDate, endDate);
@@ -692,43 +745,129 @@ function updateAllByTime() {
     updateIPChartData(startDate, endDate);
 }
 
-const evapEditButton = document.getElementById("evapEditButton");
-evapEditButton.style.display = (userRole === "Admin") ? "block" : "none";
+document.getElementById('openOperationPopupBtn').addEventListener('click', function () {
+    const popupContainerOperations = document.getElementById("popupContainerOperations");
+    // const backgroundElements = document.getElementById("modalOverlay");
+    //
+    // backgroundElements.style.display = 'block';
 
-let isEvapInputVisible = false;
+    const form = document.getElementById("dataInputForm");
+    const form2 = document.getElementById("dataInputForm2");
 
-function toggleInputField() {
-    const evapInputContainer = document.getElementById("evapInputContainer");
-    isEvapInputVisible = !isEvapInputVisible;
-    evapInputContainer.style.display = isEvapInputVisible ? "block" : "none";
-}
+    // Clear any existing form elements
+    form.innerHTML = '';
+    form2.innerHTML = '';
+    form2.style.position = "absolute";
+    form2.style.right = "275px";
+    form2.style.width = "auto";
 
-const evapRateInput = document.getElementById("evap_rate");
-evapRateInput.placeholder = localStorage.getItem('evap_rate');
 
-function saveEvapInput() {
-    const inputElement = document.getElementById("evap_rate");
-    const inputValue = inputElement.value;
+    // Loop to generate input fields with labels
+    for (const key in operationsPercentages) {
+        const label = document.createElement("label");
+        label.style.marginBottom = "10px";
+        label.textContent = key;
 
-    const validationError = document.getElementById("validationError");
-    const validationMessage = document.getElementById("validationMessage");
+        // const value = operationsPercentages[key];
+        // console.log(`Key: ${key}, Value: ${value}`);
 
-    if (!isNumeric(inputValue) || inputValue < 0 || inputValue >= 1) {
-        validationError.style.display = "block";
-        validationMessage.style.display = "none";
-        return;
+        const inputPercentage = document.createElement("input");
+        inputPercentage.style.width = "50px";
+        inputPercentage.style.position = "absolute";
+        inputPercentage.style.right = "170px";
+
+        inputPercentage.type = "text";
+        inputPercentage.name = `dataPercentage${key}`;
+
+        inputPercentage.value = operationsPercentages[key];
+
+        const inputAccuWeight = document.createElement("input");
+        inputAccuWeight.style.width = "50px";
+        inputAccuWeight.style.marginBottom = '5px';
+        // inputAccuWeight.style.position = "absolute";
+        // inputAccuWeight.style.right = "1990px";
+
+        inputAccuWeight.type = "text";
+        inputAccuWeight.name = `dataAccuWeight${key}`;
+
+        inputAccuWeight.value = operationsAccumulatedWeights[key];
+
+        form.appendChild(label);
+        form.appendChild(inputPercentage);
+        form.appendChild(document.createElement("br"));
+
+        form2.appendChild(inputAccuWeight);
+        form2.appendChild(document.createElement("br"));
     }
 
-    validationError.style.display = "none";
-    validationMessage.style.display = "block";
+    const saveButton = document.createElement("button");
+    saveButton.id = "formButton";
+    saveButton.textContent = "حفظ";
+    form.appendChild(saveButton);
 
-    localStorage.setItem('evap_rate', inputValue);
+    popupContainerOperations.style.display = "block";
 
-    updateMassBox(startDate, endDate);
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
 
-    evapRateInput.placeholder = localStorage.getItem('evap_rate');
-}
+        // Create an object to represent the data
+        const dataObjectPercentage = {};
+        const dataObjectAccuWeight = {};
+        for (const key in operationsPercentages) {
+            const inputFieldPercentage = form.querySelector(`input[name="dataPercentage${key}"]`);
+            const valuePercentage = inputFieldPercentage.value;
+            dataObjectPercentage[key] = parseFloat(valuePercentage);
 
-function isNumeric(value) {
-    return !isNaN(parseFloat(value)) && isFinite(value);
-}
+            const inputFieldAccuWeight = form2.querySelector(`input[name="dataAccuWeight${key}"]`);
+            const valueAccuWeight = inputFieldAccuWeight.value;
+            dataObjectAccuWeight[key] = parseFloat(valueAccuWeight); // Assuming you want to send numeric values
+        }
+
+        const urlPercentage = 'http://isdom.online/dash_board/accumulated/update-percentage/2'
+        const urlAccuWeight = 'http://isdom.online/dash_board/accumulated/update-weight/2'
+
+        fetch(urlPercentage, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataObjectPercentage),
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Data successfully saved to the database.');
+                } else {
+                    console.error('Failed to save data to the database.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            })
+
+        fetch(urlAccuWeight, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataObjectAccuWeight),
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Data successfully saved to the database.');
+                } else {
+                    console.error('Failed to save data to the database.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+        popupContainerOperations.style.display = 'none';
+    });
+
+});
+
+
+document.getElementById('closeOperationsPopupBtn').addEventListener('click', function () {
+    document.getElementById('popupContainerOperations').style.display = 'none';
+});

@@ -1,44 +1,44 @@
-const centersIPDateDropdown = document.getElementById('centersIP-dateRangeDropdown-total');
 var centersList = [];
-var modifiedDataTarget = 0;
+var valuesTarget = 0;
+
+var operationsPercentages;
+var operationsAccumulatedWeights;
+
 //updateTotalOPGraph
 function updateTotalOPGraph(startDate, endDate) {
 
-    const opGraphURL1 = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=اسمدة عضوية&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
-    const opGraphURL2 = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=وقود بديل&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
-    const opGraphURL3 = `http://isdom.online/dash_board/tickets/output-rejected/weight-list?startDate=${startDate}&endDate=${endDate}`; // مفروزات
-    const opGraphURL4 = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=مفروزات&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
+    const asmedaURL = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=اسمدة عضوية&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
+    const waqoodURL = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=وقود بديل&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
+    const marfoodatURL = `http://isdom.online/dash_board/tickets/output-rejected/weight-list?startDate=${startDate}&endDate=${endDate}`; // مرفوضات
+    const mafroozatURL = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=مفروزات&startDate=${startDate}&endDate=${endDate}`; // مفروزات
 
 
-    fetch(opGraphURL1)
+    fetch(asmedaURL)
         .then(response => response.json())
         .then(data => {
-            const category1Values = data;
+            const asmedaValues = data;
 
-            fetch(opGraphURL2)
+            fetch(waqoodURL)
                 .then(response => response.json())
                 .then(data => {
-                    const category2Values = data;
+                    const waqoodValues = data;
 
-                    fetch(opGraphURL3)
+                    fetch(marfoodatURL)
                         .then(response => response.json())
                         .then(data => {
-                            const category3Values = data;
+                            const marfoodatValues = data;
 
-                            fetch(opGraphURL4)
+                            fetch(mafroozatURL)
                                 .then(response => response.json())
                                 .then(data => {
-                                    const category4Values = data;
+                                    const mafroozatValues = data;
 
-                                    // Update the chart data dynamically
-                                    tot_out_grph.load({
-                                        columns: [
-                                            ['وقود بديل', ...category2Values],
-                                            ['مفروزات', ...category4Values],
-                                            ['اسمدة عضوية', ...category1Values],
-                                            ['مرفوضات', ...category3Values]
-                                        ]
-                                    });
+                                    tot_out_grph.data.datasets[0].data = asmedaValues || 0;
+                                    tot_out_grph.data.datasets[1].data = waqoodValues || 0;
+                                    tot_out_grph.data.datasets[2].data = marfoodatValues || 0;
+                                    tot_out_grph.data.datasets[3].data = mafroozatValues || 0;
+
+                                    tot_out_grph.update();
                                 })
                                 .catch(error => {
                                     // console.error('Error:', error);
@@ -72,17 +72,12 @@ function updateTotalIPOPGraph(startDate, endDate) {
             fetch(ipOpGraphURL2)
                 .then(response => response.json())
                 .then(data => {
-                    // console.log(data);
-
                     const category2Values = data;
 
-                    // Update the chart data dynamically
-                    tot_in_out_grph.load({
-                        columns: [
-                            ['مدخلات', ...category1Values],
-                            ['مخرجات', ...category2Values]
-                        ]
-                    });
+                    tot_in_out_grph.data.datasets[0].data = category1Values || 0;
+                    tot_in_out_grph.data.datasets[1].data = category2Values || 0;
+
+                    tot_in_out_grph.update();
                 })
                 .catch(error => {
                     // console.error('Error:', error);
@@ -112,13 +107,10 @@ function updateTotalIPGraph(startDate, endDate) {
 
                     const category2Values = data; // Assuming the API response contains the values for the second category
 
-                    // Update the chart data dynamically
-                    tot_in_grph.load({
-                        columns: [
-                            ['مخلفات تصلح للمعالجة', ...category1Values],
-                            ['مخلفات لا تصلح للمعالجة', ...category2Values]
-                        ]
-                    });
+                    tot_in_grph.data.datasets[0].data = category1Values || 0;
+                    tot_in_grph.data.datasets[1].data = category2Values || 0;
+
+                    tot_in_grph.update();
                 })
                 .catch(error => {
                     // console.error('Error:', error);
@@ -129,61 +121,38 @@ function updateTotalIPGraph(startDate, endDate) {
         });
 }
 
-function updateCentersInputGraph_total() {
-    const selectedDate = centersIPDateDropdown.value;
+//Update Centers Graph
+function updateCentersInputGraph_total(startDate, endDate) {
 
-    let startDatex, endDatex;
     var numberOfDays;
 
-    if (selectedDate === 'today') {
-        numberOfDays = 1;
-        startDatex = moment().format('DD-MMM-YY');
-        endDatex = moment().format('DD-MMM-YY');
-    } else if (selectedDate === 'yesterday') {
-        numberOfDays = 1;
-        startDatex = moment().subtract(1, 'days').format('DD-MMM-YY');
-        endDatex = moment().subtract(1, 'days').format('DD-MMM-YY');
-    } else if (selectedDate === 'last7days') {
-        numberOfDays = 7;
-        startDatex = moment().subtract(7, 'days').format('DD-MMM-YY');
-        endDatex = moment().format('DD-MMM-YY');
-    } else if (selectedDate === 'last14days') {
-        numberOfDays = 14;
-        startDatex = moment().subtract(14, 'days').format('DD-MMM-YY');
-        endDatex = moment().format('DD-MMM-YY');
-    } else if (selectedDate === 'lastMonth') {
-        startDatex = moment().subtract(1, 'months').startOf('month').format('DD-MMM-YY');
-        endDatex = moment().subtract(1, 'months').endOf('month').format('DD-MMM-YY');
+    const startDatex = moment(startDate, 'DD-MMM-YY');
+    const endDatex = moment(endDate, 'DD-MMM-YY');
+    numberOfDays = endDatex.diff(startDatex, 'days') + 1;
 
-        const startDate = moment(startDatex, 'DD-MMM-YY');
-        const endDate = moment(endDatex, 'DD-MMM-YY');
-        numberOfDays = endDate.diff(startDate, 'days') + 1;
-    }
-
-    const urlReal = `http://isdom.online/dash_board/tickets/centers-net-weight-list?itemType=مدخلات&startDate=${startDatex}&endDate=${endDatex}`; // وقود بديل
+    const urlReal = `http://isdom.online/dash_board/tickets/centers-net-weight-list?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
+    const urlAccepted = `http://isdom.online/dash_board/tickets/centers-accepted-net-weight-list?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
     const urlTarget = `http://isdom.online/dash_board/targets`; // وقود بديل
 
-    // const storedData = JSON.parse(localStorage.getItem('labelData')) || [];
-    //
-    // const modifiedData = storedData.map(value => value * numberOfDays);
 
     Promise.all([
         fetch(urlReal).then(responseReal => responseReal.json()),
+        fetch(urlAccepted).then(responseAccepted => responseAccepted.json()),
         fetch(urlTarget).then(responseTarget => responseTarget.json())
-    ]).then(([dataReal, dataTarget]) => {
+    ]).then(([dataReal, dataAccepted, dataTarget]) => {
         centersList = Object.keys(dataReal);
         const valuesReal = Object.values(dataReal);
-        const valuesTarget = Object.values(dataTarget);
-        modifiedDataTarget = valuesTarget.map(value => value * numberOfDays);
+        const valuesAccepted = Object.values(dataAccepted);
+        valuesTarget = Object.values(dataTarget);
+        const modifiedDataTarget = valuesTarget.map(value => value * numberOfDays);
 
-        centers_ip_graph.load({
-            columns: [
-                ['الكميات الموردة', ...valuesReal],
-                ['الكميات المستهدفة', ...modifiedDataTarget]
-            ],
-            categories: centersList
-        });
 
+        centers_ip_graph.data.datasets[0].data = valuesReal || 0;
+        centers_ip_graph.data.datasets[1].data = valuesAccepted || 0;
+        centers_ip_graph.data.datasets[2].data = modifiedDataTarget || 0;
+        centers_ip_graph.data.labels = centersList || 0;
+
+        centers_ip_graph.update();
     })
         .catch(error => {
             console.error('Error:', error);
@@ -255,7 +224,7 @@ function updateTotAccRateBox(startDate, endDate) {
                     if (isNaN(percentage))
                         document.getElementById("accepted_per").textContent = 0 + "%"
                     else
-                        document.getElementById("accepted_per").textContent = percentage.toFixed(1) + "%";
+                        document.getElementById("accepted_per").textContent = percentage.toFixed(0) + "%";
                 })
                 .catch(error => {
                     // console.error('Error:', error);
@@ -285,12 +254,65 @@ function updateTotRejRateBox(startDate, endDate) {
                     if (isNaN(percentage))
                         document.getElementById("rejected_per").textContent = 0 + "%"
                     else
-                        document.getElementById("rejected_per").textContent = percentage.toFixed(1) + "%";
+                        document.getElementById("rejected_per").textContent = percentage.toFixed(0) + "%";
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
         })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+//Operations box
+function updateInOperationBox() {
+    const startDate = moment().format('DD-MMM-YY');
+    const endDate = moment().format('DD-MMM-YY');
+
+    const percentagesURL = 'http://isdom.online/dash_board/accumulated/percentage?siteNo=0';
+    const accumulatedWeightsURL = 'http://isdom.online/dash_board/accumulated/weight?siteNo=0'
+    const acceptedInputURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const asmedaURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
+    const waqoodURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=وقود بديل&&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
+    const marfoodatURL = `http://isdom.online/dash_board/tickets/output-rejected/weight?startDate=${startDate}&endDate=${endDate}`; // مرفوضات
+    const mafroozatURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مفروزات&startDate=${startDate}&endDate=${endDate}`; // مفروزات
+
+
+    Promise.all([
+        fetch(percentagesURL).then(responsePercentages => responsePercentages.json()).catch(() => 0),
+        fetch(accumulatedWeightsURL).then(responseAccumulatedWeights => responseAccumulatedWeights.json()).catch(() => 0),
+        fetch(acceptedInputURL).then(responseAcceptedInput => responseAcceptedInput.json()).catch(() => 0),
+        fetch(asmedaURL).then(responseAsmeda => responseAsmeda.json()).catch(() => 0),
+        fetch(waqoodURL).then(responseWaqood => responseWaqood.json()).catch(() => 0),
+        fetch(marfoodatURL).then(responseMarfoodat => responseMarfoodat.json()).catch(() => 0),
+        fetch(mafroozatURL).then(responseMafroozat => responseMafroozat.json()).catch(() => 0)
+    ]).then(([dataPercentages, dataAccumulatedWeights, dataAcceptedInput,
+                 dataAsmeda, dataWaqood, dataMarfoodat,
+                 dataMafroozat]) => {
+        operationsPercentages = dataPercentages;
+        operationsAccumulatedWeights = dataAccumulatedWeights;
+
+        document.getElementById('asmeda-percentage').textContent = ' (' + dataPercentages['اسمدة عضوية'] + '%)';
+        document.getElementById('waqood-percentage').textContent = ' (' + dataPercentages['وقود بديل'] + '%)';
+        document.getElementById('marfoodat-percentage').textContent = ' (' + dataPercentages['مرفوضات'] + '%)';
+        document.getElementById('mafroozat-percentage').textContent = ' (' + dataPercentages['مفروزات'] + '%)';
+
+        const asmeda_operation_weight = (dataAcceptedInput * dataPercentages['اسمدة عضوية'] / 100) + dataAccumulatedWeights['اسمدة عضوية'] -
+            dataAsmeda;
+        const waqood_operation_weight = (dataAcceptedInput * dataPercentages['وقود بديل'] / 100) + dataAccumulatedWeights['وقود بديل'] -
+            dataWaqood;
+        const marfoodat_operation_weight = (dataAcceptedInput * dataPercentages['مرفوضات'] / 100) + dataAccumulatedWeights['مرفوضات'] -
+            dataMarfoodat;
+        const mafroozat_operation_weight = (dataAcceptedInput * dataPercentages['مفروزات'] / 100) + dataAccumulatedWeights['مفروزات'] -
+            dataMafroozat;
+
+        document.getElementById('asmeda-operation-weight').textContent = asmeda_operation_weight.toFixed(0) + ' طن';
+        document.getElementById('waqood-operation-weight').textContent = waqood_operation_weight.toFixed(0) + ' طن';
+        document.getElementById('marfoodat-operation-weight').textContent = marfoodat_operation_weight.toFixed(0) + ' طن';
+        document.getElementById('mafroozat-operation-weight').textContent = mafroozat_operation_weight.toFixed(0) + ' طن';
+
+    })
         .catch(error => {
             console.error('Error:', error);
         });
@@ -374,6 +396,7 @@ $dateRangePicker = $('#dateRangePicker');
 // Initialize the date range picker
 $(document).ready(function () {
 
+    updateInOperationBox();
     $dateRangePicker.daterangepicker({
         opens: 'left',
         startDate: moment(),
@@ -392,125 +415,118 @@ $(document).ready(function () {
         }
     });
 
-    // Initialize the total-ip-op-graph component
-    tot_in_out_grph = c3.generate({
-        bindto: "#total-ip-op-graph",
-        size: {height: 350},
-        legend: {
-            padding: {
-                left: 5
-            }
-        },
-        axis: {
-            x: {
-                type: 'category',
-                categories: ['أجا', 'سندوب', 'بلقاس', 'السنبلاوين', 'المنزلة']
-            }
-        },
+    tot_in_out_grph = new Chart(document.getElementById('total-ip-op-graph'), {
+        type: 'bar',
         data: {
-            columns: [
-                ['مدخلات', 0, 0, 0, 0, 0],
-                ['مخرجات', 0, 0, 0, 0, 0]
-            ],
-            type: "bar",
-            colors: {'مدخلات': "#ef601c", 'مخرجات': "#36ca0f"}
-        },
-        grid: {y: {show: true}}
-    });
-
-    tot_in_grph = c3.generate({
-        bindto: "#total-input-graph",
-        size: {height: 350},
-        legend: {
-            padding: {
-                left: 5
-            }
-        },
-        axis: {
-            x: {
-                type: 'category',
-                categories: ['أجا', 'سندوب', 'بلقاس', 'السنبلاوين', 'المنزلة']
-            }
-        },
-        data: {
-            columns: [
-                ['مخلفات تصلح للمعالجة', 0, 0, 0, 0, 0],
-                ['مخلفات لا تصلح للمعالجة', 0, 0, 0, 0, 0]
-            ],
-            type: "bar",
-            colors: {'مخلفات تصلح للمعالجة': "#ffa014", 'مخلفات لا تصلح للمعالجة': "#d81415"}
-        },
-        grid: {y: {show: true}}
-    });
-
-    tot_out_grph = c3.generate({
-        bindto: "#total-output-graph",
-        size: {height: 350},
-        legend: {
-            padding: {
-                left: 5
-            }
-        },
-        axis: {
-            x: {
-                type: 'category',
-                categories: ['أجا', 'سندوب', 'بلقاس', 'السنبلاوين', 'المنزلة'] // specify the categories/names on the x-axis
-            }
-        },
-        data: {
-            columns: [
-                ['وقود بديل', 0, 0, 0, 0, 0],
-                ['مفروزات', 0, 0, 0, 0, 0],
-                ['اسمدة عضوية', 0, 0, 0, 0, 0],
-                ['مرفوضات', 0, 0, 0, 0, 0]
-            ],
-            type: "bar",
-            colors: {'اسمدة عضوية': "#2da075", 'وقود بديل': "#1427c9", 'مفروزات': "#2d66d9", 'مرفوضات': "#10d6b4"}
-        },
-        grid: {y: {show: !0}}
-    });
-
-    centers_ip_graph = c3.generate({
-        bindto: "#centers-ip-graph",
-        size: {height: 350},
-        legend: {},
-        axis: {
-            x: {
-                type: 'category',
-                categories: [],
-                tick: {
-                    rotate: -20,
-                    multiline: false
+            labels: ['أجا', 'سندوب', 'بلقاس', 'السنبلاوين', 'المنزلة'],
+            datasets: [
+                {
+                    label: 'مدخلات',
+                    backgroundColor: '#ef601c',
+                    borderColor: '#ef601c',
+                    data: []
                 },
-                legend: {
-                    inset: {
-                        anchor: 'bottom-right',
-                        x: 90,
-                        y: 10,
-                        step: 2
-                    }
-                },
-                height: 35
-            }
-        },
-        data: {
-            columns: [
-                ['الكميات الموردة', []],
-                ['الكميات المستهدفة', []] // Initialize with an empty array
-            ],
-            type: "bar",
-            colors: {
-                'الكميات الموردة': "#ef601c",
-                'الكميات المستهدفة': "#6C0C0C"
-            }
-        },
-        grid: {y: {show: true}}
+                {
+                    label: 'مخرجات',
+                    backgroundColor: '#36ca0f',
+                    borderColor: '#36ca0f',
+                    data: []
+                }
+            ]
+        }
+
     });
+
+    tot_in_grph = new Chart(document.getElementById('total-input-graph'), {
+        type: 'bar',
+        data: {
+            labels: ['أجا', 'سندوب', 'بلقاس', 'السنبلاوين', 'المنزلة'],
+            datasets: [
+                {
+                    label: 'مخلفات تصلح للمعالجة',
+                    backgroundColor: '#ffa014',
+                    borderColor: '#ffa014',
+                    data: []
+                },
+                {
+                    label: 'مخلفات لا تصلح للمعالجة',
+                    backgroundColor: '#d81415',
+                    borderColor: '#d81415',
+                    data: []
+                }
+            ]
+        }
+
+    });
+
+    tot_out_grph = new Chart(document.getElementById('total-output-graph'), {
+        type: 'line',
+        data: {
+            labels: ['أجا', 'سندوب', 'بلقاس', 'السنبلاوين', 'المنزلة'],
+            datasets: [
+                {
+                    label: 'اسمدة عضوية',
+                    backgroundColor: '#2da075',
+                    borderColor: '#2da075',
+                    data: []
+                },
+                {
+                    label: 'وقود بديل',
+                    backgroundColor: '#1427c9',
+                    borderColor: '#1427c9',
+                    data: []
+                },
+                {
+                    label: 'مرفوضات',
+                    backgroundColor: '#10d6b4',
+                    borderColor: '#10d6b4',
+                    data: []
+                },
+                {
+                    label: 'مفروزات',
+                    backgroundColor: '#85a6e9',
+                    borderColor: '#85a6e9',
+                    data: []
+                }
+            ]
+        }
+
+    });
+
+    centers_ip_graph = new Chart(document.getElementById('centers-ip-graph'), {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [
+                {
+                    label: 'الكميات الموردة',
+                    backgroundColor: '#ef601c',
+                    borderColor: '#ef601c',
+                    data: []
+                },
+                {
+                    label: 'المخلفات الصالحة للمعالجة',
+                    backgroundColor: '#ffc814',
+                    borderColor: '#ffc814',
+                    data: []
+                },
+                {
+                    label: 'الكميات المستهدفة',
+                    backgroundColor: '#6C0C0C',
+                    borderColor: '#6C0C0C',
+                    data: []
+                }
+            ]
+        }
+
+    });
+
 
     // Set the initial values for the components
     updateTotalOPGraph(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateTotalIPGraph(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateTotalIPOPGraph(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
+    updateCentersInputGraph_total(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateTotAccRateBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateTotRejRateBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateTotIPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
@@ -521,7 +537,6 @@ $(document).ready(function () {
     updateTotWaqoodOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateTotMarfoodatOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateTotMafroozatOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
-    updateCentersInputGraph_total();
 
     // Listen for changes in the date range picker and update the components accordingly
     $dateRangePicker.on('apply.daterangepicker', function (ev, picker) {
@@ -531,6 +546,7 @@ $(document).ready(function () {
         updateTotalOPGraph(startDate, endDate);
         updateTotalIPGraph(startDate, endDate);
         updateTotalIPOPGraph(startDate, endDate);
+        updateCentersInputGraph_total(startDate, endDate);
         updateTotAccRateBox(startDate, endDate);
         updateTotRejRateBox(startDate, endDate);
         updateTotIPBox(startDate, endDate);
@@ -548,13 +564,8 @@ document.getElementById('openPopupBtn').addEventListener('click', function () {
     const popupContainer = document.getElementById("popupContainer");
     const form = document.getElementById("dataInputForm");
 
-    // Clear any existing form elements
     form.innerHTML = '';
 
-    // Retrieve data from local storage
-    const storedData = JSON.parse(localStorage.getItem('labelData'));
-
-    // Loop to generate input fields with labels
     for (let i = 0; i < centersList.length; i++) {
         const label = document.createElement("label");
         label.style.marginBottom = "10px";
@@ -568,9 +579,8 @@ document.getElementById('openPopupBtn').addEventListener('click', function () {
         input.type = "text";
         input.name = `data${i}`;
 
-        // Set the input value from the stored data
-        if (modifiedDataTarget && modifiedDataTarget[i]) {
-            input.value = modifiedDataTarget[i];
+        if (valuesTarget && valuesTarget[i]) {
+            input.value = valuesTarget[i];
         }
 
         form.appendChild(label);
@@ -618,14 +628,15 @@ document.getElementById('openPopupBtn').addEventListener('click', function () {
 
         popupContainer.style.display = 'none';
 
-        console.log('modifiedDataTarget')
-        console.log(modifiedDataTarget)
+        // centers_ip_graph.load({
+        //     columns: [
+        //         ['الكميات المستهدفة', ...valuesTarget]
+        //     ],
+        // });
 
-        centers_ip_graph.load({
-            columns: [
-                ['الكميات المستهدفة', ...modifiedDataTarget]
-            ],
-        });
+        centers_ip_graph.data.datasets[1].data = valuesTarget || 0;
+        centers_ip_graph.update();
+
     });
 
 });
@@ -633,4 +644,125 @@ document.getElementById('openPopupBtn').addEventListener('click', function () {
 
 document.getElementById('closePopupBtn').addEventListener('click', function () {
     document.getElementById('popupContainer').style.display = 'none';
+});
+
+
+document.getElementById('openOperationPopupBtn').addEventListener('click', function () {
+    const popupContainerOperations = document.getElementById("popupContainerOperations");
+    // const backgroundElements = document.getElementById("modalOverlay");
+    //
+    // backgroundElements.style.display = 'block';
+
+    const form = document.getElementById("percentageForm");
+    const form2 = document.getElementById("accuWeightForm");
+
+    // Clear any existing form elements
+    form.innerHTML = '';
+    form2.innerHTML = '';
+    form2.style.position = "absolute";
+    form2.style.right = "275px";
+    form2.style.width = "auto";
+
+
+    // Loop to generate input fields with labels
+    for (const key in operationsPercentages) {
+        const label = document.createElement("label");
+        label.style.marginBottom = "10px";
+        label.textContent = key;
+
+        const inputPercentage = document.createElement("input");
+        inputPercentage.style.width = "50px";
+        inputPercentage.style.position = "absolute";
+        inputPercentage.style.right = "170px";
+
+        inputPercentage.type = "text";
+        inputPercentage.name = `dataPercentage${key}`;
+
+        inputPercentage.value = operationsPercentages[key];
+
+        const inputAccuWeight = document.createElement("input");
+        inputAccuWeight.style.width = "50px";
+        inputAccuWeight.style.marginBottom = '5px';
+
+        inputAccuWeight.type = "text";
+        inputAccuWeight.name = `dataAccuWeight${key}`;
+
+        inputAccuWeight.value = operationsAccumulatedWeights[key];
+
+        form.appendChild(label);
+        form.appendChild(inputPercentage);
+        form.appendChild(document.createElement("br"));
+
+        form2.appendChild(inputAccuWeight);
+        form2.appendChild(document.createElement("br"));
+    }
+
+    const saveButton = document.createElement("button");
+    saveButton.id = "formButton";
+    saveButton.textContent = "حفظ";
+    form.appendChild(saveButton);
+
+    popupContainerOperations.style.display = "block";
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const dataObjectPercentage = {};
+        const dataObjectAccuWeight = {};
+        for (const key in operationsPercentages) {
+            const inputFieldPercentage = form.querySelector(`input[name="dataPercentage${key}"]`);
+            const valuePercentage = inputFieldPercentage.value;
+            dataObjectPercentage[key] = parseFloat(valuePercentage);
+
+            const inputFieldAccuWeight = form2.querySelector(`input[name="dataAccuWeight${key}"]`);
+            const valueAccuWeight = inputFieldAccuWeight.value;
+            dataObjectAccuWeight[key] = parseFloat(valueAccuWeight); // Assuming you want to send numeric values
+        }
+
+        const urlPercentage = 'http://isdom.online/dash_board/accumulated/update-percentage/0'
+        const urlAccuWeight = 'http://isdom.online/dash_board/accumulated/update-weight/0'
+
+        fetch(urlPercentage, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataObjectPercentage),
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Data successfully saved to the database.');
+                } else {
+                    console.error('Failed to save data to the database.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            })
+
+        fetch(urlAccuWeight, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataObjectAccuWeight),
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Data successfully saved to the database.');
+                } else {
+                    console.error('Failed to save data to the database.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+        popupContainerOperations.style.display = 'none';
+    });
+
+});
+
+document.getElementById('closeOperationsPopupBtn').addEventListener('click', function () {
+    document.getElementById('popupContainerOperations').style.display = 'none';
 });
