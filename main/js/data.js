@@ -582,7 +582,7 @@ $(document).ready(function () {
 
 document.getElementById('openPopupBtn').addEventListener('click', function () {
     const popupContainer = document.getElementById("popupContainer");
-    const form = document.getElementById("dataInputForm");
+    const form = document.getElementById("targetsForm");
 
     form.innerHTML = '';
 

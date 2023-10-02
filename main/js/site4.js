@@ -553,82 +553,9 @@ function updateOPChartData(startDate, endDate) {
         });
 }
 
-
 //// DATA BOXES ////
 
-function updateRejBox(startDate, endDate) {
-    const urlAcc = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=4&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const urlRej = `http://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
-
-    Promise.all([
-        fetch(urlAcc).then(response => response.json()).catch(() => 0),
-        fetch(urlRej).then(response => response.json()).catch(() => 0),
-    ])
-        .then(([accData, rejData]) => {
-            const percentage = (rejData / accData) * 100;
-            if (isNaN(percentage))
-                document.getElementById("s4-accepted").textContent = 0 + "%"
-            else {
-                document.getElementById("s4-rejected-per").textContent = percentage.toFixed(0) + "%"
-                document.getElementById("s4-accepted").textContent = "من " + accData + " طن";
-
-                const progressBar = document.getElementById("s4-rej-progress");
-                updateProgressBar(progressBar, percentage);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
-    function updateProgressBar(progressBar, percentage) {
-        progressBar.style.width = `${percentage}%`; // Set the width of the progress bar
-        progressBar.setAttribute('aria-valuenow', percentage); // Set the current value of the progress bar
-    }
-}
-
-function updateAccBox(startDate, endDate) {
-    const accUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=4&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const totInUrl = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=4&startDate=${startDate}&endDate=${endDate}`;
-
-    Promise.all([
-        fetch(accUrl).then(response => response.json()).catch(() => 0),
-        fetch(totInUrl).then(response => response.json()).catch(() => 0),
-    ])
-        .then(([accData, totInData]) => {
-            const percentage = (accData / totInData) * 100;
-            if (isNaN(percentage))
-                document.getElementById("s4-accepted-per").textContent = 0 + "%"
-            else {
-                document.getElementById("s4-accepted-per").textContent = percentage.toFixed(0) + "%"
-
-                const progressBar = document.getElementById("s4-acc-progress");
-                updateProgressBar(progressBar, percentage);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
-    function updateProgressBar(progressBar, percentage) {
-        progressBar.style.width = `${percentage}%`; // Set the width of the progress bar
-        progressBar.setAttribute('aria-valuenow', percentage); // Set the current value of the progress bar
-    }
-}
-
-function updateOPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مخرجات&siteNo=4&startDate=${startDate}&endDate=${endDate}`;
-
-    fetch(url)
-        .then(response => response.json()).catch(() => 0)
-        .then(data => {
-            const newValue = data; // Assuming the API response contains the desired value
-
-            document.getElementById("s4-op-box").textContent = newValue + " طن";
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}
+//// inputs ////
 
 function updateIPBox(startDate, endDate) {
     const url = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=4&startDate=${startDate}&endDate=${endDate}`;
@@ -644,6 +571,95 @@ function updateIPBox(startDate, endDate) {
             console.error('Error:', error);
         });
 }
+
+function updateAccIPBox(startDate, endDate) {
+    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=4&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    fetch(url)
+        .then(response => response.json()).catch(() => 0)
+        .then(data => {
+            const newValue = data;
+            document.getElementById("s4-accepted-ip-box").textContent = newValue + " طن";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+function updateRejIPBox(startDate, endDate) {
+    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=4&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    fetch(url)
+        .then(response => response.json()).catch(() => 0)
+        .then(data => {
+            const newValue = data;
+            document.getElementById("s4-rejected-ip-box").textContent = newValue + " طن";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+
+function updateRejRateBox(startDate, endDate) {
+    const accUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=4&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const rejUrl = `http://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`;
+
+    fetch(rejUrl)
+        .then(response => response.json()).catch(() => 0)
+        .then(rejData => {
+
+            const rejVal = rejData;
+            // console.log("rejected value" + rejVal);
+            fetch(accUrl)
+                .then(response => response.json()).catch(() => 0)
+                .then(accData => {
+                    const accVal = accData;
+
+                    const percentage = (rejVal / accVal) * 100;
+                    if (isNaN(percentage))
+                        document.getElementById("rejected_per").textContent = 0 + "%"
+                    else
+                        document.getElementById("rejected_per").textContent = percentage.toFixed(0) + "%";
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+function updateAccRateBox(startDate, endDate) {
+    const accUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=4&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const totInUrl = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=4&startDate=${startDate}&endDate=${endDate}`;
+
+
+    fetch(accUrl)
+        .then(response => response.json()).catch(() => 0)
+        .then(accData => {
+
+            const accVal = accData;
+            fetch(totInUrl)
+                .then(response => response.json()).catch(() => 0)
+                .then(totInData => {
+                    const totInVal = totInData;
+
+                    const percentage = (accVal / totInVal) * 100;
+                    if (isNaN(percentage))
+                        document.getElementById("accepted_per").textContent = 0 + "%"
+                    else
+                        document.getElementById("accepted_per").textContent = percentage.toFixed(0) + "%";
+                })
+                .catch(error => {
+                    // console.error('Error:', error);
+                });
+        })
+        .catch(error => {
+            // console.error('Error:', error);
+        });
+}
+
+//// operations ////
 
 function updateInOperationBox() {
     const startDate = moment().format('DD-MMM-YY');
@@ -697,6 +713,76 @@ function updateInOperationBox() {
         });
 }
 
+//// outputs ////
+
+function updateOPBox(startDate, endDate) {
+    const url = `http://isdom.online/dash_board/tickets/output/weight?itemType=مخرجات&siteNo=4&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`;
+
+    fetch(url)
+        .then(response => response.json()).catch(() => 0)
+        .then(data => {
+            const newValue = data; // Assuming the API response contains the desired value
+
+            document.getElementById("s4-op-box").textContent = newValue + " طن";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+function updateAsmedaOPBox(startDate, endDate) {
+    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&siteNo=4&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    fetch(url)
+        .then(response => response.json()).catch(() => 0)
+        .then(data => {
+            const newValue = data;
+            document.getElementById("s4-asmeda-op-box").textContent = newValue + " طن";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+function updateWaqoodOPBox(startDate, endDate) {
+    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=وقود بديل&siteNo=4&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    fetch(url)
+        .then(response => response.json()).catch(() => 0)
+        .then(data => {
+            const newValue = data;
+            document.getElementById("s4-waqood-op-box").textContent = newValue + " طن";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+function updateMarfoodatOPBox(startDate, endDate) {
+    const url = `http://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`;
+    fetch(url)
+        .then(response => response.json()).catch(() => 0)
+        .then(data => {
+            const newValue = data;
+            document.getElementById("s4-marfoodat-op-box").textContent = newValue + " طن";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+function updateMafroozatOPBox(startDate, endDate) {
+    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مفروزات&siteNo=4&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    fetch(url)
+        .then(response => response.json()).catch(() => 0)
+        .then(data => {
+            const newValue = data;
+            document.getElementById("s4-mafroozat-op-box").textContent = newValue + " طن";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+
 $(document).ready(function () {
 
     updateInOperationBox();
@@ -713,9 +799,15 @@ $(document).ready(function () {
     }, refreshFreq);
 
     // Initial data update
-    updateAccBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
-    updateRejBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
+    updateAccIPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
+    updateRejIPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
+    updateAccRateBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
+    updateRejRateBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
+    updateAsmedaOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
+    updateWaqoodOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
+    updateMarfoodatOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
+    updateMafroozatOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateIPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateOPChartData(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateIPChartData(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
@@ -762,9 +854,15 @@ function updateAllByTime() {
     var endDate = end.format('DD-MMM-YY');
 
     // Call the update functions with the start and end dates
-    updateAccBox(startDate, endDate);
-    updateRejBox(startDate, endDate);
+    updateAccIPBox(startDate, endDate);
+    updateRejIPBox(startDate, endDate);
+    updateAccRateBox(startDate, endDate);
+    updateRejRateBox(startDate, endDate);
     updateOPBox(startDate, endDate);
+    updateAsmedaOPBox(startDate, endDate);
+    updateWaqoodOPBox(startDate, endDate);
+    updateMarfoodatOPBox(startDate, endDate);
+    updateMafroozatOPBox(startDate, endDate);
     updateIPBox(startDate, endDate);
     updateOPChartData(startDate, endDate);
     updateIPChartData(startDate, endDate);
@@ -777,8 +875,8 @@ document.getElementById('openOperationPopupBtn').addEventListener('click', funct
     //
     // backgroundElements.style.display = 'block';
 
-    const form = document.getElementById("dataInputForm");
-    const form2 = document.getElementById("dataInputForm2");
+    const form = document.getElementById("percentageForm");
+    const form2 = document.getElementById("accuWeightForm");
 
     // Clear any existing form elements
     form.innerHTML = '';

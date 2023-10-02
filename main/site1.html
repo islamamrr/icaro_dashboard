@@ -156,96 +156,111 @@
             <!-- Main content -->
             <section class="content">
                 <div class="row">
-                    <div class="col-xl-6 col-md-6 col-12">
+                    <!--INPUT-->
+                    <div class="col-xl-4 col-md-4 col-12">
                         <div class="col-xl-12 col-md-12 col-12">
-                            <div class="box p-4">
-                                <h1 class="fw-500 text-dark" id="s1-rejected-per"></h1>
-                                <small class="fw-200 fs-2" id="s1-accepted"></small>
-                                <p class="fs-4">
-                                    نسبة المرفوضات من المخلفات الصالحة للمعالجة
-                                </p>
-                                <div class="progress progress-xs mt-10 mb-0 max-w-p90">
-                                    <div
-                                            class="progress-bar"
-                                            role="progressbar"
-                                            style="width: 100%; background-color: #003f5c"
-                                            aria-valuenow="0"
-                                            aria-valuemin="0"
-                                            aria-valuemax="100"
-                                            id="s1-rej-progress"
-                                    ></div>
+                            <div class="box pull-up">
+                                <div class="box-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div style="color: #ef601c; margin: auto">
+                                            <h5 class="mb-0" style="font-weight: bold">
+                                                اجمالى المدخلات
+                                            </h5>
+                                            <h2 id="s1-ip-box" class="mb-0"></h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        <div class="row">
+                            <div class="col-xl-6 col-md-6 col-12">
+                                <div class="box pull-up">
+                                    <div class="box-body">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div style="color: #ffa014; margin: auto">
+                                                <h5 class="mb-0" style="font-size: small">
+                                                    مخلفات تصلح للمعالجة
+                                                </h5>
+                                                <h2 id="s1-accepted-ip-box" class="mb-0 fs-4 d-flex justify-content-center"></h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6 col-12">
+                                <div class="box pull-up">
+                                    <div class="box-body">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div style="color: #d81415; margin: auto">
+                                                <h5 class="mb-0" style="font-size: small">
+                                                    مخلفات لا تصلح للمعالجة
+                                                </h5>
+                                                <h2 id="s1-rejected-ip-box" class="mb-0 fs-4 d-flex justify-content-center"></h2>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-xl-12 col-md-12 col-12">
-                            <div class="box p-4" style="color: #003f5c">
-                                <h1 class="fw-500" id="s1-accepted-per"></h1>
-                                <p class="fs-4">نسبة المخلفات الصالحة للمعالجة</p>
-                                <div class="progress progress-xs mt-10 mb-0 max-w-p90">
-                                    <div
-                                            class="progress-bar"
-                                            role="progressbar"
-                                            style="width: 100%; background-color: #003f5c"
-                                            aria-valuenow="0"
-                                            aria-valuemin="0"
-                                            aria-valuemax="100"
-                                            id="s1-acc-progress"
-                                    ></div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-xl-6 col-md-6 col-12">
-                                <div class="box p-4">
-                                    <div
-                                            class="d-flex align-items-center justify-content-between"
-                                    >
-                                        <!--                                <img src="../images/import.png" style="height: 60px">-->
-                                        <div style="color: #ef601c">
-                                            <h3 class="fw-500" id="s1-ip-box"></h3>
-                                            <p class="fs-4 fw-600">اجمالى وزن المدخلات</p>
+                                <div class="box pull-up">
+                                    <div class="box-body">
+                                        <div
+                                                class="d-flex align-items-center justify-content-between"
+                                        >
+                                            <div style="color: #003f5c; margin: auto">
+                                                <h5 class="mb-0" style="font-weight: bold; font-size: small">
+                                                    نسبة المخلفات الصالحة للمعالجة
+                                                </h5>
+                                                <h2 class="mb-0 fs-4 d-flex justify-content-center" id="accepted_per"></h2>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-xl-6 col-md-6 col-12">
-                                <div class="box p-4">
-                                    <div
-                                            class="d-flex align-items-center justify-content-between"
-                                    >
-                                        <!--                                <img src="../images/export.png" style="height: 60px">-->
-                                        <div style="color: #36ca0f">
-                                            <h3 class="fw-500" id="s1-op-box"></h3>
-                                            <p class="fs-4 fw-600">اجمالى وزن المخرجات</p>
+                                <div class="box pull-up">
+                                    <div class="box-body">
+                                        <div
+                                                class="d-flex align-items-center justify-content-between"
+                                        >
+                                            <div style="color: #003f5c; margin: auto">
+                                                <h5 class="mb-0" style="font-weight: bold; font-size: small">
+                                                    نسبة المرفوضات من المخلفات الصالحة للمعالجة
+                                                </h5>
+                                                <h2 class="mb-0 fs-4 d-flex justify-content-center" id="rejected_per"></h2>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
                     <!--taht el tashgheel-->
 
-                    <div class="col-xl-6 col-md-6 col-12">
+                    <div class="col-xl-4 col-md-4 col-12">
                         <div id="popupContainerOperations" class="popup">
                             <div class="popup-content-operations">
                                         <span class="close"
                                               id="closeOperationsPopupBtn">&times;</span>
-                                <h2 style="font-size: 21px;margin-bottom: 35px;">تغيير الكميات التراكمية والنسب من المخلفات الصالحة للمعالجة
+                                <h2 style="font-size: 21px;margin-bottom: 22px;">تغيير الكميات التراكمية والنسب من
+                                    المخلفات الصالحة للمعالجة
                                     لليوم</h2>
-                                <span style="position:relative;font-size:medium;right: 160px">النسبة</span>
+                                <span style="position:absolute;font-size:medium;right: 175px">النسبة</span>
                                 <span style="position:absolute;font-size:medium;right: 275px">الكمية المتراكمة</span>
-                                <div class="row" style="margin-top: 10px;">
-                                    <form id="dataInputForm">
+                                <div class="row" style="margin-top: 55px;">
+                                    <form id="percentageForm">
                                     </form>
-                                    <form id="dataInputForm2">
+                                    <form id="accuWeightForm">
                                     </form>
                                 </div>
                             </div>
                         </div>
-                        <div class="box pull-up">
+                        <div class="box pull-up" style="background: radial-gradient(#ffffff, #F9F9F9);">
                             <div class="box-body">
                                 <div class="d-flex flex-column">
 
@@ -274,6 +289,100 @@
                                                 id="mafroozat-percentage" style="font-size: medium"></span></span>
                                         <span class="operations-value fs-4 fw-500"
                                               id="mafroozat-operation-weight"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--OUTPUT-->
+                    <div class="col-xl-4 col-md-4 col-12">
+                        <div class="col-xl-12 col-md-12 col-12">
+                            <div class="box pull-up">
+                                <div class="box-body">
+                                    <div
+                                            class="d-flex align-items-center justify-content-between"
+                                    >
+                                        <div style="color: #36ca0f; margin: auto">
+                                            <h5 class="mb-0" style="font-weight: bold">
+                                                اجمالى المخرجات
+                                            </h5>
+                                            <h2 id="s1-op-box" class="mb-0"></h2>
+                                        </div>
+                                        <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-6 col-md-6 col-12">
+                                <div class="box pull-up">
+                                    <div class="box-body">
+                                        <div
+                                                class="d-flex align-items-center justify-content-between"
+                                        >
+                                            <div style="color: #2da075; margin: auto">
+                                                <h5 class="mb-0" style="font-size: medium">
+                                                    اسمدة عضوية
+                                                </h5>
+                                                <h2 id="s1-asmeda-op-box" class="mb-0 fs-4 d-flex justify-content-center"></h2>
+                                            </div>
+                                            <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6 col-12">
+                                <div class="box pull-up">
+                                    <div class="box-body">
+                                        <div
+                                                class="d-flex align-items-center justify-content-between"
+                                        >
+                                            <div style="color: #1427c9; margin: auto">
+                                                <h5 class="mb-0" style="font-size: medium">
+                                                    وقود بديل
+                                                </h5>
+                                                <h2 id="s1-waqood-op-box" class="mb-0 fs-4 d-flex justify-content-center"></h2>
+                                            </div>
+                                            <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-md-6 col-12">
+                                <div class="box pull-up">
+                                    <div class="box-body">
+                                        <div
+                                                class="d-flex align-items-center justify-content-between"
+                                        >
+                                            <div style="color: #10d6b4; margin: auto">
+                                                <h5 class="mb-0" style="font-size: medium">
+                                                    مرفوضات
+                                                </h5>
+                                                <h2 id="s1-marfoodat-op-box" class="mb-0 fs-4 d-flex justify-content-center"></h2>
+                                            </div>
+                                            <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6 col-12">
+                                <div class="box pull-up">
+                                    <div class="box-body">
+                                        <div
+                                                class="d-flex align-items-center justify-content-between"
+                                        >
+                                            <div style="color: #85a6e9; margin: auto">
+                                                <h5 class="mb-0" style="font-size: medium">
+                                                    مفروزات
+                                                </h5>
+                                                <h2 id="s1-mafroozat-op-box" class="mb-0 fs-4 d-flex justify-content-center"></h2>
+                                            </div>
+                                            <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
+                                        </div>
                                     </div>
                                 </div>
                             </div>

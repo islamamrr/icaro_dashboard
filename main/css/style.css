@@ -43640,7 +43640,7 @@ select#op-villageDropdown-s5, select#op-villageDropdown-s6 {
 
 #openOperationPopupBtn {
     position: relative;
-    right: 88%;
+    right: 85%;
     bottom: 24px;
     border-radius: 11px;
     color: white;
@@ -43687,7 +43687,7 @@ select#op-villageDropdown-s5, select#op-villageDropdown-s6 {
 
 .popup-content-operations{
     padding: 20px;
-    width: 25vw;
+    width: 27vw;
 }
 
 #s1-ip-chart, #s1-op-chart, #s2-ip-chart, #s2-op-chart, #s3-ip-chart, #s3-op-chart,
