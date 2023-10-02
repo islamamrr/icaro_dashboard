@@ -262,7 +262,14 @@ const ipGraphData = {
         }]
 };
 const s4_in_grph = new Chart(document.getElementById('s4-in-grph'), {
-    type: 'line', data: ipGraphData
+    type: 'line',
+    data: ipGraphData,
+    options: {
+        interaction: {
+            intersect: false,
+            mode: 'index',
+        }
+    }
 });
 
 
@@ -380,7 +387,14 @@ const opGraphData = {
 };
 
 const s4_out_grph = new Chart(document.getElementById('s4-out-grph'), {
-    type: 'line', data: opGraphData
+    type: 'line',
+    data: opGraphData,
+    options: {
+        interaction: {
+            intersect: false,
+            mode: 'index',
+        }
+    }
 });
 
 

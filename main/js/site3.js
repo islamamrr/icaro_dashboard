@@ -269,7 +269,14 @@ const ipChartOptions = {
 };
 
 const s3_in_grph = new Chart(document.getElementById('s3-in-grph'), {
-    type: 'line', data: ipChartOptions
+    type: 'line',
+    data: ipChartOptions,
+    options: {
+        interaction: {
+            intersect: false,
+            mode: 'index'
+        }
+    }
 });
 
 
@@ -340,16 +347,43 @@ function updateInputGraph_s3() {
 
 ////  INPUT DONUT CHART  ////
 
+// const initialIPChartData = {
+//     labels: ['مصنع اجا', 'مصنع سندوب', 'مصنع بلقاس', 'مصنع السنبلاوين', 'مصنع المنزلة', 'اخري'],
+//     datasets: [{
+//         data: [0, 0, 0, 0, 0, 0],
+//         backgroundColor: ['#d9938c', '#885A5A', '#6096BA', '#567a44', '#DC136C', '#394565']
+//     }]
+// };
+// const s3_ip_chart = new Chart(document.getElementById('s3-ip-chart'), {
+//     type: 'doughnut', data: initialIPChartData
+// });
+
+
 const initialIPChartData = {
-    labels: ['مصنع اجا', 'مصنع سندوب', 'مصنع بلقاس', 'مصنع السنبلاوين', 'مصنع المنزلة', 'اخري'],
-    datasets: [{
-        data: [0, 0, 0, 0, 0, 0],
-        backgroundColor: ['#d9938c', '#885A5A', '#6096BA', '#567a44', '#DC136C', '#394565']
-    }]
+    bindto: "#s3-ip-chart",
+    size: {height: 350},
+    legend: {},
+    data: {
+        columns: [],
+        type: "pie",
+        colors: {
+            'مصنع اجا': '#d9938c',
+            'مصنع سندوب': '#885A5A',
+            'مصنع بلقاس': '#6096BA',
+            'مصنع السنبلاوين': '#567a44',
+            'مصنع المنزلة': '#DC136C',
+            'اخري': '#394565'
+        }
+    },
+    tooltip: {
+        format: {
+            value: function (value, ratio, id, index) {
+                return value;
+            }
+        }
+    }
 };
-const s3_ip_chart = new Chart(document.getElementById('s3-ip-chart'), {
-    type: 'doughnut', data: initialIPChartData
-});
+const s3_ip_chart = c3.generate(initialIPChartData);
 
 function updateIPChartData(startDate, endDate) {
     // const urlIP1 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
@@ -379,14 +413,25 @@ function updateIPChartData(startDate, endDate) {
             const datasetOthersValue = datasetOthersData;
 
             // Update the dataset values in the chart
-            s3_ip_chart.data.datasets[0].data[0] = dataset1Value || 0;
-            s3_ip_chart.data.datasets[0].data[1] = dataset2Value || 0;
-            s3_ip_chart.data.datasets[0].data[2] = dataset4Value || 0;
-            s3_ip_chart.data.datasets[0].data[3] = dataset5Value || 0;
-            s3_ip_chart.data.datasets[0].data[4] = dataset6Value || 0;
-            s3_ip_chart.data.datasets[0].data[5] = datasetOthersValue || 0;
+            // s3_ip_chart.data.datasets[0].data[0] = dataset1Value || 0;
+            // s3_ip_chart.data.datasets[0].data[1] = dataset2Value || 0;
+            // s3_ip_chart.data.datasets[0].data[2] = dataset4Value || 0;
+            // s3_ip_chart.data.datasets[0].data[3] = dataset5Value || 0;
+            // s3_ip_chart.data.datasets[0].data[4] = dataset6Value || 0;
+            // s3_ip_chart.data.datasets[0].data[5] = datasetOthersValue || 0;
+            //
+            // s3_ip_chart.update();
 
-            s3_ip_chart.update();
+            s3_ip_chart.load({
+                columns: [
+                    ['مصنع اجا', dataset1Value],
+                    ['مصنع سندوب', dataset2Value],
+                    ['مصنع بلقاس', dataset4Value],
+                    ['مصنع السنبلاوين', dataset5Value],
+                    ['مصنع المنزلة', dataset6Value],
+                    ['اخري', datasetOthersValue]
+                ]
+            });
         })
         .catch(error => {
             console.error('Error:', error);

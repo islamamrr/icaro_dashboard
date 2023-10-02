@@ -433,8 +433,13 @@ $(document).ready(function () {
                     data: []
                 }
             ]
+        },
+        options: {
+            interaction: {
+                intersect: false,
+                mode: 'index',
+            }
         }
-
     });
 
     tot_in_grph = new Chart(document.getElementById('total-input-graph'), {
@@ -455,8 +460,13 @@ $(document).ready(function () {
                     data: []
                 }
             ]
+        },
+        options: {
+            interaction: {
+                intersect: false,
+                mode: 'index',
+            }
         }
-
     });
 
     tot_out_grph = new Chart(document.getElementById('total-output-graph'), {
@@ -489,8 +499,13 @@ $(document).ready(function () {
                     data: []
                 }
             ]
+        },
+        options: {
+            interaction: {
+                intersect: false,
+                mode: 'index',
+            }
         }
-
     });
 
     centers_ip_graph = new Chart(document.getElementById('centers-ip-graph'), {
@@ -517,8 +532,13 @@ $(document).ready(function () {
                     data: []
                 }
             ]
+        },
+        options: {
+            interaction: {
+                intersect: false,
+                mode: 'index',
+            }
         }
-
     });
 
 

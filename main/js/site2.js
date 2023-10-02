@@ -249,7 +249,14 @@ const ipGraphData = {
         }]
 };
 const s2_in_grph = new Chart(document.getElementById('s2-in-grph'), {
-    type: 'line', data: ipGraphData
+    type: 'line',
+    data: ipGraphData,
+    options: {
+        interaction: {
+            intersect: false,
+            mode: 'index',
+        }
+    }
 });
 
 
@@ -367,7 +374,14 @@ const opGraphData = {
 };
 
 const s2_out_grph = new Chart(document.getElementById('s2-out-grph'), {
-    type: 'line', data: opGraphData
+    type: 'line',
+    data: opGraphData,
+    options: {
+        interaction: {
+            intersect: false,
+            mode: 'index',
+        }
+    }
 });
 
 
