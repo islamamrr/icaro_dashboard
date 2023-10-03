@@ -14,7 +14,6 @@ var dataTableJSONData;
 const headerMapping = {
     ticketId: "رقم التذكرة",
     itemType: "نوع الشحنة",
-    clientName: "العميل",
     clientType: "العميل",
     villageName: "الوحدة المحلية",
     driverName: "اسم السائق",
@@ -94,7 +93,7 @@ function updateDatatable(startDate, endDate) {
                 Object.entries(rowData).forEach(([key, cellData]) => {
 
                     // to hide these columns
-                    if (key === "enterMethod" || key === "clientName")
+                    if (key === "enterMethod" || key === "clientName" || key === "villageName")
                         return;
 
                     // if (key === "carTwoDate")
@@ -272,6 +271,11 @@ const s3_in_grph = new Chart(document.getElementById('s3-in-grph'), {
     type: 'line',
     data: ipChartOptions,
     options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
         interaction: {
             intersect: false,
             mode: 'index'

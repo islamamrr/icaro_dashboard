@@ -20,7 +20,6 @@ const headerMapping = {
     itemType: "نوع الشحنة",
     itemName: "اسم الصنف",
     clientName: "العميل",
-    clientType: "العميل",
     villageName: "الوحدة المحلية",
     driverName: "اسم السائق",
     vehicleNumber: "رقم السيارة",
@@ -267,6 +266,11 @@ const s6_in_grph = new Chart(document.getElementById('s6-in-grph'), {
     type: 'line',
     data: ipGraphData,
     options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
         interaction: {
             intersect: false,
             mode: 'index',
@@ -392,6 +396,11 @@ const s6_out_grph = new Chart(document.getElementById('s6-out-grph'), {
     type: 'line',
     data: opGraphData,
     options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
         interaction: {
             intersect: false,
             mode: 'index',

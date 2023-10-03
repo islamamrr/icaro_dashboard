@@ -435,6 +435,11 @@ $(document).ready(function () {
             ]
         },
         options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
             interaction: {
                 intersect: false,
                 mode: 'index',
@@ -462,6 +467,11 @@ $(document).ready(function () {
             ]
         },
         options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
             interaction: {
                 intersect: false,
                 mode: 'index',
@@ -501,6 +511,11 @@ $(document).ready(function () {
             ]
         },
         options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
             interaction: {
                 intersect: false,
                 mode: 'index',
@@ -534,6 +549,11 @@ $(document).ready(function () {
             ]
         },
         options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
             interaction: {
                 intersect: false,
                 mode: 'index',
