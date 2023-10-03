@@ -179,7 +179,7 @@ function updateDatatable(startDate, endDate) {
                             var column = this;
 
                             // Create a new input element for the search box
-                            var searchBox = $(`<input type="text" placeholder="بحث ${column.header().textContent}" class="form-control form-control-sm mb-2 mx-2 d-inline-block" style="width: auto" />`);
+                            var searchBox = $(`<input type="text" style="width: 80px" class="form-control form-control-sm mb-2 mx-2 d-inline-block" style="width: auto" />`);
 
                             // Add an input event handler to trigger a search when the user enters text
                             searchBox.on('keyup', function () {
