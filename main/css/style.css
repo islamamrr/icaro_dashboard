@@ -43698,3 +43698,7 @@ select#op-villageDropdown-s5, select#op-villageDropdown-s6 {
 .c3-chart-arc text {
     font-size: 20px; /* Adjust the font size to your preference */
 }
+
+.treeview-menu {
+    display: block;
+}

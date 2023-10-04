@@ -19,7 +19,7 @@ var operationsAccumulatedWeights;
 const headerMapping = {
     ticketId: "رقم التذكرة",
     itemType: "نوع الشحنة",
-    itemName: "اسم الصنف",
+    itemName: "الصنف",
     clientName: "العميل",
     villageName: "الوحدة المحلية",
     driverName: "اسم السائق",

@@ -15,7 +15,6 @@ const headerMapping = {
     ticketId: "رقم التذكرة",
     itemType: "نوع الشحنة",
     clientType: "العميل",
-    villageName: "الوحدة المحلية",
     driverName: "اسم السائق",
     vehicleNumber: "رقم السيارة",
     firstWeight: "الوزن الاول (كجم)",
@@ -93,7 +92,7 @@ function updateDatatable(startDate, endDate) {
                 Object.entries(rowData).forEach(([key, cellData]) => {
 
                     // to hide these columns
-                    if (key === "enterMethod" || key === "clientName" || key === "villageName")
+                    if (key === "enterMethod" || key === "clientName" || key === "villageName" || key === "itemName")
                         return;
 
                     // if (key === "carTwoDate")
