@@ -570,7 +570,7 @@ function updateOPChartData(startDate, endDate) {
 //// inputs ////
 
 function updateIPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=4&startDate=${startDate}&endDate=${endDate}`;
+    const url = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=6&startDate=${startDate}&endDate=${endDate}`;
 
     fetch(url)
         .then(response => response.json()).catch(() => 0)
@@ -585,7 +585,7 @@ function updateIPBox(startDate, endDate) {
 }
 
 function updateAccIPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=4&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
     fetch(url)
         .then(response => response.json()).catch(() => 0)
         .then(data => {
@@ -598,7 +598,7 @@ function updateAccIPBox(startDate, endDate) {
 }
 
 function updateRejIPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=4&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
     fetch(url)
         .then(response => response.json()).catch(() => 0)
         .then(data => {
@@ -612,7 +612,7 @@ function updateRejIPBox(startDate, endDate) {
 
 
 function updateRejRateBox(startDate, endDate) {
-    const accUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=4&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const accUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
     const rejUrl = `http://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`;
 
     fetch(rejUrl)
@@ -642,8 +642,8 @@ function updateRejRateBox(startDate, endDate) {
 }
 
 function updateAccRateBox(startDate, endDate) {
-    const accUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=4&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const totInUrl = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=4&startDate=${startDate}&endDate=${endDate}`;
+    const accUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const totInUrl = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=6&startDate=${startDate}&endDate=${endDate}`;
 
 
     fetch(accUrl)
@@ -677,13 +677,13 @@ function updateInOperationBox() {
     const startDate = moment().format('DD-MMM-YY');
     const endDate = moment().format('DD-MMM-YY');
 
-    const percentagesURL = 'http://isdom.online/dash_board/accumulated/percentage?siteNo=4';
-    const accumulatedWeightsURL = 'http://isdom.online/dash_board/accumulated/weight?siteNo=4'
-    const acceptedInputURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=4&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const asmedaURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&siteNo=4&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
-    const waqoodURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=وقود بديل&siteNo=4&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
+    const percentagesURL = 'http://isdom.online/dash_board/accumulated/percentage?siteNo=6';
+    const accumulatedWeightsURL = 'http://isdom.online/dash_board/accumulated/weight?siteNo=6'
+    const acceptedInputURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const asmedaURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
+    const waqoodURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=وقود بديل&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
     const marfoodatURL = `http://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
-    const mafroozatURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مفروزات&siteNo=4&startDate=${startDate}&endDate=${endDate}`; // مفروزات
+    const mafroozatURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مفروزات&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // مفروزات
 
 
     Promise.all([
@@ -728,7 +728,7 @@ function updateInOperationBox() {
 //// outputs ////
 
 function updateOPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/output/weight?itemType=مخرجات&siteNo=4&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`;
+    const url = `http://isdom.online/dash_board/tickets/output/weight?itemType=مخرجات&siteNo=6&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`;
 
     fetch(url)
         .then(response => response.json()).catch(() => 0)
@@ -743,7 +743,7 @@ function updateOPBox(startDate, endDate) {
 }
 
 function updateAsmedaOPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&siteNo=4&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
     fetch(url)
         .then(response => response.json()).catch(() => 0)
         .then(data => {
@@ -756,7 +756,7 @@ function updateAsmedaOPBox(startDate, endDate) {
 }
 
 function updateWaqoodOPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=وقود بديل&siteNo=4&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=وقود بديل&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
     fetch(url)
         .then(response => response.json()).catch(() => 0)
         .then(data => {
@@ -782,7 +782,7 @@ function updateMarfoodatOPBox(startDate, endDate) {
 }
 
 function updateMafroozatOPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مفروزات&siteNo=4&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مفروزات&siteNo=6&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
     fetch(url)
         .then(response => response.json()).catch(() => 0)
         .then(data => {

@@ -1,8 +1,67 @@
 var centersList = [];
 var valuesTarget = 0;
 
-var operationsPercentages;
-var operationsAccumulatedWeights;
+var acceptedInputSites = [];
+var rejectedInputSites = [];
+
+var totalInput = 0;
+var totalAccepted = 0;
+
+var totalAsmeda = 0;
+var totalWaqood = 0;
+var totalMarfoodat = 0;
+var totalMafroozat = 0;
+
+var isFirstLoad = true;
+
+function fetchReusableDataAndUpdateCharts(startDate, endDate) {
+    const acceptedInputsURL = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`;
+    const rejectedInputsURL = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=مخلفات لا تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`;
+
+    const totalInputURL = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
+    const acceptedInputURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`;
+
+    const asmedaURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&startDate=${startDate}&endDate=${endDate}`;
+    const waqoodURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=وقود بديل&&startDate=${startDate}&endDate=${endDate}`;
+    const marfoodatURL = `http://isdom.online/dash_board/tickets/output-rejected/weight?startDate=${startDate}&endDate=${endDate}`;
+    const mafroozatURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مفروزات&startDate=${startDate}&endDate=${endDate}`;
+
+    Promise.all([
+        fetch(acceptedInputsURL).then(responseacceptedInputs => responseacceptedInputs.json()),
+        fetch(rejectedInputsURL).then(responserejectedInputs => responserejectedInputs.json()),
+        fetch(totalInputURL).then(responseTotalInput => responseTotalInput.json()),
+        fetch(acceptedInputURL).then(responseAcceptedInput => responseAcceptedInput.json()),
+        fetch(asmedaURL).then(responseAsmeda => responseAsmeda.json()).catch(() => 0),
+        fetch(waqoodURL).then(responseWaqood => responseWaqood.json()).catch(() => 0),
+        fetch(marfoodatURL).then(responseMarfoodat => responseMarfoodat.json()).catch(() => 0),
+        fetch(mafroozatURL).then(responseMafroozat => responseMafroozat.json()).catch(() => 0)
+    ]).then(([dataAcceptedInputs, dataRejectedInputs, dataTotalInput, dataAcceptedInput, dataAsmeda, dataWaqood, dataMarfoodat,
+                 dataMafroozat]) => {
+
+        acceptedInputSites = dataAcceptedInputs;
+        rejectedInputSites = dataRejectedInputs;
+
+        totalInput = dataTotalInput;
+        totalAccepted = dataAcceptedInput;
+
+        totalAsmeda = dataAsmeda;
+        totalWaqood = dataWaqood;
+        totalMarfoodat = dataMarfoodat;
+        totalMafroozat = dataMafroozat;
+
+        updateTotalIPGraph();
+        updateTotAccIPBox();
+        updateTotAccRateBox();
+        updateTotRejRateBox();
+        updateTotAsmedaOPBox();
+        updateTotWaqoodOPBox();
+        updateTotMarfoodatOPBox();
+        updateTotMafroozatOPBox();
+        if (isFirstLoad)
+            updateInOperationBox();
+    })
+}
+
 
 //updateTotalOPGraph
 function updateTotalOPGraph(startDate, endDate) {
@@ -40,21 +99,21 @@ function updateTotalOPGraph(startDate, endDate) {
 
                                     tot_out_grph.update();
                                 })
-                                .catch(error => {
-                                    // console.error('Error:', error);
-                                });
+                            // .catch(error => {
+                            //     // console.error('Error:', error);
+                            // });
                         })
-                        .catch(error => {
-                            // console.error('Error:', error);
-                        });
+                    // .catch(error => {
+                    //     // console.error('Error:', error);
+                    // });
                 })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+            // .catch(error => {
+            //     console.error('Error:', error);
+            // });
         })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+    // .catch(error => {
+    //     console.error('Error:', error);
+    // });
 }
 
 //updateTotalIPOPGraph
@@ -79,46 +138,22 @@ function updateTotalIPOPGraph(startDate, endDate) {
 
                     tot_in_out_grph.update();
                 })
-                .catch(error => {
-                    // console.error('Error:', error);
-                });
+            // .catch(error => {
+            //     // console.error('Error:', error);
+            // });
         })
-        .catch(error => {
-            // console.error('Error:', error);
-        });
+    // .catch(error => {
+    //     // console.error('Error:', error);
+    // });
 }
 
 //updateTotalIPGraph
-function updateTotalIPGraph(startDate, endDate) {
-    const ipGraphURL1 = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const ipGraphURL2 = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=مخلفات لا تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // مخلفات لا تصلح للمعالجة
+function updateTotalIPGraph() {
 
-    fetch(ipGraphURL1)
-        .then(response => response.json()).catch(() => 0)
-        .then(data => {
-            // console.log(data);
-            const category1Values = data; // Assuming the API response contains the values for the first category
+    tot_in_grph.data.datasets[0].data = acceptedInputSites || 0;
+    tot_in_grph.data.datasets[1].data = rejectedInputSites || 0;
 
-            // Fetch data for category2 values
-            fetch(ipGraphURL2)
-                .then(response => response.json()).catch(() => 0)
-                .then(data => {
-                    // console.log(data);
-
-                    const category2Values = data; // Assuming the API response contains the values for the second category
-
-                    tot_in_grph.data.datasets[0].data = category1Values || 0;
-                    tot_in_grph.data.datasets[1].data = category2Values || 0;
-
-                    tot_in_grph.update();
-                })
-                .catch(error => {
-                    // console.error('Error:', error);
-                });
-        })
-        .catch(error => {
-            // console.error('Error:', error);
-        });
+    tot_in_grph.update();
 }
 
 //Update Centers Graph
@@ -154,9 +189,9 @@ function updateCentersInputGraph_total(startDate, endDate) {
 
         centers_ip_graph.update();
     })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+    // .catch(error => {
+    //     console.error('Error:', error);
+    // });
 }
 
 
@@ -168,26 +203,15 @@ function updateTotIPBox(startDate, endDate) {
     fetch(url)
         .then(response => response.json()).catch(() => 0)
         .then(data => {
-            const newValue = data; // Assuming the API response contains the desired value
-            // console.log(newValue);
-            document.getElementById("tot-ip-box").textContent = newValue + " طن";
+            document.getElementById("tot-ip-box").textContent = data + " طن";
         })
-        .catch(error => {
-            // console.error('Error:', error);
-        });
+    // .catch(error => {
+    //     // console.error('Error:', error);
+    // });
 }
 
-function updateTotAccIPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    fetch(url)
-        .then(response => response.json()).catch(() => 0)
-        .then(data => {
-            const newValue = data;
-            document.getElementById("tot-accepted-ip-box").textContent = newValue + " طن";
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+function updateTotAccIPBox() {
+    document.getElementById("tot-accepted-ip-box").textContent = totalAccepted + " طن";
 }
 
 function updateTotRejIPBox(startDate, endDate) {
@@ -198,124 +222,81 @@ function updateTotRejIPBox(startDate, endDate) {
             const newValue = data;
             document.getElementById("tot-rejected-ip-box").textContent = newValue + " طن";
         })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+    // .catch(error => {
+    //     console.error('Error:', error);
+    // });
 }
 
 //Rates boxes
-function updateTotAccRateBox(startDate, endDate) {
-    const accUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const totInUrl = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
-
-
-    fetch(accUrl)
-        .then(response => response.json()).catch(() => 0)
-        .then(accData => {
-
-            const accVal = accData;
-            // console.log("accepted value" + accVal);
-            fetch(totInUrl)
-                .then(response => response.json()).catch(() => 0)
-                .then(totInData => {
-                    const totInVal = totInData;
-
-                    const percentage = (accVal / totInVal) * 100;
-                    if (isNaN(percentage))
-                        document.getElementById("accepted_per").textContent = 0 + "%"
-                    else
-                        document.getElementById("accepted_per").textContent = percentage.toFixed(0) + "%";
-                })
-                .catch(error => {
-                    // console.error('Error:', error);
-                });
-        })
-        .catch(error => {
-            // console.error('Error:', error);
-        });
+function updateTotAccRateBox() {
+    const percentage = (totalAccepted / totalInput) * 100;
+    if (isNaN(percentage))
+        document.getElementById("accepted_per").textContent = 0 + "%"
+    else
+        document.getElementById("accepted_per").textContent = percentage.toFixed(0) + "%";
 }
 
-function updateTotRejRateBox(startDate, endDate) {
-    const accUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const rejUrl = `http://isdom.online/dash_board/tickets/output-rejected/weight?startDate=${startDate}&endDate=${endDate}`;
+function updateTotRejRateBox() {
+    const percentage = (totalMarfoodat / totalAccepted) * 100;
+    if (isNaN(percentage))
+        document.getElementById("rejected_per").textContent = 0 + "%"
+    else
+        document.getElementById("rejected_per").textContent = percentage.toFixed(0) + "%";
 
-    fetch(rejUrl)
-        .then(response => response.json()).catch(() => 0)
-        .then(rejData => {
-
-            const rejVal = rejData;
-            // console.log("rejected value" + rejVal);
-            fetch(accUrl)
-                .then(response => response.json()).catch(() => 0)
-                .then(accData => {
-                    const accVal = accData;
-
-                    const percentage = (rejVal / accVal) * 100;
-                    if (isNaN(percentage))
-                        document.getElementById("rejected_per").textContent = 0 + "%"
-                    else
-                        document.getElementById("rejected_per").textContent = percentage.toFixed(0) + "%";
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
 }
 
 //Operations box
 function updateInOperationBox() {
-    const startDate = moment().format('DD-MMM-YY');
-    const endDate = moment().format('DD-MMM-YY');
 
-    const percentagesURL = 'http://isdom.online/dash_board/accumulated/percentage?siteNo=0';
-    const accumulatedWeightsURL = 'http://isdom.online/dash_board/accumulated/weight?siteNo=0'
-    const acceptedInputURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const asmedaURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
-    const waqoodURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=وقود بديل&&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
-    const marfoodatURL = `http://isdom.online/dash_board/tickets/output-rejected/weight?startDate=${startDate}&endDate=${endDate}`; // مرفوضات
-    const mafroozatURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مفروزات&startDate=${startDate}&endDate=${endDate}`; // مفروزات
-
+    const asmedaPercentagesURL = 'http://isdom.online/dash_board/accumulated/percentage-by-itemname?itemName=اسمدة عضوية';
+    const waqoodPercentagesURL = 'http://isdom.online/dash_board/accumulated/percentage-by-itemname?itemName=وقود بديل';
+    const marfoodatPercentagesURL = 'http://isdom.online/dash_board/accumulated/percentage-by-itemname?itemName=مرفوضات';
+    const mafroozatPercentagesURL = 'http://isdom.online/dash_board/accumulated/percentage-by-itemname?itemName=مفروزات';
+    const accumulatedWeightsURL = 'http://isdom.online/dash_board/accumulated/weight'
 
     Promise.all([
-        fetch(percentagesURL).then(responsePercentages => responsePercentages.json()).catch(() => 0),
-        fetch(accumulatedWeightsURL).then(responseAccumulatedWeights => responseAccumulatedWeights.json()).catch(() => 0),
-        fetch(acceptedInputURL).then(responseAcceptedInput => responseAcceptedInput.json()).catch(() => 0),
-        fetch(asmedaURL).then(responseAsmeda => responseAsmeda.json()).catch(() => 0),
-        fetch(waqoodURL).then(responseWaqood => responseWaqood.json()).catch(() => 0),
-        fetch(marfoodatURL).then(responseMarfoodat => responseMarfoodat.json()).catch(() => 0),
-        fetch(mafroozatURL).then(responseMafroozat => responseMafroozat.json()).catch(() => 0)
-    ]).then(([dataPercentages, dataAccumulatedWeights, dataAcceptedInput,
-                 dataAsmeda, dataWaqood, dataMarfoodat,
-                 dataMafroozat]) => {
-        operationsPercentages = dataPercentages;
-        operationsAccumulatedWeights = dataAccumulatedWeights;
+        fetch(asmedaPercentagesURL).then(responseAsmedaPercentages => responseAsmedaPercentages.json()).catch(() => 0),
+        fetch(waqoodPercentagesURL).then(responseWaqoodPercentages => responseWaqoodPercentages.json()).catch(() => 0),
+        fetch(marfoodatPercentagesURL).then(responseMarfoodatPercentages => responseMarfoodatPercentages.json()).catch(() => 0),
+        fetch(mafroozatPercentagesURL).then(responseMafroozatPercentages => responseMafroozatPercentages.json()).catch(() => 0),
+        fetch(accumulatedWeightsURL).then(responseAccumulatedWeights => responseAccumulatedWeights.json()).catch(() => 0)
+    ]).then(([dataAsmedaPercentages, dataWaqoodPercentages, dataMarfoodatPercentages,
+                 dataMafroozatPercentages, dataAccumulatedWeights]) => {
 
-        document.getElementById('asmeda-percentage').textContent = ' (' + dataPercentages['اسمدة عضوية'] + '%)';
-        document.getElementById('waqood-percentage').textContent = ' (' + dataPercentages['وقود بديل'] + '%)';
-        document.getElementById('marfoodat-percentage').textContent = ' (' + dataPercentages['مرفوضات'] + '%)';
-        document.getElementById('mafroozat-percentage').textContent = ' (' + dataPercentages['مفروزات'] + '%)';
+        const asmedaInputsByPercentageList = acceptedInputSites.map((element, index) => element * Object.values(dataAsmedaPercentages)[index]);
+        const waqoodInputsByPercentageList = acceptedInputSites.map((element, index) => element * Object.values(dataWaqoodPercentages)[index]);
+        const marfoodatInputsByPercentageList = acceptedInputSites.map((element, index) => element * Object.values(dataMarfoodatPercentages)[index]);
+        const mafroozatInputsByPercentageList = acceptedInputSites.map((element, index) => element * Object.values(dataMafroozatPercentages)[index]);
 
-        const asmeda_operation_weight = (dataAcceptedInput * dataPercentages['اسمدة عضوية'] / 100) + dataAccumulatedWeights['اسمدة عضوية'] -
-            dataAsmeda;
-        const waqood_operation_weight = (dataAcceptedInput * dataPercentages['وقود بديل'] / 100) + dataAccumulatedWeights['وقود بديل'] -
-            dataWaqood;
-        const marfoodat_operation_weight = (dataAcceptedInput * dataPercentages['مرفوضات'] / 100) + dataAccumulatedWeights['مرفوضات'] -
-            dataMarfoodat;
-        const mafroozat_operation_weight = (dataAcceptedInput * dataPercentages['مفروزات'] / 100) + dataAccumulatedWeights['مفروزات'] -
-            dataMafroozat;
+        const asmedaSumInputsByPercentages = asmedaInputsByPercentageList.reduce((accumulator, currentValue) => {
+            return accumulator + currentValue;
+        }, 0);
+        const waqoodSumInputsByPercentages = waqoodInputsByPercentageList.reduce((accumulator, currentValue) => {
+            return accumulator + currentValue;
+        }, 0);
+        const marfoodatSumInputsByPercentages = marfoodatInputsByPercentageList.reduce((accumulator, currentValue) => {
+            return accumulator + currentValue;
+        }, 0);
+        const mafroozatSumInputsByPercentages = mafroozatInputsByPercentageList.reduce((accumulator, currentValue) => {
+            return accumulator + currentValue;
+        }, 0);
+
+        const asmeda_operation_weight = asmedaSumInputsByPercentages / 100 + dataAccumulatedWeights['اسمدة عضوية'] -
+            totalAsmeda;
+        const waqood_operation_weight = waqoodSumInputsByPercentages / 100 + dataAccumulatedWeights['وقود بديل'] -
+            totalWaqood;
+        const marfoodat_operation_weight = marfoodatSumInputsByPercentages / 100 + dataAccumulatedWeights['مرفوضات'] -
+            totalMarfoodat;
+        const mafroozat_operation_weight = mafroozatSumInputsByPercentages / 100 + dataAccumulatedWeights['مفروزات'] -
+            totalMafroozat;
 
         document.getElementById('asmeda-operation-weight').textContent = asmeda_operation_weight.toFixed(0) + ' طن';
         document.getElementById('waqood-operation-weight').textContent = waqood_operation_weight.toFixed(0) + ' طن';
         document.getElementById('marfoodat-operation-weight').textContent = marfoodat_operation_weight.toFixed(0) + ' طن';
         document.getElementById('mafroozat-operation-weight').textContent = mafroozat_operation_weight.toFixed(0) + ' طن';
 
+        isFirstLoad = false;
     })
-        .catch(error => {
-            console.error('Error:', error);
-        });
 }
 
 //Output boxes
@@ -329,61 +310,22 @@ function updateTotOPBox(startDate, endDate) {
             const newValue = data;
             document.getElementById("tot-op-box").textContent = newValue + " طن";
         })
-        .catch(error => {
-            // console.error('Error:', error);
-        });
 }
 
-function updateTotAsmedaOPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    fetch(url)
-        .then(response => response.json()).catch(() => 0)
-        .then(data => {
-            const newValue = data;
-            document.getElementById("tot-asmeda-op-box").textContent = newValue + " طن";
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+function updateTotAsmedaOPBox() {
+    document.getElementById("tot-asmeda-op-box").textContent = totalAsmeda + " طن";
 }
 
-function updateTotWaqoodOPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=وقود بديل&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    fetch(url)
-        .then(response => response.json()).catch(() => 0)
-        .then(data => {
-            const newValue = data;
-            document.getElementById("tot-waqood-op-box").textContent = newValue + " طن";
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+function updateTotWaqoodOPBox() {
+    document.getElementById("tot-waqood-op-box").textContent = totalWaqood + " طن";
 }
 
-function updateTotMarfoodatOPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/output-rejected/weight?startDate=${startDate}&endDate=${endDate}`;
-    fetch(url)
-        .then(response => response.json()).catch(() => 0)
-        .then(data => {
-            const newValue = data;
-            document.getElementById("tot-marfoodat-op-box").textContent = newValue + " طن";
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+function updateTotMarfoodatOPBox() {
+    document.getElementById("tot-marfoodat-op-box").textContent = totalMarfoodat + " طن";
 }
 
-function updateTotMafroozatOPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مفروزات&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    fetch(url)
-        .then(response => response.json()).catch(() => 0)
-        .then(data => {
-            const newValue = data;
-            document.getElementById("tot-mafroozat-op-box").textContent = newValue + " طن";
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+function updateTotMafroozatOPBox() {
+    document.getElementById("tot-mafroozat-op-box").textContent = totalMafroozat + " طن";
 }
 
 
@@ -395,8 +337,6 @@ var centers_ip_graph;
 $dateRangePicker = $('#dateRangePicker');
 // Initialize the date range picker
 $(document).ready(function () {
-
-    updateInOperationBox();
     $dateRangePicker.daterangepicker({
         opens: 'left',
         startDate: moment(),
@@ -564,19 +504,12 @@ $(document).ready(function () {
 
     // Set the initial values for the components
     updateTotalOPGraph(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
-    updateTotalIPGraph(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateTotalIPOPGraph(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateCentersInputGraph_total(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
-    updateTotAccRateBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
-    updateTotRejRateBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateTotIPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
-    updateTotAccIPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateTotRejIPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateTotOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
-    updateTotAsmedaOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
-    updateTotWaqoodOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
-    updateTotMarfoodatOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
-    updateTotMafroozatOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
+    fetchReusableDataAndUpdateCharts(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
 
     // Listen for changes in the date range picker and update the components accordingly
     $dateRangePicker.on('apply.daterangepicker', function (ev, picker) {
@@ -584,19 +517,12 @@ $(document).ready(function () {
         const endDate = picker.endDate.format('DD-MMM-YY');
 
         updateTotalOPGraph(startDate, endDate);
-        updateTotalIPGraph(startDate, endDate);
         updateTotalIPOPGraph(startDate, endDate);
         updateCentersInputGraph_total(startDate, endDate);
-        updateTotAccRateBox(startDate, endDate);
-        updateTotRejRateBox(startDate, endDate);
         updateTotIPBox(startDate, endDate);
-        updateTotAccIPBox(startDate, endDate);
         updateTotRejIPBox(startDate, endDate);
         updateTotOPBox(startDate, endDate);
-        updateTotAsmedaOPBox(startDate, endDate);
-        updateTotWaqoodOPBox(startDate, endDate);
-        updateTotMarfoodatOPBox(startDate, endDate);
-        updateTotMafroozatOPBox(startDate, endDate);
+        fetchReusableDataAndUpdateCharts(startDate, endDate);
     });
 });
 
@@ -656,15 +582,15 @@ document.getElementById('openPopupBtn').addEventListener('click', function () {
             body: JSON.stringify(dataObject),
         })
             .then(response => {
-                if (response.ok) {
-                    console.log('Data successfully saved to the database.');
-                } else {
-                    console.error('Failed to save data to the database.');
-                }
+                // if (response.ok) {
+                //     console.log('Data successfully saved to the database.');
+                // } else {
+                //     console.error('Failed to save data to the database.');
+                // }
             })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        // .catch(error => {
+        //     console.error('Error:', error);
+        // });
 
         popupContainer.style.display = 'none';
 
@@ -684,125 +610,4 @@ document.getElementById('openPopupBtn').addEventListener('click', function () {
 
 document.getElementById('closePopupBtn').addEventListener('click', function () {
     document.getElementById('popupContainer').style.display = 'none';
-});
-
-
-document.getElementById('openOperationPopupBtn').addEventListener('click', function () {
-    const popupContainerOperations = document.getElementById("popupContainerOperations");
-    // const backgroundElements = document.getElementById("modalOverlay");
-    //
-    // backgroundElements.style.display = 'block';
-
-    const form = document.getElementById("percentageForm");
-    const form2 = document.getElementById("accuWeightForm");
-
-    // Clear any existing form elements
-    form.innerHTML = '';
-    form2.innerHTML = '';
-    form2.style.position = "absolute";
-    form2.style.right = "275px";
-    form2.style.width = "auto";
-
-
-    // Loop to generate input fields with labels
-    for (const key in operationsPercentages) {
-        const label = document.createElement("label");
-        label.style.marginBottom = "10px";
-        label.textContent = key;
-
-        const inputPercentage = document.createElement("input");
-        inputPercentage.style.width = "50px";
-        inputPercentage.style.position = "absolute";
-        inputPercentage.style.right = "170px";
-
-        inputPercentage.type = "text";
-        inputPercentage.name = `dataPercentage${key}`;
-
-        inputPercentage.value = operationsPercentages[key];
-
-        const inputAccuWeight = document.createElement("input");
-        inputAccuWeight.style.width = "50px";
-        inputAccuWeight.style.marginBottom = '5px';
-
-        inputAccuWeight.type = "text";
-        inputAccuWeight.name = `dataAccuWeight${key}`;
-
-        inputAccuWeight.value = operationsAccumulatedWeights[key];
-
-        form.appendChild(label);
-        form.appendChild(inputPercentage);
-        form.appendChild(document.createElement("br"));
-
-        form2.appendChild(inputAccuWeight);
-        form2.appendChild(document.createElement("br"));
-    }
-
-    const saveButton = document.createElement("button");
-    saveButton.id = "formButton";
-    saveButton.textContent = "حفظ";
-    form.appendChild(saveButton);
-
-    popupContainerOperations.style.display = "block";
-
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        const dataObjectPercentage = {};
-        const dataObjectAccuWeight = {};
-        for (const key in operationsPercentages) {
-            const inputFieldPercentage = form.querySelector(`input[name="dataPercentage${key}"]`);
-            const valuePercentage = inputFieldPercentage.value;
-            dataObjectPercentage[key] = parseFloat(valuePercentage);
-
-            const inputFieldAccuWeight = form2.querySelector(`input[name="dataAccuWeight${key}"]`);
-            const valueAccuWeight = inputFieldAccuWeight.value;
-            dataObjectAccuWeight[key] = parseFloat(valueAccuWeight); // Assuming you want to send numeric values
-        }
-
-        const urlPercentage = 'http://isdom.online/dash_board/accumulated/update-percentage/0'
-        const urlAccuWeight = 'http://isdom.online/dash_board/accumulated/update-weight/0'
-
-        fetch(urlPercentage, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(dataObjectPercentage),
-        })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Data successfully saved to the database.');
-                } else {
-                    console.error('Failed to save data to the database.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            })
-
-        fetch(urlAccuWeight, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(dataObjectAccuWeight),
-        })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Data successfully saved to the database.');
-                } else {
-                    console.error('Failed to save data to the database.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-
-        popupContainerOperations.style.display = 'none';
-    });
-
-});
-
-document.getElementById('closeOperationsPopupBtn').addEventListener('click', function () {
-    document.getElementById('popupContainerOperations').style.display = 'none';
 });

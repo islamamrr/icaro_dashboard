@@ -449,7 +449,7 @@ function updateOutputGraph_s1() {
 }
 
 
-////  INPUT DONUT CHART  ////
+////  INPUT PIE CHART  ////
 const initialIPChartData = {
     bindto: "#s1-ip-chart",
     size: {height: 350},
@@ -496,7 +496,7 @@ function updateIPChartData(startDate, endDate) {
         });
 }
 
-////  OUTPUT DONUT CHART  ////
+////  OUTPUT PIE CHART  ////
 const initialOPChartData = {
     bindto: "#s1-op-chart",
     size: {height: 350},
