@@ -581,28 +581,12 @@ document.getElementById('openPopupBtn').addEventListener('click', function () {
             },
             body: JSON.stringify(dataObject),
         })
-            .then(response => {
-                // if (response.ok) {
-                //     console.log('Data successfully saved to the database.');
-                // } else {
-                //     console.error('Failed to save data to the database.');
-                // }
+            .then(() => {
+                popupContainer.style.display = 'none';
+
+                centers_ip_graph.data.datasets[2].data = Object.values(dataObject) || 0;
+                centers_ip_graph.update();
             })
-        // .catch(error => {
-        //     console.error('Error:', error);
-        // });
-
-        popupContainer.style.display = 'none';
-
-        // centers_ip_graph.load({
-        //     columns: [
-        //         ['الكميات المستهدفة', ...valuesTarget]
-        //     ],
-        // });
-
-        centers_ip_graph.data.datasets[1].data = valuesTarget || 0;
-        centers_ip_graph.update();
-
     });
 
 });
