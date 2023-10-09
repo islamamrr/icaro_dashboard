@@ -245,7 +245,10 @@
                                 <h2 style="font-size: 21px;margin-bottom: 22px;">تغيير الكميات التراكمية والنسب من
                                     المخلفات الصالحة للمعالجة
                                     لليوم</h2>
-                                <span style="position:absolute;font-size:medium;right: 175px">النسبة</span>
+                                <div class="d-flex justify-content-center" style="margin: 12px;">
+                                    <div class="spinner-border" id="operationsEditLoader">
+                                    </div>
+                                </div>                                <span style="position:absolute;font-size:medium;right: 175px">النسبة</span>
                                 <span style="position:absolute;font-size:medium;right: 275px">الكمية المتراكمة</span>
                                 <div class="row" style="margin-top: 55px;">
                                     <form id="percentageForm">
@@ -260,7 +263,7 @@
                                 <div class="d-flex flex-column">
 
                                     <h5 class="fs-4 mb-0" style="color: #003F5C; font-weight: bold; margin: auto">
-                                        تحت التشغيل اليوم
+                                        تحت التشغيل
                                     </h5>
                                     <button id="openOperationPopupBtn">تعديل</button>
                                     <div class="d-flex justify-content-between" style="color: #10d6b4">
@@ -318,42 +321,6 @@
                                         <div
                                                 class="d-flex align-items-center justify-content-between"
                                         >
-                                            <div style="color: #2da075; margin: auto">
-                                                <h5 class="mb-0" style="font-size: medium">
-                                                    اسمدة عضوية
-                                                </h5>
-                                                <h2 id="s2-asmeda-op-box" class="mb-0 fs-4 d-flex justify-content-center"></h2>
-                                            </div>
-                                            <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-md-6 col-12">
-                                <div class="box pull-up">
-                                    <div class="box-body">
-                                        <div
-                                                class="d-flex align-items-center justify-content-between"
-                                        >
-                                            <div style="color: #1427c9; margin: auto">
-                                                <h5 class="mb-0" style="font-size: medium">
-                                                    وقود بديل
-                                                </h5>
-                                                <h2 id="s2-waqood-op-box" class="mb-0 fs-4 d-flex justify-content-center"></h2>
-                                            </div>
-                                            <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xl-6 col-md-6 col-12">
-                                <div class="box pull-up">
-                                    <div class="box-body">
-                                        <div
-                                                class="d-flex align-items-center justify-content-between"
-                                        >
                                             <div style="color: #10d6b4; margin: auto">
                                                 <h5 class="mb-0" style="font-size: medium">
                                                     مرفوضات
@@ -383,6 +350,44 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-xl-6 col-md-6 col-12">
+                                <div class="box pull-up">
+                                    <div class="box-body">
+                                        <div
+                                                class="d-flex align-items-center justify-content-between"
+                                        >
+                                            <div style="color: #2da075; margin: auto">
+                                                <h5 class="mb-0" style="font-size: medium">
+                                                    اسمدة عضوية
+                                                </h5>
+                                                <h2 id="s2-asmeda-op-box" class="mb-0 fs-4 d-flex justify-content-center"></h2>
+                                            </div>
+                                            <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6 col-12">
+                                <div class="box pull-up">
+                                    <div class="box-body">
+                                        <div
+                                                class="d-flex align-items-center justify-content-between"
+                                        >
+                                            <div style="color: #1427c9; margin: auto">
+                                                <h5 class="mb-0" style="font-size: medium">
+                                                    وقود بديل
+                                                </h5>
+                                                <h2 id="s2-waqood-op-box" class="mb-0 fs-4 d-flex justify-content-center"></h2>
+                                            </div>
+                                            <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="col-xl-4 col-12">

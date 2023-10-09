@@ -110,7 +110,7 @@ function updateDatatable(startDate, endDate) {
                     if (userRole === "Admin")
                         if (key === 'carTwoDate' || key === 'carTwoTime' || key === 'secondWeight') {
                             cell.setAttribute('contenteditable', 'true');
-                            cell.addEventListener('blur', function () {
+                            cell.addEventListener('keyup', function () {
                                 rowData[key] = cell.textContent;
                                 const newNetWeight = Math.abs(rowData.secondWeight - rowData.firstWeight);
 
@@ -704,6 +704,10 @@ function updateInOperationBox() {
         document.getElementById('marfoodat-operation-weight').textContent = marfoodat_operation_weight.toFixed(0) + ' طن';
         document.getElementById('mafroozat-operation-weight').textContent = mafroozat_operation_weight.toFixed(0) + ' طن';
 
+        if (userRole === "Admin") {
+            const openOperationPopupBtn = document.getElementById("openOperationPopupBtn");
+            openOperationPopupBtn.style.display = "block";
+        }
     })
         .catch(error => {
             console.error('Error:', error);
@@ -931,7 +935,9 @@ document.getElementById('openOperationPopupBtn').addEventListener('click', funct
     form.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        // Create an object to represent the data
+        const operationsEditLoader = document.getElementById("operationsEditLoader");
+        operationsEditLoader.style.display = "block";
+
         const dataObjectPercentage = {};
         const dataObjectAccuWeight = {};
         for (const key in operationsPercentages) {
@@ -960,6 +966,9 @@ document.getElementById('openOperationPopupBtn').addEventListener('click', funct
                 } else {
                     console.error('Failed to save data to the database.');
                 }
+                operationsEditLoader.style.display = "none";
+                popupContainerOperations.style.display = 'none';
+
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -978,12 +987,14 @@ document.getElementById('openOperationPopupBtn').addEventListener('click', funct
                 } else {
                     console.error('Failed to save data to the database.');
                 }
+                operationsEditLoader.style.display = "none";
+                popupContainerOperations.style.display = 'none';
+
             })
             .catch(error => {
                 console.error('Error:', error);
             });
 
-        popupContainerOperations.style.display = 'none';
     });
 
 });

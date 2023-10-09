@@ -1,3 +1,5 @@
+const userRole = getRoleFromToken();
+
 var centersList = [];
 var valuesTarget = 0;
 
@@ -99,21 +101,9 @@ function updateTotalOPGraph(startDate, endDate) {
 
                                     tot_out_grph.update();
                                 })
-                            // .catch(error => {
-                            //     // console.error('Error:', error);
-                            // });
                         })
-                    // .catch(error => {
-                    //     // console.error('Error:', error);
-                    // });
                 })
-            // .catch(error => {
-            //     console.error('Error:', error);
-            // });
         })
-    // .catch(error => {
-    //     console.error('Error:', error);
-    // });
 }
 
 //updateTotalIPOPGraph
@@ -138,13 +128,7 @@ function updateTotalIPOPGraph(startDate, endDate) {
 
                     tot_in_out_grph.update();
                 })
-            // .catch(error => {
-            //     // console.error('Error:', error);
-            // });
         })
-    // .catch(error => {
-    //     // console.error('Error:', error);
-    // });
 }
 
 //updateTotalIPGraph
@@ -179,12 +163,17 @@ function updateCentersInputGraph_total(startDate, endDate) {
         const valuesReal = Object.values(dataReal);
         const valuesAccepted = Object.values(dataAccepted);
         valuesTarget = Object.values(dataTarget);
-        const modifiedDataTarget = valuesTarget.map(value => value * numberOfDays);
+        const dataTargetByDays = valuesTarget.map(value => value * numberOfDays);
+
+        if (userRole === "Admin") {
+            const openCentersTargetsPopupBtn = document.getElementById("openCentersTargetsPopupBtn");
+            openCentersTargetsPopupBtn.style.display = "block";
+        }
 
 
         centers_ip_graph.data.datasets[0].data = valuesReal || 0;
         centers_ip_graph.data.datasets[1].data = valuesAccepted || 0;
-        centers_ip_graph.data.datasets[2].data = modifiedDataTarget || 0;
+        centers_ip_graph.data.datasets[2].data = dataTargetByDays || 0;
         centers_ip_graph.data.labels = centersList || 0;
 
         centers_ip_graph.update();
@@ -526,7 +515,7 @@ $(document).ready(function () {
     });
 });
 
-document.getElementById('openPopupBtn').addEventListener('click', function () {
+document.getElementById('openCentersTargetsPopupBtn').addEventListener('click', function () {
     const popupContainer = document.getElementById("popupContainer");
     const form = document.getElementById("targetsForm");
 
@@ -564,6 +553,9 @@ document.getElementById('openPopupBtn').addEventListener('click', function () {
     form.addEventListener('submit', function (e) {
         e.preventDefault();
 
+        const targetsEditLoader = document.getElementById("targetsEditLoader");
+        targetsEditLoader.style.display = "block";
+
         // Create an object to represent the data
         const dataObject = {};
         for (let i = 0; i < centersList.length; i++) {
@@ -571,7 +563,8 @@ document.getElementById('openPopupBtn').addEventListener('click', function () {
             const value = inputField.value;
             dataObject[i + 1] = parseFloat(value); // Assuming you want to send numeric values
         }
-
+        valuesTarget = Object.values(dataObject);
+        
         const url = 'http://isdom.online/dash_board/update-targets'
 
         fetch(url, {
@@ -586,6 +579,8 @@ document.getElementById('openPopupBtn').addEventListener('click', function () {
 
                 centers_ip_graph.data.datasets[2].data = Object.values(dataObject) || 0;
                 centers_ip_graph.update();
+
+                targetsEditLoader.style.display = "none";
             })
     });
 

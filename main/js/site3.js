@@ -104,7 +104,7 @@ function updateDatatable(startDate, endDate) {
                     if (userRole === "Admin")
                         if (key === 'carTwoDate' || key === 'carTwoTime' || key === 'secondWeight') {
                             cell.setAttribute('contenteditable', 'true');
-                            cell.addEventListener('blur', function () {
+                            cell.addEventListener('keyup', function () {
                                 rowData[key] = cell.textContent;
                                 const newNetWeight = Math.abs(rowData.secondWeight - rowData.firstWeight);
 
@@ -119,7 +119,7 @@ function updateDatatable(startDate, endDate) {
                                     secondWeight: rowData.secondWeight
                                 }
 
-                                fetch(`http://isdom.online/dash_board/tickets/${rowData.ticketId}/1`, {
+                                fetch(`http://isdom.online/dash_board/tickets/${rowData.ticketId}/3`, {
                                     method: 'PUT',
                                     headers: {
                                         'Content-Type': 'application/json'
