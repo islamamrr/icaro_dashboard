@@ -248,10 +248,10 @@
                     <!--taht el tashgheel-->
 
                     <div class="col-xl-4 col-md-4 col-12">
-                        <div id="popupContainerOperations" class="popup">
+                        <div id="popupContainerOperations" class="popup">-->
                             <div class="popup-content-operations">
-                                        <span class="close"
-                                              id="closeOperationsPopupBtn">&times;</span>
+                                                                    <span class="close"
+                                                                          id="closeOperationsPopupBtn">&times;</span>
                                 <h2 style="font-size: 21px;margin-bottom: 22px;">تغيير الكميات التراكمية والنسب من
                                     المخلفات الصالحة للمعالجة
                                     لليوم</h2>
@@ -269,40 +269,142 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="box pull-up" style="background: radial-gradient(#ffffff, #F9F9F9);">
-                            <div class="box-body">
-                                <div class="d-flex flex-column">
-
-                                    <h5 class="fs-4 mb-0" style="color: #003F5C; font-weight: bold; margin: auto">
-                                        تحت التشغيل
-                                    </h5>
+                        <div class="col-xl-12 col-md-12 col-12">
+                            <div class="box pull-up">
+                                <div class="box-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div style="color: #003f5c; margin: auto">
+                                            <h3 style="font-weight: bold;margin-bottom: 10px;">
+                                                تحت التشغيل
+                                            </h3>
+                                        </div>
+                                    </div>
                                     <button id="openOperationPopupBtn">تعديل</button>
-                                    <div class="d-flex justify-content-between" style="color: #10d6b4">
-                                        <span class="operations-label fs-4 fw-500">مرفوضات<span
-                                                id="marfoodat-percentage" style="font-size: medium"></span></span>
-                                        <span class="operations-value fs-4 fw-500"
-                                              id="marfoodat-operation-weight"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-md-6 col-12">
+                                <div class="box pull-up">
+                                    <div class="box-body" style="padding-inline: 1rem;">
+                                        <div style="color: #10d6b4; margin: auto">
+                                            <h5 class="operations-label" style="margin-bottom: 10px;font-size: medium;">
+                                                مرفوضات</h5>
+                                            <div style="display: flex;justify-content: space-between;align-items: center;">
+                                                <span id="marfoodat-percentage" style="font-size: medium"></span>
+                                                <span id="marfoodat-operation-weight"
+                                                      class="mb-0 fs-4 d-flex justify-content-center"></span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="d-flex justify-content-between" style="color: #85a6e9">
-                                        <span class="operations-label fs-4 fw-500">مفروزات<span
-                                                id="mafroozat-percentage" style="font-size: medium"></span></span>
-                                        <span class="operations-value fs-4 fw-500"
-                                              id="mafroozat-operation-weight"></span>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6 col-12">
+                                <div class="box pull-up">
+                                    <div class="box-body" style="padding-inline: 1rem;">
+                                        <div style="color: #85a6e9; margin: auto">
+                                            <h5 class="operations-label" style="margin-bottom: 10px;font-size: medium;">
+                                                مفروزات</h5>
+                                            <div style="display: flex;justify-content: space-between;align-items: center;">
+                                                <span id="mafroozat-percentage"></span>
+                                                <span id="mafroozat-operation-weight" style="font-size: medium"
+                                                      class="mb-0 fs-4 d-flex justify-content-center"></span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="d-flex justify-content-between" style="color: #2da075">
-                                        <span class="operations-label fs-4 fw-500">اسمدة عضوية<span
-                                                id="asmeda-percentage" style="font-size: medium"></span></span>
-                                        <span class="operations-value fs-4 fw-500" id="asmeda-operation-weight"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-md-6 col-12">
+                                <div class="box pull-up">
+                                    <div class="box-body" style="padding-inline: 1rem;">
+                                        <div style="color: #2da075; margin: auto">
+                                            <h5 class="operations-label" style="margin-bottom: 10px;font-size: medium;">
+                                                اسمدة عضوية</h5>
+                                            <div style="display: flex;justify-content: space-between;align-items: center;">
+                                                <span id="asmeda-percentage" style="font-size: medium"></span>
+                                                <span id="asmeda-operation-weight"
+                                                      class="mb-0 fs-4 d-flex justify-content-center"></span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="d-flex justify-content-between" style="color: #1427c9">
-                                        <span class="operations-label fs-4 fw-500">وقود بديل<span
-                                                id="waqood-percentage" style="font-size: medium"></span></span>
-                                        <span class="operations-value fs-4 fw-500" id="waqood-operation-weight"></span>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6 col-12">
+                                <div class="box pull-up">
+                                    <div class="box-body" style="padding-inline: 1rem;">
+                                        <div style="color: #1427c9; margin: auto">
+                                            <h5 class="operations-label" style="margin-bottom: 10px;font-size: medium;">
+                                                وقود بديل</h5>
+                                            <div style="display: flex;justify-content: space-between;align-items: center;">
+                                                <span id="waqood-percentage" style="font-size: medium"></span>
+                                                <span id="waqood-operation-weight"
+                                                      class="mb-0 fs-4 d-flex justify-content-center"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <!--                    <div class="col-xl-4 col-md-4 col-12">-->
+                    <!--                        <div id="popupContainerOperations" class="popup">-->
+                    <!--                            <div class="popup-content-operations">-->
+                    <!--                                        <span class="close"-->
+                    <!--                                              id="closeOperationsPopupBtn">&times;</span>-->
+                    <!--                                <h2 style="font-size: 21px;margin-bottom: 22px;">تغيير الكميات التراكمية والنسب من-->
+                    <!--                                    المخلفات الصالحة للمعالجة-->
+                    <!--                                    لليوم</h2>-->
+                    <!--                                <div class="d-flex justify-content-center" style="margin: 12px;">-->
+                    <!--                                    <div class="spinner-border" id="operationsEditLoader">-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                                <span style="position:absolute;font-size:medium;right: 175px">النسبة</span>-->
+                    <!--                                <span style="position:absolute;font-size:medium;right: 275px">الكمية المتراكمة</span>-->
+                    <!--                                <div class="row" style="margin-top: 55px;">-->
+                    <!--                                    <form id="percentageForm">-->
+                    <!--                                    </form>-->
+                    <!--                                    <form id="accuWeightForm">-->
+                    <!--                                    </form>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="box pull-up" style="background: radial-gradient(#ffffff, #F9F9F9);">-->
+                    <!--                            <div class="box-body">-->
+                    <!--                                <div class="d-flex flex-column">-->
+
+                    <!--                                    <h5 class="fs-4 mb-0" style="color: #003F5C; font-weight: bold; margin: auto">-->
+                    <!--                                        تحت التشغيل-->
+                    <!--                                    </h5>-->
+                    <!--                                    <button id="openOperationPopupBtn">تعديل</button>-->
+                    <!--                                    <div class="d-flex justify-content-between" style="color: #10d6b4">-->
+                    <!--                                        <span class="operations-label fs-4 fw-500">مرفوضات<span-->
+                    <!--                                                id="marfoodat-percentage" style="font-size: medium"></span></span>-->
+                    <!--                                        <span class="operations-value fs-4 fw-500"-->
+                    <!--                                              id="marfoodat-operation-weight"></span>-->
+                    <!--                                    </div>-->
+                    <!--                                    <div class="d-flex justify-content-between" style="color: #85a6e9">-->
+                    <!--                                        <span class="operations-label fs-4 fw-500">مفروزات<span-->
+                    <!--                                                id="mafroozat-percentage" style="font-size: medium"></span></span>-->
+                    <!--                                        <span class="operations-value fs-4 fw-500"-->
+                    <!--                                              id="mafroozat-operation-weight"></span>-->
+                    <!--                                    </div>-->
+                    <!--                                    <div class="d-flex justify-content-between" style="color: #2da075">-->
+                    <!--                                        <span class="operations-label fs-4 fw-500">اسمدة عضوية<span-->
+                    <!--                                                id="asmeda-percentage" style="font-size: medium"></span></span>-->
+                    <!--                                        <span class="operations-value fs-4 fw-500" id="asmeda-operation-weight"></span>-->
+                    <!--                                    </div>-->
+                    <!--                                    <div class="d-flex justify-content-between" style="color: #1427c9">-->
+                    <!--                                        <span class="operations-label fs-4 fw-500">وقود بديل<span-->
+                    <!--                                                id="waqood-percentage" style="font-size: medium"></span></span>-->
+                    <!--                                        <span class="operations-value fs-4 fw-500" id="waqood-operation-weight"></span>-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
 
                     <!--OUTPUT-->
                     <div class="col-xl-4 col-md-4 col-12">

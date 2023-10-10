@@ -43640,9 +43640,9 @@ select#op-villageDropdown-s5, select#op-villageDropdown-s6 {
 }
 
 #openOperationPopupBtn {
-    position: relative;
-    right: 85%;
-    bottom: 24px;
+    position: absolute;
+    right: 2%;
+    top: 8px;
     border-radius: 11px;
     color: white;
     font-size: initial;
@@ -43654,7 +43654,8 @@ select#op-villageDropdown-s5, select#op-villageDropdown-s6 {
 }
 
 .operations-label {
-    margin-inline-start: 10%;
+    display: flex;
+    justify-content: center;
     margin-block: 2%;
 }
 

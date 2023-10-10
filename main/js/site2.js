@@ -960,15 +960,11 @@ document.getElementById('openOperationPopupBtn').addEventListener('click', funct
             },
             body: JSON.stringify(dataObjectPercentage),
         })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Data successfully saved to the database.');
-                } else {
-                    console.error('Failed to save data to the database.');
-                }
+            .then(() => {
+                operationsPercentages = dataObjectPercentage;
+
                 operationsEditLoader.style.display = "none";
                 popupContainerOperations.style.display = 'none';
-
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -981,15 +977,10 @@ document.getElementById('openOperationPopupBtn').addEventListener('click', funct
             },
             body: JSON.stringify(dataObjectAccuWeight),
         })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Data successfully saved to the database.');
-                } else {
-                    console.error('Failed to save data to the database.');
-                }
+            .then(() => {
+                operationsAccumulatedWeights = dataObjectAccuWeight;
                 operationsEditLoader.style.display = "none";
                 popupContainerOperations.style.display = 'none';
-
             })
             .catch(error => {
                 console.error('Error:', error);

@@ -1,7 +1,7 @@
 const userRole = getRoleFromToken();
 
 var centersList = [];
-var valuesTarget = 0;
+var valuesTarget = [];
 
 var acceptedInputSites = [];
 var rejectedInputSites = [];
@@ -63,7 +63,6 @@ function fetchReusableDataAndUpdateCharts(startDate, endDate) {
             updateInOperationBox();
     })
 }
-
 
 //updateTotalOPGraph
 function updateTotalOPGraph(startDate, endDate) {
@@ -152,24 +151,51 @@ function updateCentersInputGraph_total(startDate, endDate) {
     const urlReal = `http://isdom.online/dash_board/tickets/centers-net-weight-list?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
     const urlAccepted = `http://isdom.online/dash_board/tickets/centers-accepted-net-weight-list?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
     const urlTarget = `http://isdom.online/dash_board/targets`; // وقود بديل
-
+    const urlCenters = 'http://isdom.online/dash_board/centers';
 
     Promise.all([
         fetch(urlReal).then(responseReal => responseReal.json()),
         fetch(urlAccepted).then(responseAccepted => responseAccepted.json()),
-        fetch(urlTarget).then(responseTarget => responseTarget.json())
-    ]).then(([dataReal, dataAccepted, dataTarget]) => {
-        centersList = Object.keys(dataReal);
-        const valuesReal = Object.values(dataReal);
-        const valuesAccepted = Object.values(dataAccepted);
-        valuesTarget = Object.values(dataTarget);
+        fetch(urlTarget).then(responseTarget => responseTarget.json()),
+        fetch(urlCenters).then(responseCenters => responseCenters.json())
+    ]).then(([dataReal, dataAccepted, dataTarget, dataCenters]) => {
+
+        centersList = dataCenters.map(function (obj) {
+            return obj.centerName;
+        });
+
+        var valuesReal = [];
+        var valuesAccepted = [];
+
+        for (var i = 0; i < centersList.length; i++) {
+            var centerName = centersList[i];
+            if (dataReal.hasOwnProperty(centerName)) {
+                valuesReal.push(dataReal[centerName]);
+            }
+            if (dataAccepted.hasOwnProperty(centerName)) {
+                valuesAccepted.push(dataAccepted[centerName]);
+            }
+            if (dataTarget.hasOwnProperty(centerName)) {
+                valuesTarget.push(dataTarget[centerName]);
+            }
+        }
+
+        console.log(valuesTarget)
+        console.log(dataTarget)
+
+        // console.log('valuesReal')
+        // console.log(valuesReal)
+
+        // const valuesReal = Object.values(dataReal);
+        // const valuesAccepted = Object.values(dataAccepted);
+        // valuesTarget = Object.values(dataTarget);
         const dataTargetByDays = valuesTarget.map(value => value * numberOfDays);
+
 
         if (userRole === "Admin") {
             const openCentersTargetsPopupBtn = document.getElementById("openCentersTargetsPopupBtn");
             openCentersTargetsPopupBtn.style.display = "block";
         }
-
 
         centers_ip_graph.data.datasets[0].data = valuesReal || 0;
         centers_ip_graph.data.datasets[1].data = valuesAccepted || 0;
@@ -556,15 +582,18 @@ document.getElementById('openCentersTargetsPopupBtn').addEventListener('click', 
         const targetsEditLoader = document.getElementById("targetsEditLoader");
         targetsEditLoader.style.display = "block";
 
-        // Create an object to represent the data
         const dataObject = {};
         for (let i = 0; i < centersList.length; i++) {
             const inputField = form.querySelector(`input[name="data${i}"]`);
             const value = inputField.value;
-            dataObject[i + 1] = parseFloat(value); // Assuming you want to send numeric values
+
+            if (i < 10)
+                dataObject[i + 1] = parseFloat(value);
+            else
+                dataObject[i + 3] = parseFloat(value);
         }
         valuesTarget = Object.values(dataObject);
-        
+
         const url = 'http://isdom.online/dash_board/update-targets'
 
         fetch(url, {

@@ -240,37 +240,153 @@
 
                     <!--taht el tashgheel-->
                     <div class="col-xl-4 col-md-4 col-12">
-                        <div class="box pull-up" style="background: radial-gradient(#ffffff, #F9F9F9);">
-                            <div class="box-body">
-                                <div class="d-flex flex-column">
+                        <div id="popupContainerOperations" class="popup">-->
+                            <div class="popup-content-operations">
+                                                                    <span class="close"
+                                                                          id="closeOperationsPopupBtn">&times;</span>
+                                <h2 style="font-size: 21px;margin-bottom: 22px;">تغيير الكميات التراكمية والنسب من
+                                    المخلفات الصالحة للمعالجة
+                                    لليوم</h2>
+                                <div class="d-flex justify-content-center" style="margin: 12px;">
+                                    <div class="spinner-border" id="operationsEditLoader">
+                                    </div>
+                                </div>
+                                <span style="position:absolute;font-size:medium;right: 175px">النسبة</span>
+                                <span style="position:absolute;font-size:medium;right: 275px">الكمية المتراكمة</span>
+                                <div class="row" style="margin-top: 55px;">
+                                    <form id="percentageForm">
+                                    </form>
+                                    <form id="accuWeightForm">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-md-12 col-12">
+                            <div class="box pull-up">
+                                <div class="box-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div style="color: #003f5c; margin: auto">
+                                            <h3 class="mb-0" style="font-weight: bold;">
+                                                تحت التشغيل
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <button id="openOperationPopupBtn">تعديل</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-md-6 col-12">
+                                <div class="box pull-up">
+                                    <div class="box-body">
+                                        <div
+                                                class="d-flex align-items-center justify-content-between"
+                                        >
+                                            <div style="color: #10d6b4; margin: auto">
+                                                <h5 class="mb-0" style="font-size: medium">
+                                                    مرفوضات
+                                                </h5>
+                                                <h2 id="marfoodat-operation-weight"
+                                                    class="mb-0 fs-4 d-flex justify-content-center"></h2>
+                                            </div>
+                                            <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6 col-12">
+                                <div class="box pull-up">
+                                    <div class="box-body">
+                                        <div
+                                                class="d-flex align-items-center justify-content-between"
+                                        >
+                                            <div style="color: #85a6e9; margin: auto">
+                                                <h5 class="mb-0" style="font-size: medium">
+                                                    مفروزات
+                                                </h5>
+                                                <h2 id="mafroozat-operation-weight"
+                                                    class="mb-0 fs-4 d-flex justify-content-center"></h2>
+                                            </div>
+                                            <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                                    <h5 class="fs-4 "
-                                        style="color: #003F5C; font-weight: bold; margin: auto auto 28px;">
-                                        تحت التشغيل
-                                    </h5>
-                                    <!--                                    <div class="loader"></div>-->
-                                    <div class="d-flex justify-content-between" style="color: #10d6b4">
-                                        <span class="operations-label fs-4 fw-500">مرفوضات</span>
-                                        <span class="operations-value fs-4 fw-500"
-                                              id="marfoodat-operation-weight"></span>
+                        <div class="row">
+                            <div class="col-xl-6 col-md-6 col-12">
+                                <div class="box pull-up">
+                                    <div class="box-body">
+                                        <div
+                                                class="d-flex align-items-center justify-content-between"
+                                        >
+                                            <div style="color: #2da075; margin: auto">
+                                                <h5 class="mb-0" style="font-size: medium">
+                                                    اسمدة عضوية
+                                                </h5>
+                                                <h2 id="asmeda-operation-weight"
+                                                    class="mb-0 fs-4 d-flex justify-content-center"></h2>
+                                            </div>
+                                            <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
+                                        </div>
                                     </div>
-                                    <div class="d-flex justify-content-between" style="color: #85a6e9">
-                                        <span class="operations-label fs-4 fw-500">مفروزات</span>
-                                        <span class="operations-value fs-4 fw-500"
-                                              id="mafroozat-operation-weight"></span>
-                                    </div>
-                                    <div class="d-flex justify-content-between" style="color: #2da075">
-                                        <span class="operations-label fs-4 fw-500">اسمدة عضوية</span>
-                                        <span class="operations-value fs-4 fw-500" id="asmeda-operation-weight"></span>
-                                    </div>
-                                    <div class="d-flex justify-content-between" style="color: #1427c9">
-                                        <span class="operations-label fs-4 fw-500">وقود بديل</span>
-                                        <span class="operations-value fs-4 fw-500" id="waqood-operation-weight"></span>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6 col-12">
+                                <div class="box pull-up">
+                                    <div class="box-body">
+                                        <div
+                                                class="d-flex align-items-center justify-content-between"
+                                        >
+                                            <div style="color: #1427c9; margin: auto">
+                                                <h5 class="mb-0" style="font-size: medium">
+                                                    وقود بديل
+                                                </h5>
+                                                <h2 id="waqood-operation-weight"
+                                                    class="mb-0 fs-4 d-flex justify-content-center"></h2>
+                                            </div>
+                                            <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
+                    <!--                    <div class="col-xl-4 col-md-4 col-12">-->
+                    <!--                        <div class="box pull-up" style="background: radial-gradient(#ffffff, #F9F9F9);">-->
+                    <!--                            <div class="box-body">-->
+                    <!--                                <div class="d-flex flex-column">-->
+
+                    <!--                                    <h5 class="fs-4 "-->
+                    <!--                                        style="color: #003F5C; font-weight: bold; margin: auto auto 28px;">-->
+                    <!--                                        تحت التشغيل-->
+                    <!--                                    </h5>-->
+                    <!--                                    &lt;!&ndash;                                    <div class="loader"></div>&ndash;&gt;-->
+                    <!--                                    <div class="d-flex justify-content-between" style="color: #10d6b4">-->
+                    <!--                                        <span class="operations-label fs-4 fw-500">مرفوضات</span>-->
+                    <!--                                        <span class="operations-value fs-4 fw-500"-->
+                    <!--                                              id="marfoodat-operation-weight"></span>-->
+                    <!--                                    </div>-->
+                    <!--                                    <div class="d-flex justify-content-between" style="color: #85a6e9">-->
+                    <!--                                        <span class="operations-label fs-4 fw-500">مفروزات</span>-->
+                    <!--                                        <span class="operations-value fs-4 fw-500"-->
+                    <!--                                              id="mafroozat-operation-weight"></span>-->
+                    <!--                                    </div>-->
+                    <!--                                    <div class="d-flex justify-content-between" style="color: #2da075">-->
+                    <!--                                        <span class="operations-label fs-4 fw-500">اسمدة عضوية</span>-->
+                    <!--                                        <span class="operations-value fs-4 fw-500" id="asmeda-operation-weight"></span>-->
+                    <!--                                    </div>-->
+                    <!--                                    <div class="d-flex justify-content-between" style="color: #1427c9">-->
+                    <!--                                        <span class="operations-label fs-4 fw-500">وقود بديل</span>-->
+                    <!--                                        <span class="operations-value fs-4 fw-500" id="waqood-operation-weight"></span>-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
 
 
                     <!--outputs-->
