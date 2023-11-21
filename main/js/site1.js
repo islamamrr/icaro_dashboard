@@ -6,7 +6,11 @@ var endDate = moment().format('DD-MMM-YY');
 const ipCenterDropdown = document.getElementById('ip-centerDropdown-s1');
 const ipVillageDropdown = document.getElementById('ip-villageDropdown-s1');
 const opDateDropdown = document.getElementById('op-dateRangeDropdown-s1');
-const ipDateDropdown = document.getElementById('ip-dateRangeDropdown-s1');
+
+var startDateIPGraph = moment().subtract(6, 'days').format('DD-MMM-YY');
+var endDateIPGraph = moment().format('DD-MMM-YY');
+var startDateOPGraph = moment().subtract(6, 'days').format('DD-MMM-YY');
+var endDateOPGraph = moment().format('DD-MMM-YY');
 
 const currentClientType = 'مصنع اجا';
 var dataTableInitialized = false;
@@ -296,7 +300,6 @@ function updateIpVillageDropdown(centerId) {
 }
 
 function updateInputGraph_s1(isVillage) {
-    const selectedDate = ipDateDropdown.value;
     const selectedCenter = ipCenterDropdown.value;
     var selectedVillage = ipVillageDropdown.value;
 
@@ -305,25 +308,8 @@ function updateInputGraph_s1(isVillage) {
         selectedVillage = "";
     }
 
-    let startDatex, endDatex;
-
-    if (selectedDate === 'last7days') {
-        startDatex = moment().subtract(7, 'days').format('DD-MMM-YY');
-        endDatex = moment().format('DD-MMM-YY');
-    } else if (selectedDate === 'last14days') {
-        startDatex = moment().subtract(14, 'days').format('DD-MMM-YY');
-        endDatex = moment().format('DD-MMM-YY');
-    } else if (selectedDate === 'lastMonth') {
-        startDatex = moment().subtract(1, 'months').startOf('month').format('DD-MMM-YY');
-        endDatex = moment().subtract(1, 'months').endOf('month').format('DD-MMM-YY');
-    }
-    // else if (selectedDate === 'lastYear') {
-    //     startDatex = moment().subtract(1, 'years').format('DD-MMM-YY');
-    //     endDatex = moment().format('DD-MMM-YY');
-    // }
-
-    const url1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات  تصلح للمعالجة&siteNo=1&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات تصلح للمعالجة
-    const url2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات لا تصلح للمعالجة&siteNo=1&startDate=${startDatex}&endDate=${endDatex}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات لا تصلح للمعالجة
+    const url1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات  تصلح للمعالجة&siteNo=1&startDate=${startDateIPGraph}&endDate=${endDateIPGraph}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات تصلح للمعالجة
+    const url2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات لا تصلح للمعالجة&siteNo=1&startDate=${startDateIPGraph}&endDate=${endDateIPGraph}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات لا تصلح للمعالجة
 
     Promise.all([
         fetch(url1).then(response1 => response1.json()).catch(() => 0),
@@ -332,10 +318,6 @@ function updateInputGraph_s1(isVillage) {
         let categories = Object.keys(data1);
         const values1 = Object.values(data1);
         const values2 = Object.values(data2);
-
-        if (selectedDate === 'lastMonth') {
-            categories = Object.keys(data1).map(date => date.split('-')[0]);
-        }
 
         s1_in_grph.data.datasets[0].data = values1 || 0;
         s1_in_grph.data.datasets[1].data = values2 || 0;
@@ -399,25 +381,11 @@ const s1_out_grph = new Chart(document.getElementById('s1-out-grph'), {
 
 
 function updateOutputGraph_s1() {
-    const selectedDate = opDateDropdown.value;
 
-    let startDatex, endDatex;
-
-    if (selectedDate === 'last7days') {
-        startDatex = moment().subtract(7, 'days').format('DD-MMM-YY');
-        endDatex = moment().format('DD-MMM-YY');
-    } else if (selectedDate === 'last14days') {
-        startDatex = moment().subtract(14, 'days').format('DD-MMM-YY');
-        endDatex = moment().format('DD-MMM-YY');
-    } else if (selectedDate === 'lastMonth') {
-        startDatex = moment().subtract(1, 'months').startOf('month').format('DD-MMM-YY');
-        endDatex = moment().subtract(1, 'months').endOf('month').format('DD-MMM-YY');
-    }
-
-    const waqoodURL = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=وقود بديل&siteNo=1&startDate=${startDatex}&endDate=${endDatex}`; // وقود بديل
-    const asmedaURL = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=اسمدة عضوية&siteNo=1&startDate=${startDatex}&endDate=${endDatex}`; // اسمدة عضوية
-    const marfoodatURL = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${currentClientType}&startDate=${startDatex}&endDate=${endDatex}`; // مرفوضات
-    const mafroozatURL = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مفروزات&siteNo=1&startDate=${startDatex}&endDate=${endDatex}`; //مفروزات
+    const waqoodURL = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=وقود بديل&siteNo=1&startDate=${startDateOPGraph}&endDate=${endDateOPGraph}`; // وقود بديل
+    const asmedaURL = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=اسمدة عضوية&siteNo=1&startDate=${startDateOPGraph}&endDate=${endDateOPGraph}`; // اسمدة عضوية
+    const marfoodatURL = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${currentClientType}&startDate=${startDateOPGraph}&endDate=${endDateOPGraph}`; // مرفوضات
+    const mafroozatURL = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?itemName=مفروزات&siteNo=1&startDate=${startDateOPGraph}&endDate=${endDateOPGraph}`; //مفروزات
     Promise.all([
         fetch(waqoodURL).then(responseWaqood => responseWaqood.json().catch(() => 0)),
         fetch(asmedaURL).then(responseAsmeda => responseAsmeda.json().catch(() => 0)),
@@ -429,10 +397,6 @@ function updateOutputGraph_s1() {
         const valuesAsmeda = Object.values(dataAsmeda);
         const valuesMarfoodat = Object.values(dataMarfoodat);
         const valuesMafroozat = Object.values(dataMafroozat);
-
-        if (selectedDate === 'lastMonth') {
-            categories = Object.keys(dataWaqood).map(date => date.split('-')[0]);
-        }
 
         s1_out_grph.data.datasets[0].data = valuesWaqood || 0;
         s1_out_grph.data.datasets[1].data = valuesAsmeda || 0;
@@ -794,6 +758,8 @@ $(document).ready(function () {
     // saveNewWeightAtMidnight();
     updateInOperationBox();
     initDatatableDateRange();
+    initIPGraphDateRange();
+    initOPGraphDateRange();
 
     getCenters();
     updateInputGraph_s1(false);
@@ -821,6 +787,15 @@ $(document).ready(function () {
 function initDateRange() {
     $('#dateRangePicker').daterangepicker({
         opens: 'left',
+        ranges: {
+                'اسبوع': [moment().subtract(6, 'days'), moment()],
+                'اسبوعين': [moment().subtract(13, 'days'), moment()],
+//                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'الشهر الحالى': [moment().startOf('month'), moment()],
+                'الشهر الماضى': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+              },
+        alwaysShowCalendars: true,
+        showCustomRangeLabel: false,
         startDate: moment(),
         endDate: moment(),
         locale: {
@@ -850,6 +825,55 @@ function initDatatableDateRange() {
     });
 }
 
+function initIPGraphDateRange() {
+    $('#ipGraphDateRangePicker').daterangepicker({
+        opens: 'left',
+        ranges: {
+                'اسبوع': [moment().subtract(6, 'days'), moment()],
+                'اسبوعين': [moment().subtract(13, 'days'), moment()],
+                'الشهر الحالى': [moment().startOf('month'), moment()],
+                'الشهر الماضى': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+              },
+        showCustomRangeLabel: false,
+        alwaysShowCalendars: true,
+        startDate: moment(),
+        endDate: moment(),
+        locale: {
+            format: 'DD-MM-YYYY'
+        }
+    }, function () {
+        var start = moment($('#ipGraphDateRangePicker').data('daterangepicker').startDate);
+        var end = moment($('#ipGraphDateRangePicker').data('daterangepicker').endDate);
+        startDateIPGraph = start.format('DD-MMM-YY');
+        endDateIPGraph = end.format('DD-MMM-YY');
+        updateInputGraph_s1(false);
+    });
+}
+
+function initOPGraphDateRange() {
+    $('#opGraphDateRangePicker').daterangepicker({
+        opens: 'left',
+        ranges: {
+                'اسبوع': [moment().subtract(6, 'days'), moment()],
+                'اسبوعين': [moment().subtract(13, 'days'), moment()],
+                'الشهر الحالى': [moment().startOf('month'), moment()],
+                'الشهر الماضى': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+              },
+        showCustomRangeLabel: false,
+        alwaysShowCalendars: true,
+        startDate: moment(),
+        endDate: moment(),
+        locale: {
+            format: 'DD-MM-YYYY'
+        }
+    }, function () {
+        var start = moment($('#opGraphDateRangePicker').data('daterangepicker').startDate);
+        var end = moment($('#opGraphDateRangePicker').data('daterangepicker').endDate);
+        startDateOPGraph = start.format('DD-MMM-YY');
+        endDateOPGraph = end.format('DD-MMM-YY');
+        updateOutputGraph_s1();
+    });
+}
 
 function updateAllByTime() {
     var start = moment($('#dateRangePicker').data('daterangepicker').startDate);

@@ -3,8 +3,8 @@ const userRole = getRoleFromToken();
 var centersList = [];
 var valuesTarget = [];
 
-var acceptedInputSites = [];
-var rejectedInputSites = [];
+var acceptedInputSites = [0, 0, 0, 0, 0];
+var rejectedInputSites = [0, 0, 0, 0, 0];
 
 var totalInput = 0;
 var totalAccepted = 0;
@@ -29,27 +29,32 @@ function fetchReusableDataAndUpdateCharts(startDate, endDate) {
     const mafroozatURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مفروزات&startDate=${startDate}&endDate=${endDate}`;
 
     Promise.all([
+        fetch(acceptedInputURL).then(responseAcceptedInput => responseAcceptedInput.json()),
         fetch(acceptedInputsURL).then(responseacceptedInputs => responseacceptedInputs.json()),
         fetch(rejectedInputsURL).then(responserejectedInputs => responserejectedInputs.json()),
         fetch(totalInputURL).then(responseTotalInput => responseTotalInput.json()),
-        fetch(acceptedInputURL).then(responseAcceptedInput => responseAcceptedInput.json()),
         fetch(asmedaURL).then(responseAsmeda => responseAsmeda.json()).catch(() => 0),
         fetch(waqoodURL).then(responseWaqood => responseWaqood.json()).catch(() => 0),
         fetch(marfoodatURL).then(responseMarfoodat => responseMarfoodat.json()).catch(() => 0),
         fetch(mafroozatURL).then(responseMafroozat => responseMafroozat.json()).catch(() => 0)
-    ]).then(([dataAcceptedInputs, dataRejectedInputs, dataTotalInput, dataAcceptedInput, dataAsmeda, dataWaqood, dataMarfoodat,
+    ]).then(([dataAcceptedInput, dataAcceptedInputs, dataRejectedInputs, dataTotalInput, dataAsmeda, dataWaqood, dataMarfoodat,
                  dataMafroozat]) => {
 
-        acceptedInputSites = dataAcceptedInputs;
-        rejectedInputSites = dataRejectedInputs;
+        console.log("kiko")
+        console.log(dataAcceptedInputs)
 
-        totalInput = dataTotalInput;
-        totalAccepted = dataAcceptedInput;
+        acceptedInputSites = dataAcceptedInputs == null ? 0 : dataAcceptedInputs;
+        rejectedInputSites = dataRejectedInputs == null ? 0 : dataRejectedInputs;
 
-        totalAsmeda = dataAsmeda;
-        totalWaqood = dataWaqood;
-        totalMarfoodat = dataMarfoodat;
-        totalMafroozat = dataMafroozat;
+        totalInput = dataTotalInput == null ? 0 : dataTotalInput;
+        totalAccepted = dataAcceptedInput == null ? 0 : dataAcceptedInput;
+
+        totalAsmeda = dataAsmeda == null ? 0 : dataAsmeda;
+        totalWaqood = dataWaqood == null ? 0 : dataWaqood;
+        totalMarfoodat = dataMarfoodat == null ? 0 : dataMarfoodat;
+        totalMafroozat = dataMafroozat == null ? 0 : dataMafroozat;
+        // console.log("dataMafroozat")
+        // console.log(dataMafroozat)
 
         updateTotalIPGraph();
         updateTotAccIPBox();
@@ -179,9 +184,6 @@ function updateCentersInputGraph_total(startDate, endDate) {
                 valuesTarget.push(dataTarget[centerName]);
             }
         }
-
-        console.log(valuesTarget)
-        console.log(dataTarget)
 
         // console.log('valuesReal')
         // console.log(valuesReal)

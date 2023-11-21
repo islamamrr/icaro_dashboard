@@ -2,26 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-    <link rel="icon" href="../images/favicon.ico"/>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <link href="../images/favicon.ico" rel="icon"/>
 
     <title>السنبلاوين</title>
 
     <!-- Vendors Style-->
-    <link rel="stylesheet" href="css/vendors_css.css"/>
+    <link href="css/vendors_css.css" rel="stylesheet"/>
 
     <!-- Style-->
-    <link rel="stylesheet" href="css/style.css"/>
-    <link rel="stylesheet" href="css/skin_color.css"/>
+    <link href="css/style.css" rel="stylesheet"/>
+    <link href="css/skin_color.css" rel="stylesheet"/>
 
-    <link rel="stylesheet" href="css/jquery-ui.css"/>
-
-    <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">-->
-    <!--    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">-->
-    <!--    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>-->
+    <link href="css/jquery-ui.css" rel="stylesheet"/>
 </head>
 <!---->
 <body class="hold-transition light-skin sidebar-mini theme-primary fixed rtl">
@@ -31,22 +27,22 @@
     <header class="main-header">
         <div class="d-flex align-items-center logo-box justify-content-start">
             <a
-                    href="#"
                     class="waves-effect waves-light nav-link rounded d-none d-md-inline-block mx-10 push-btn"
                     data-toggle="push-menu"
+                    href="#"
                     role="button"
             >
                 <i class="ti-menu"></i>
             </a>
             <!-- Logo -->
-            <a href="index.html" class="logo justify-content-around">
+            <a class="logo justify-content-around" href="index.html">
                 <!-- logo-->
                 <div class="logo-lg">
               <span class="light-logo"
-              ><img src="../images/millenium.jpeg" alt="logo"
+              ><img alt="logo" src="../images/millenium.jpeg"
               /></span>
                     <span class="dark-logo"
-                    ><img src="../images/logo-light-text.png" alt="logo"
+                    ><img alt="logo" src="../images/logo-light-text.png"
                     /></span>
                 </div>
             </a>
@@ -56,16 +52,16 @@
             <!-- Sidebar toggle button-->
 
             <div class="input-group mb-3" style="width: 200px; margin-top: auto">
-                <input type="text" class="form-control" id="dateRangePicker"/>
+                <input class="form-control" id="dateRangePicker" type="text"/>
             </div>
 
             <div class="navbar-custom-menu r-side" style="display: flex">
                 <ul class="nav navbar-nav">
                     <li class="btn-group nav-item d-lg-inline-flex d-none">
                         <a
-                                href="#"
-                                data-provide="fullscreen"
                                 class="waves-effect waves-light nav-link rounded full-screen"
+                                data-provide="fullscreen"
+                                href="#"
                                 title="Full Screen"
                         >
                             <i class="ti-fullscreen"></i>
@@ -166,41 +162,44 @@
                                             <h5 class="mb-0" style="font-weight: bold">
                                                 اجمالى المدخلات
                                             </h5>
-                                            <h2 id="s5-ip-box" class="mb-0"></h2>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                        <div class="row">
-                        <div class="col-xl-6 col-md-6 col-12">
-                            <div class="box pull-up">
-                                <div class="box-body">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div style="color: #ffa014; margin: auto">
-                                            <h5 class="mb-0" style="font-size: small">
-                                                مخلفات تصلح للمعالجة
-                                            </h5>
-                                            <h2 id="s5-accepted-ip-box" class="mb-0 fs-4 d-flex justify-content-center"></h2>
+                                            <h2 class="mb-0" id="s5-ip-box"></h2>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-6 col-md-6 col-12">
-                            <div class="box pull-up">
-                                <div class="box-body">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div style="color: #d81415; margin: auto">
-                                            <h5 class="mb-0" style="font-size: small">
-                                                مخلفات لا تصلح للمعالجة
-                                            </h5>
-                                            <h2 id="s5-rejected-ip-box" class="mb-0 fs-4 d-flex justify-content-center"></h2>
+                        <div class="row">
+                            <div class="col-xl-6 col-md-6 col-12">
+                                <div class="box pull-up">
+                                    <div class="box-body">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div style="color: #ffa014; margin: auto">
+                                                <h5 class="mb-0" style="font-size: small">
+                                                    مخلفات تصلح للمعالجة
+                                                </h5>
+                                                <h2 class="mb-0 fs-4 d-flex justify-content-center"
+                                                    id="s5-accepted-ip-box"></h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6 col-12">
+                                <div class="box pull-up">
+                                    <div class="box-body">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div style="color: #d81415; margin: auto">
+                                                <h5 class="mb-0" style="font-size: small">
+                                                    مخلفات لا تصلح للمعالجة
+                                                </h5>
+                                                <h2 class="mb-0 fs-4 d-flex justify-content-center"
+                                                    id="s5-rejected-ip-box"></h2>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
                         <div class="row">
                             <div class="col-xl-6 col-md-6 col-12">
@@ -213,7 +212,8 @@
                                                 <h5 class="mb-0" style="font-weight: bold; font-size: small">
                                                     نسبة المخلفات الصالحة للمعالجة
                                                 </h5>
-                                                <h2 class="mb-0 fs-4 d-flex justify-content-center" id="accepted_per"></h2>
+                                                <h2 class="mb-0 fs-4 d-flex justify-content-center"
+                                                    id="accepted_per"></h2>
                                             </div>
                                         </div>
                                     </div>
@@ -230,7 +230,8 @@
                                                 <h5 class="mb-0" style="font-weight: bold; font-size: small">
                                                     نسبة المرفوضات من المخلفات الصالحة للمعالجة
                                                 </h5>
-                                                <h2 class="mb-0 fs-4 d-flex justify-content-center" id="rejected_per"></h2>
+                                                <h2 class="mb-0 fs-4 d-flex justify-content-center"
+                                                    id="rejected_per"></h2>
                                             </div>
                                         </div>
                                     </div>
@@ -243,7 +244,7 @@
                     <!--taht el tashgheel-->
 
                     <div class="col-xl-4 col-md-4 col-12">
-                        <div id="popupContainerOperations" class="popup">-->
+                        <div class="popup" id="popupContainerOperations">-->
                             <div class="popup-content-operations">
                                                                     <span class="close"
                                                                           id="closeOperationsPopupBtn">&times;</span>
@@ -287,8 +288,8 @@
                                                 مرفوضات</h5>
                                             <div style="display: flex;justify-content: space-between;align-items: center;">
                                                 <span id="marfoodat-percentage" style="font-size: medium"></span>
-                                                <span id="marfoodat-operation-weight"
-                                                      class="mb-0 fs-4 d-flex justify-content-center"></span>
+                                                <span class="mb-0 fs-4 d-flex justify-content-center"
+                                                      id="marfoodat-operation-weight"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -302,8 +303,8 @@
                                                 مفروزات</h5>
                                             <div style="display: flex;justify-content: space-between;align-items: center;">
                                                 <span id="mafroozat-percentage"></span>
-                                                <span id="mafroozat-operation-weight" style="font-size: medium"
-                                                      class="mb-0 fs-4 d-flex justify-content-center"></span>
+                                                <span class="mb-0 fs-4 d-flex justify-content-center" id="mafroozat-operation-weight"
+                                                      style="font-size: medium"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -319,8 +320,8 @@
                                                 اسمدة عضوية</h5>
                                             <div style="display: flex;justify-content: space-between;align-items: center;">
                                                 <span id="asmeda-percentage" style="font-size: medium"></span>
-                                                <span id="asmeda-operation-weight"
-                                                      class="mb-0 fs-4 d-flex justify-content-center"></span>
+                                                <span class="mb-0 fs-4 d-flex justify-content-center"
+                                                      id="asmeda-operation-weight"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -334,8 +335,8 @@
                                                 وقود بديل</h5>
                                             <div style="display: flex;justify-content: space-between;align-items: center;">
                                                 <span id="waqood-percentage" style="font-size: medium"></span>
-                                                <span id="waqood-operation-weight"
-                                                      class="mb-0 fs-4 d-flex justify-content-center"></span>
+                                                <span class="mb-0 fs-4 d-flex justify-content-center"
+                                                      id="waqood-operation-weight"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -346,61 +347,61 @@
 
 
                     <!--                    <div class="col-xl-4 col-md-4 col-12">-->
-<!--                        <div id="popupContainerOperations" class="popup">-->
-<!--                            <div class="popup-content-operations">-->
-<!--                                        <span class="close"-->
-<!--                                              id="closeOperationsPopupBtn">&times;</span>-->
-<!--                                <h2 style="font-size: 21px;margin-bottom: 22px;">تغيير الكميات التراكمية والنسب من-->
-<!--                                    المخلفات الصالحة للمعالجة-->
-<!--                                    لليوم</h2>-->
-<!--                                <div class="d-flex justify-content-center" style="margin: 12px;">-->
-<!--                                    <div class="spinner-border" id="operationsEditLoader">-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <span style="position:absolute;font-size:medium;right: 175px">النسبة</span>-->
-<!--                                <span style="position:absolute;font-size:medium;right: 275px">الكمية المتراكمة</span>-->
-<!--                                <div class="row" style="margin-top: 55px;">-->
-<!--                                    <form id="percentageForm">-->
-<!--                                    </form>-->
-<!--                                    <form id="accuWeightForm">-->
-<!--                                    </form>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="box pull-up" style="background: radial-gradient(#ffffff, #F9F9F9);">-->
-<!--                            <div class="box-body">-->
-<!--                                <div class="d-flex flex-column">-->
+                    <!--                        <div id="popupContainerOperations" class="popup">-->
+                    <!--                            <div class="popup-content-operations">-->
+                    <!--                                        <span class="close"-->
+                    <!--                                              id="closeOperationsPopupBtn">&times;</span>-->
+                    <!--                                <h2 style="font-size: 21px;margin-bottom: 22px;">تغيير الكميات التراكمية والنسب من-->
+                    <!--                                    المخلفات الصالحة للمعالجة-->
+                    <!--                                    لليوم</h2>-->
+                    <!--                                <div class="d-flex justify-content-center" style="margin: 12px;">-->
+                    <!--                                    <div class="spinner-border" id="operationsEditLoader">-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                                <span style="position:absolute;font-size:medium;right: 175px">النسبة</span>-->
+                    <!--                                <span style="position:absolute;font-size:medium;right: 275px">الكمية المتراكمة</span>-->
+                    <!--                                <div class="row" style="margin-top: 55px;">-->
+                    <!--                                    <form id="percentageForm">-->
+                    <!--                                    </form>-->
+                    <!--                                    <form id="accuWeightForm">-->
+                    <!--                                    </form>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="box pull-up" style="background: radial-gradient(#ffffff, #F9F9F9);">-->
+                    <!--                            <div class="box-body">-->
+                    <!--                                <div class="d-flex flex-column">-->
 
-<!--                                    <h5 class="fs-4 mb-0" style="color: #003F5C; font-weight: bold; margin: auto">-->
-<!--                                        تحت التشغيل-->
-<!--                                    </h5>-->
-<!--                                    <button id="openOperationPopupBtn">تعديل</button>-->
-<!--                                    <div class="d-flex justify-content-between" style="color: #10d6b4">-->
-<!--                                        <span class="operations-label fs-4 fw-500">مرفوضات<span-->
-<!--                                                id="marfoodat-percentage" style="font-size: medium"></span></span>-->
-<!--                                        <span class="operations-value fs-4 fw-500"-->
-<!--                                              id="marfoodat-operation-weight"></span>-->
-<!--                                    </div>-->
-<!--                                    <div class="d-flex justify-content-between" style="color: #85a6e9">-->
-<!--                                        <span class="operations-label fs-4 fw-500">مفروزات<span-->
-<!--                                                id="mafroozat-percentage" style="font-size: medium"></span></span>-->
-<!--                                        <span class="operations-value fs-4 fw-500"-->
-<!--                                              id="mafroozat-operation-weight"></span>-->
-<!--                                    </div>-->
-<!--                                    <div class="d-flex justify-content-between" style="color: #2da075">-->
-<!--                                        <span class="operations-label fs-4 fw-500">اسمدة عضوية<span-->
-<!--                                                id="asmeda-percentage" style="font-size: medium"></span></span>-->
-<!--                                        <span class="operations-value fs-4 fw-500" id="asmeda-operation-weight"></span>-->
-<!--                                    </div>-->
-<!--                                    <div class="d-flex justify-content-between" style="color: #1427c9">-->
-<!--                                        <span class="operations-label fs-4 fw-500">وقود بديل<span-->
-<!--                                                id="waqood-percentage" style="font-size: medium"></span></span>-->
-<!--                                        <span class="operations-value fs-4 fw-500" id="waqood-operation-weight"></span>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <!--                                    <h5 class="fs-4 mb-0" style="color: #003F5C; font-weight: bold; margin: auto">-->
+                    <!--                                        تحت التشغيل-->
+                    <!--                                    </h5>-->
+                    <!--                                    <button id="openOperationPopupBtn">تعديل</button>-->
+                    <!--                                    <div class="d-flex justify-content-between" style="color: #10d6b4">-->
+                    <!--                                        <span class="operations-label fs-4 fw-500">مرفوضات<span-->
+                    <!--                                                id="marfoodat-percentage" style="font-size: medium"></span></span>-->
+                    <!--                                        <span class="operations-value fs-4 fw-500"-->
+                    <!--                                              id="marfoodat-operation-weight"></span>-->
+                    <!--                                    </div>-->
+                    <!--                                    <div class="d-flex justify-content-between" style="color: #85a6e9">-->
+                    <!--                                        <span class="operations-label fs-4 fw-500">مفروزات<span-->
+                    <!--                                                id="mafroozat-percentage" style="font-size: medium"></span></span>-->
+                    <!--                                        <span class="operations-value fs-4 fw-500"-->
+                    <!--                                              id="mafroozat-operation-weight"></span>-->
+                    <!--                                    </div>-->
+                    <!--                                    <div class="d-flex justify-content-between" style="color: #2da075">-->
+                    <!--                                        <span class="operations-label fs-4 fw-500">اسمدة عضوية<span-->
+                    <!--                                                id="asmeda-percentage" style="font-size: medium"></span></span>-->
+                    <!--                                        <span class="operations-value fs-4 fw-500" id="asmeda-operation-weight"></span>-->
+                    <!--                                    </div>-->
+                    <!--                                    <div class="d-flex justify-content-between" style="color: #1427c9">-->
+                    <!--                                        <span class="operations-label fs-4 fw-500">وقود بديل<span-->
+                    <!--                                                id="waqood-percentage" style="font-size: medium"></span></span>-->
+                    <!--                                        <span class="operations-value fs-4 fw-500" id="waqood-operation-weight"></span>-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
 
                     <!--OUTPUT-->
                     <div class="col-xl-4 col-md-4 col-12">
@@ -414,7 +415,7 @@
                                             <h5 class="mb-0" style="font-weight: bold">
                                                 اجمالى المخرجات
                                             </h5>
-                                            <h2 id="s5-op-box" class="mb-0"></h2>
+                                            <h2 class="mb-0" id="s5-op-box"></h2>
                                         </div>
                                         <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
                                     </div>
@@ -433,7 +434,8 @@
                                                 <h5 class="mb-0" style="font-size: medium">
                                                     مرفوضات
                                                 </h5>
-                                                <h2 id="s5-marfoodat-op-box" class="mb-0 fs-4 d-flex justify-content-center"></h2>
+                                                <h2 class="mb-0 fs-4 d-flex justify-content-center"
+                                                    id="s5-marfoodat-op-box"></h2>
                                             </div>
                                             <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
                                         </div>
@@ -450,7 +452,8 @@
                                                 <h5 class="mb-0" style="font-size: medium">
                                                     مفروزات
                                                 </h5>
-                                                <h2 id="s5-mafroozat-op-box" class="mb-0 fs-4 d-flex justify-content-center"></h2>
+                                                <h2 class="mb-0 fs-4 d-flex justify-content-center"
+                                                    id="s5-mafroozat-op-box"></h2>
                                             </div>
                                             <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
                                         </div>
@@ -470,7 +473,8 @@
                                                 <h5 class="mb-0" style="font-size: medium">
                                                     اسمدة عضوية
                                                 </h5>
-                                                <h2 id="s5-asmeda-op-box" class="mb-0 fs-4 d-flex justify-content-center"></h2>
+                                                <h2 class="mb-0 fs-4 d-flex justify-content-center"
+                                                    id="s5-asmeda-op-box"></h2>
                                             </div>
                                             <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
                                         </div>
@@ -487,7 +491,8 @@
                                                 <h5 class="mb-0" style="font-size: medium">
                                                     وقود بديل
                                                 </h5>
-                                                <h2 id="s5-waqood-op-box" class="mb-0 fs-4 d-flex justify-content-center"></h2>
+                                                <h2 class="mb-0 fs-4 d-flex justify-content-center"
+                                                    id="s5-waqood-op-box"></h2>
                                             </div>
                                             <!--                                    <img src="../images/gher_ma2bool.png" alt="" style="height: 62px">-->
                                         </div>
@@ -516,16 +521,8 @@
 
                     <div class="col-xl-8 col-8">
                         <div class="box">
-                            <div>
-                                <select
-                                        id="ip-dateRangeDropdown-s5"
-                                        onchange="updateInputGraph_s5(false)"
-                                >
-                                    <!--                                    <option value="" disabled selected>المدة</option>-->
-                                    <option value="last7days">اسبوع</option>
-                                    <option value="last14days">اسبوعين</option>
-                                    <option value="lastMonth">الشهر الماضى</option>
-                                </select>
+                            <div class="input-group mb-3" style="width: 200px; margin-top: auto">
+                                <input class="form-control" id="ipGraphDateRangePicker" type="text"/>
                             </div>
 
                             <div>
@@ -538,8 +535,8 @@
                             <div>
                                 <select
                                         id="ip-villageDropdown-s5"
-                                        style="display: none"
                                         onchange="updateInputGraph_s5(true)"
+                                        style="display: none"
                                 ></select>
                             </div>
                             <div class="box-header with-border">
@@ -568,19 +565,11 @@
 
                     <div class="col-xl-8 col-12">
                         <div class="box">
-                            <div>
-                                <select
-                                        id="op-dateRangeDropdown-s5"
-                                        onchange="updateOutputGraph_s5()"
-                                >
-                                    <option value="last7days">اسبوع</option>
-                                    <option value="last14days">اسبوعين</option>
-                                    <option value="lastMonth">الشهر الماضى</option>
-                                    <!--                                    <option value="lastYear">Last Year</option>-->
-                                </select>
+                            <div class="input-group mb-3" style="width: 200px; margin-top: auto">
+                                <input class="form-control" id="opGraphDateRangePicker" type="text"/>
                             </div>
                             <div class="box-header">
-                                <h4 class="box-title">المخرجات (طن)</h4>
+                                <h4 class="box-title" style="margin-top: 15px;">المخرجات (طن)</h4>
                             </div>
                             <div class="box-body">
                                 <canvas id="s5-out-grph"></canvas>
@@ -590,13 +579,13 @@
                 </div>
 
                 <div class="input-group mb-3" style="width: 200px; margin-top: auto">
-                    <input type="text" class="form-control" id="datatableDateRangePicker"/>
+                    <input class="form-control" id="datatableDateRangePicker" type="text"/>
                 </div>
 
                 <div
                         class="input-group mb-3"
-                        style="display: none; position: absolute; right: 70%;"
                         id="datatableExportGroup"
+                        style="display: none; position: absolute; right: 70%;"
                 >
                     <button id="datatableExport"
                             onclick="exportToExcel()">
@@ -605,7 +594,7 @@
                     </button>
                 </div>
 
-                <table id="site5_table" class="table table-striped table-bordered">
+                <table class="table table-striped table-bordered" id="site5_table">
                     <thead>
                     <tr>
                         <th class="searchable-column">رقم التذكرة</th>
@@ -640,44 +629,24 @@
             window.location.href = "login.html";
         }
     });
+
 </script>
 
 <script src="js/vendors.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="../assets/vendor_components/jquery.peity/jquery.peity.js"></script>
+
 <script src="../assets/vendor_components/c3/d3.min.js"></script>
 <script src="../assets/vendor_components/c3/c3.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 
 <script src="js/template.js"></script>
-<!--<script src="js/pages/dashboard.js"></script>-->
-
-<!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/moment/min/moment.min.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>-->
 <script src="../assets/vendor_components/moment/moment.js"></script>
 <script src="js/site5.js"></script>
 
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/ar.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/en-gb.js"></script>-->
-<!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>-->
 <script src="../assets/vendor_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<!--<script src="../assets/vendor_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>-->
 
-<script src="js/jquery-ui.js"></script>
-
-<!--<script src="js/pages/chart-widgets.js"></script>-->
-
-<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>-->
-<!--<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>-->
 <script src="../assets/vendor_components/datatable/datatables.js"></script>
-
-<!--<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>-->
-
-<!--<script src="js/pages/chartjs-int.js"></script>-->
-
-<!--<script src="js/pages/dashboard2.js"></script>-->
-<!--<script src="../assets/vendor_components/apexcharts-bundle/dist/apexcharts.js"></script>-->
 </body>
 </html>

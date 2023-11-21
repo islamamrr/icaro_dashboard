@@ -43499,10 +43499,15 @@ select#ip-dateRangeDropdown-s5, select#ip-dateRangeDropdown-s6 {
     font-size: initial;
 }
 
+#ipGraphDateRangePicker, #opGraphDateRangePicker {
+    right: 6%;
+    top: 26px;
+}
+
 select#ip-centerDropdown-s1, select#ip-centerDropdown-s2, select#ip-clientDropdown-s3, select#ip-centerDropdown-s4,
 select#ip-centerDropdown-s5, select#ip-centerDropdown-s6 {
     position: relative;
-    right: 19%;
+    right: 29%;
     top: -16px;
     border-radius: 11px;
     color: #003f5c;
@@ -43512,7 +43517,7 @@ select#ip-centerDropdown-s5, select#ip-centerDropdown-s6 {
 select#ip-villageDropdown-s1, select#ip-villageDropdown-s2, select#ip-villageDropdown-s3, select#ip-villageDropdown-s4,
 select#ip-villageDropdown-s5, select#ip-villageDropdown-s6 {
     position: relative;
-    right: 40%;
+    right: 48%;
     top: -40px;
     border-radius: 11px;
     color: #003f5c;
