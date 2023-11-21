@@ -7,7 +7,8 @@ var acceptedInputSites = [0, 0, 0, 0, 0];
 var rejectedInputSites = [0, 0, 0, 0, 0];
 
 var totalInput = 0;
-var totalAccepted = 0;
+var totalAcceptedInput = 0;
+var totalRejectedInput = 0;
 
 var totalAsmeda = 0;
 var totalWaqood = 0;
@@ -22,6 +23,7 @@ function fetchReusableDataAndUpdateCharts(startDate, endDate) {
 
     const totalInputURL = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
     const acceptedInputURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`;
+    const rejectedInputURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`;
 
     const asmedaURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&startDate=${startDate}&endDate=${endDate}`;
     const waqoodURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=وقود بديل&&startDate=${startDate}&endDate=${endDate}`;
@@ -30,24 +32,23 @@ function fetchReusableDataAndUpdateCharts(startDate, endDate) {
 
     Promise.all([
         fetch(acceptedInputURL).then(responseAcceptedInput => responseAcceptedInput.json()),
-        fetch(acceptedInputsURL).then(responseacceptedInputs => responseacceptedInputs.json()),
-        fetch(rejectedInputsURL).then(responserejectedInputs => responserejectedInputs.json()),
+        fetch(acceptedInputsURL).then(responseAcceptedInputs => responseAcceptedInputs.json()),
+        fetch(rejectedInputURL).then(responseRejectedInput => responseRejectedInput.json()),
+        fetch(rejectedInputsURL).then(responseRejectedInputs => responseRejectedInputs.json()),
         fetch(totalInputURL).then(responseTotalInput => responseTotalInput.json()),
         fetch(asmedaURL).then(responseAsmeda => responseAsmeda.json()).catch(() => 0),
         fetch(waqoodURL).then(responseWaqood => responseWaqood.json()).catch(() => 0),
         fetch(marfoodatURL).then(responseMarfoodat => responseMarfoodat.json()).catch(() => 0),
         fetch(mafroozatURL).then(responseMafroozat => responseMafroozat.json()).catch(() => 0)
-    ]).then(([dataAcceptedInput, dataAcceptedInputs, dataRejectedInputs, dataTotalInput, dataAsmeda, dataWaqood, dataMarfoodat,
+    ]).then(([dataAcceptedInput, dataAcceptedInputs, dataRejectedInput, dataRejectedInputs, dataTotalInput, dataAsmeda, dataWaqood, dataMarfoodat,
                  dataMafroozat]) => {
-
-        console.log("kiko")
-        console.log(dataAcceptedInputs)
 
         acceptedInputSites = dataAcceptedInputs == null ? 0 : dataAcceptedInputs;
         rejectedInputSites = dataRejectedInputs == null ? 0 : dataRejectedInputs;
 
         totalInput = dataTotalInput == null ? 0 : dataTotalInput;
-        totalAccepted = dataAcceptedInput == null ? 0 : dataAcceptedInput;
+        totalAcceptedInput = dataAcceptedInput == null ? 0 : dataAcceptedInput;
+        totalRejectedInput = dataRejectedInput == null ? 0 : dataRejectedInput;
 
         totalAsmeda = dataAsmeda == null ? 0 : dataAsmeda;
         totalWaqood = dataWaqood == null ? 0 : dataWaqood;
@@ -58,6 +59,7 @@ function fetchReusableDataAndUpdateCharts(startDate, endDate) {
 
         updateTotalIPGraph();
         updateTotAccIPBox();
+        updateTotRejIPBox();
         updateTotAccRateBox();
         updateTotRejRateBox();
         updateTotAsmedaOPBox();
@@ -228,25 +230,16 @@ function updateTotIPBox(startDate, endDate) {
 }
 
 function updateTotAccIPBox() {
-    document.getElementById("tot-accepted-ip-box").textContent = totalAccepted + " طن";
+    document.getElementById("tot-accepted-ip-box").textContent = totalAcceptedInput + " طن";
 }
 
 function updateTotRejIPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    fetch(url)
-        .then(response => response.json()).catch(() => 0)
-        .then(data => {
-            const newValue = data;
-            document.getElementById("tot-rejected-ip-box").textContent = newValue + " طن";
-        })
-    // .catch(error => {
-    //     console.error('Error:', error);
-    // });
+    document.getElementById("tot-rejected-ip-box").textContent = totalRejectedInput + " طن";
 }
 
 //Rates boxes
 function updateTotAccRateBox() {
-    const percentage = (totalAccepted / totalInput) * 100;
+    const percentage = (totalAcceptedInput / totalInput) * 100;
     if (isNaN(percentage))
         document.getElementById("accepted_per").textContent = 0 + "%"
     else
@@ -254,7 +247,7 @@ function updateTotAccRateBox() {
 }
 
 function updateTotRejRateBox() {
-    const percentage = (totalMarfoodat / totalAccepted) * 100;
+    const percentage = ((totalMarfoodat - totalRejectedInput)/ totalAcceptedInput) * 100;
     if (isNaN(percentage))
         document.getElementById("rejected_per").textContent = 0 + "%"
     else
@@ -524,7 +517,6 @@ $(document).ready(function () {
     updateTotalIPOPGraph(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateCentersInputGraph_total(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateTotIPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
-    updateTotRejIPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateTotOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     fetchReusableDataAndUpdateCharts(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
 
@@ -537,7 +529,6 @@ $(document).ready(function () {
         updateTotalIPOPGraph(startDate, endDate);
         updateCentersInputGraph_total(startDate, endDate);
         updateTotIPBox(startDate, endDate);
-        updateTotRejIPBox(startDate, endDate);
         updateTotOPBox(startDate, endDate);
         fetchReusableDataAndUpdateCharts(startDate, endDate);
     });
