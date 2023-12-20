@@ -559,35 +559,27 @@ function updateRejIPBox(startDate, endDate) {
         });
 }
 
-
 function updateRejRateBox(startDate, endDate) {
     const accUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const rejUrl = `http://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`;
+    const rejUrl = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`;
+    const marfoodatURL = `http://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
 
-    fetch(rejUrl)
-        .then(response => response.json()).catch(() => 0)
-        .then(rejData => {
+    Promise.all([
+        fetch(accUrl).then(accResponse => accResponse.json()).catch(() => 0),
+        fetch(rejUrl).then(rejResponse => rejResponse.json()).catch(() => 0),
+        fetch(marfoodatURL).then(marfoodatResponse => marfoodatResponse.json()).catch(() => 0)
+    ]).then(([accVal, rejVal, marfoodat]) => {
 
-            const rejVal = rejData;
-            // console.log("rejected value" + rejVal);
-            fetch(accUrl)
-                .then(response => response.json()).catch(() => 0)
-                .then(accData => {
-                    const accVal = accData;
+        console.log(accVal);
+        console.log(rejVal);
+        console.log(marfoodat);
+        const percentage = ((marfoodat - rejVal)/ accVal) * 100;
 
-                    const percentage = (rejVal / accVal) * 100;
-                    if (isNaN(percentage))
-                        document.getElementById("rejected_per").textContent = 0 + "%"
-                    else
-                        document.getElementById("rejected_per").textContent = percentage.toFixed(0) + "%";
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        if (isNaN(percentage))
+            document.getElementById("rejected_per").textContent = 0 + "%"
+        else
+            document.getElementById("rejected_per").textContent = percentage.toFixed(0) + "%";
+    })
 }
 
 function updateAccRateBox(startDate, endDate) {
