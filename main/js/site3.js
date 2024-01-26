@@ -70,7 +70,7 @@ function updateDatatable(startDate, endDate) {
     const tbody = document.querySelector('#site3_table tbody');
 
 
-    fetch(`http://isdom.online/dash_board/tickets/all?siteNo=3&startDate=${startDate}&endDate=${endDate}`)
+    fetch(`https://isdom.online/dash_board/tickets/all?siteNo=3&startDate=${startDate}&endDate=${endDate}`)
         .then(response => response.json())
         .then(data => {
 
@@ -119,7 +119,7 @@ function updateDatatable(startDate, endDate) {
                                     secondWeight: rowData.secondWeight
                                 }
 
-                                fetch(`http://isdom.online/dash_board/tickets/${rowData.ticketId}/3`, {
+                                fetch(`https://isdom.online/dash_board/tickets/${rowData.ticketId}/3`, {
                                     method: 'PUT',
                                     headers: {
                                         'Content-Type': 'application/json'
@@ -300,13 +300,13 @@ function updateInputGraph_s3() {
         endDatex = moment().subtract(1, 'months').endOf('month').format('DD-MMM-YY');
     }
 
-    const totalURL = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&startDate=${startDatex}&endDate=${endDatex}`;
-    const URL1 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${clients[0]}&startDate=${startDatex}&endDate=${endDatex}`;
-    const URL2 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${clients[1]}&startDate=${startDatex}&endDate=${endDatex}`;
-    const URL4 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${clients[3]}&startDate=${startDatex}&endDate=${endDatex}`;
-    const URL5 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${clients[4]}&startDate=${startDatex}&endDate=${endDatex}`;
-    const URL6 = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${clients[5]}&startDate=${startDatex}&endDate=${endDatex}`;
-    const othersURL = `http://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${otherClient}&startDate=${startDatex}&endDate=${endDatex}`;
+    const totalURL = `https://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&startDate=${startDatex}&endDate=${endDatex}`;
+    const URL1 = `https://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${clients[0]}&startDate=${startDatex}&endDate=${endDatex}`;
+    const URL2 = `https://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${clients[1]}&startDate=${startDatex}&endDate=${endDatex}`;
+    const URL4 = `https://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${clients[3]}&startDate=${startDatex}&endDate=${endDatex}`;
+    const URL5 = `https://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${clients[4]}&startDate=${startDatex}&endDate=${endDatex}`;
+    const URL6 = `https://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${clients[5]}&startDate=${startDatex}&endDate=${endDatex}`;
+    const othersURL = `https://isdom.online/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${otherClient}&startDate=${startDatex}&endDate=${endDatex}`;
 
     Promise.all([
         fetch(totalURL).then(responseTotal => responseTotal.json()).catch(() => 0),
@@ -389,15 +389,15 @@ const initialIPChartData = {
 const s3_ip_chart = c3.generate(initialIPChartData);
 
 function updateIPChartData(startDate, endDate) {
-    // const urlIP1 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    // const urlIP2 = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مخلفات لا تصلح للمعالجة
+    // const urlIP1 = `https://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    // const urlIP2 = `https://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=3&startDate=${startDate}&endDate=${endDate}`; // مخلفات لا تصلح للمعالجة
 
-    const URL1 = `http://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${clients[0]}&startDate=${startDate}&endDate=${endDate}`;
-    const URL2 = `http://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${clients[1]}&startDate=${startDate}&endDate=${endDate}`;
-    const URL4 = `http://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${clients[3]}&startDate=${startDate}&endDate=${endDate}`;
-    const URL5 = `http://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${clients[4]}&startDate=${startDate}&endDate=${endDate}`;
-    const URL6 = `http://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${clients[5]}&startDate=${startDate}&endDate=${endDate}`;
-    const othersURL = `http://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${otherClient}&startDate=${startDate}&endDate=${endDate}`;
+    const URL1 = `https://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${clients[0]}&startDate=${startDate}&endDate=${endDate}`;
+    const URL2 = `https://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${clients[1]}&startDate=${startDate}&endDate=${endDate}`;
+    const URL4 = `https://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${clients[3]}&startDate=${startDate}&endDate=${endDate}`;
+    const URL5 = `https://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${clients[4]}&startDate=${startDate}&endDate=${endDate}`;
+    const URL6 = `https://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${clients[5]}&startDate=${startDate}&endDate=${endDate}`;
+    const othersURL = `https://isdom.online/dash_board/tickets/itemName/weight?siteNo=3&clientType=${otherClient}&startDate=${startDate}&endDate=${endDate}`;
 
     Promise.all([
         fetch(URL1).then(response => response.json()).catch(() => 0),
@@ -444,7 +444,7 @@ function updateIPChartData(startDate, endDate) {
 // DATA BOXES ////
 
 function updateIPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=3&startDate=${startDate}&endDate=${endDate}`;
+    const url = `https://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=3&startDate=${startDate}&endDate=${endDate}`;
 
     fetch(url)
         .then(response => response.json()).catch(() => 0)

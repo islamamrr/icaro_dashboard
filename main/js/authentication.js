@@ -7,7 +7,7 @@ function isAuthenticated() {
         return Promise.resolve(false);
     }
 
-    return fetch('http://isdom.online/dash_board/api/protected-route', {
+    return fetch('https://isdom.online/dash_board/api/protected-route', {
         headers: {
             'Authorization': 'Bearer ' + token
         }

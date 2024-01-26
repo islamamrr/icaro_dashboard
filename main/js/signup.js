@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
             password: password
         };
 
-        fetch('http://isdom.online/dash_board/api/signup', {
+        fetch('https://isdom.online/dash_board/api/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

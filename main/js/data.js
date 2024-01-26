@@ -18,17 +18,17 @@ var totalMafroozat = 0;
 var isFirstLoad = true;
 
 function fetchReusableDataAndUpdateCharts(startDate, endDate) {
-    const acceptedInputsURL = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`;
-    const rejectedInputsURL = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=مخلفات لا تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`;
+    const acceptedInputsURL = `https://isdom.online/dash_board/tickets/itemName/weight-list?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`;
+    const rejectedInputsURL = `https://isdom.online/dash_board/tickets/itemName/weight-list?itemName=مخلفات لا تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`;
 
-    const totalInputURL = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
-    const acceptedInputURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`;
-    const rejectedInputURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`;
+    const totalInputURL = `https://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
+    const acceptedInputURL = `https://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`;
+    const rejectedInputURL = `https://isdom.online/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`;
 
-    const asmedaURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&startDate=${startDate}&endDate=${endDate}`;
-    const waqoodURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=وقود بديل&&startDate=${startDate}&endDate=${endDate}`;
-    const marfoodatURL = `http://isdom.online/dash_board/tickets/output-rejected/weight?startDate=${startDate}&endDate=${endDate}`;
-    const mafroozatURL = `http://isdom.online/dash_board/tickets/itemName/weight?itemName=مفروزات&startDate=${startDate}&endDate=${endDate}`;
+    const asmedaURL = `https://isdom.online/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&startDate=${startDate}&endDate=${endDate}`;
+    const waqoodURL = `https://isdom.online/dash_board/tickets/itemName/weight?itemName=وقود بديل&&startDate=${startDate}&endDate=${endDate}`;
+    const marfoodatURL = `https://isdom.online/dash_board/tickets/output-rejected/weight?startDate=${startDate}&endDate=${endDate}`;
+    const mafroozatURL = `https://isdom.online/dash_board/tickets/itemName/weight?itemName=مفروزات&startDate=${startDate}&endDate=${endDate}`;
 
     Promise.all([
         fetch(acceptedInputURL).then(responseAcceptedInput => responseAcceptedInput.json()),
@@ -74,10 +74,10 @@ function fetchReusableDataAndUpdateCharts(startDate, endDate) {
 //updateTotalOPGraph
 function updateTotalOPGraph(startDate, endDate) {
 
-    const asmedaURL = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=اسمدة عضوية&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
-    const waqoodURL = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=وقود بديل&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
-    const marfoodatURL = `http://isdom.online/dash_board/tickets/output-rejected/weight-list?startDate=${startDate}&endDate=${endDate}`; // مرفوضات
-    const mafroozatURL = `http://isdom.online/dash_board/tickets/itemName/weight-list?itemName=مفروزات&startDate=${startDate}&endDate=${endDate}`; // مفروزات
+    const asmedaURL = `https://isdom.online/dash_board/tickets/itemName/weight-list?itemName=اسمدة عضوية&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
+    const waqoodURL = `https://isdom.online/dash_board/tickets/itemName/weight-list?itemName=وقود بديل&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
+    const marfoodatURL = `https://isdom.online/dash_board/tickets/output-rejected/weight-list?startDate=${startDate}&endDate=${endDate}`; // مرفوضات
+    const mafroozatURL = `https://isdom.online/dash_board/tickets/itemName/weight-list?itemName=مفروزات&startDate=${startDate}&endDate=${endDate}`; // مفروزات
 
 
     fetch(asmedaURL)
@@ -114,8 +114,8 @@ function updateTotalOPGraph(startDate, endDate) {
 
 //updateTotalIPOPGraph
 function updateTotalIPOPGraph(startDate, endDate) {
-    const ipOpGraphURL1 = `http://isdom.online/dash_board/tickets/itemType/weight-list?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
-    const ipOpGraphURL2 = `http://isdom.online/dash_board/tickets/output/weight-list?startDate=${startDate}&endDate=${endDate}`;
+    const ipOpGraphURL1 = `https://isdom.online/dash_board/tickets/itemType/weight-list?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
+    const ipOpGraphURL2 = `https://isdom.online/dash_board/tickets/output/weight-list?startDate=${startDate}&endDate=${endDate}`;
 
     fetch(ipOpGraphURL1)
         .then(response => response.json())
@@ -155,10 +155,10 @@ function updateCentersInputGraph_total(startDate, endDate) {
     const endDatex = moment(endDate, 'DD-MMM-YY');
     numberOfDays = endDatex.diff(startDatex, 'days') + 1;
 
-    const urlReal = `http://isdom.online/dash_board/tickets/centers-net-weight-list?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
-    const urlAccepted = `http://isdom.online/dash_board/tickets/centers-accepted-net-weight-list?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
-    const urlTarget = `http://isdom.online/dash_board/targets`; // وقود بديل
-    const urlCenters = 'http://isdom.online/dash_board/centers';
+    const urlReal = `https://isdom.online/dash_board/tickets/centers-net-weight-list?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
+    const urlAccepted = `https://isdom.online/dash_board/tickets/centers-accepted-net-weight-list?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
+    const urlTarget = `https://isdom.online/dash_board/targets`; // وقود بديل
+    const urlCenters = 'https://isdom.online/dash_board/centers';
 
     Promise.all([
         fetch(urlReal).then(responseReal => responseReal.json()),
@@ -217,7 +217,7 @@ function updateCentersInputGraph_total(startDate, endDate) {
 //Input boxes
 //Total input box
 function updateTotIPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
+    const url = `https://isdom.online/dash_board/tickets/itemType/weight?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
 
     fetch(url)
         .then(response => response.json()).catch(() => 0)
@@ -258,11 +258,11 @@ function updateTotRejRateBox() {
 //Operations box
 function updateInOperationBox() {
 
-    const asmedaPercentagesURL = 'http://isdom.online/dash_board/accumulated/percentage-by-itemname?itemName=اسمدة عضوية';
-    const waqoodPercentagesURL = 'http://isdom.online/dash_board/accumulated/percentage-by-itemname?itemName=وقود بديل';
-    const marfoodatPercentagesURL = 'http://isdom.online/dash_board/accumulated/percentage-by-itemname?itemName=مرفوضات';
-    const mafroozatPercentagesURL = 'http://isdom.online/dash_board/accumulated/percentage-by-itemname?itemName=مفروزات';
-    const accumulatedWeightsURL = 'http://isdom.online/dash_board/accumulated/weight'
+    const asmedaPercentagesURL = 'https://isdom.online/dash_board/accumulated/percentage-by-itemname?itemName=اسمدة عضوية';
+    const waqoodPercentagesURL = 'https://isdom.online/dash_board/accumulated/percentage-by-itemname?itemName=وقود بديل';
+    const marfoodatPercentagesURL = 'https://isdom.online/dash_board/accumulated/percentage-by-itemname?itemName=مرفوضات';
+    const mafroozatPercentagesURL = 'https://isdom.online/dash_board/accumulated/percentage-by-itemname?itemName=مفروزات';
+    const accumulatedWeightsURL = 'https://isdom.online/dash_board/accumulated/weight'
 
     Promise.all([
         fetch(asmedaPercentagesURL).then(responseAsmedaPercentages => responseAsmedaPercentages.json()).catch(() => 0),
@@ -312,7 +312,7 @@ function updateInOperationBox() {
 //Output boxes
 //Total output box
 function updateTotOPBox(startDate, endDate) {
-    const url = `http://isdom.online/dash_board/tickets/output/weight?startDate=${startDate}&endDate=${endDate}`;
+    const url = `https://isdom.online/dash_board/tickets/output/weight?startDate=${startDate}&endDate=${endDate}`;
 
     fetch(url)
         .then(response => response.json()).catch(() => 0)
@@ -587,7 +587,7 @@ document.getElementById('openCentersTargetsPopupBtn').addEventListener('click', 
         }
         valuesTarget = Object.values(dataObject);
 
-        const url = 'http://isdom.online/dash_board/update-targets'
+        const url = 'https://isdom.online/dash_board/update-targets'
 
         fetch(url, {
             method: 'POST',
