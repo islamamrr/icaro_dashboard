@@ -80,7 +80,7 @@ function updateDatatable(startDate, endDate) {
 
     const tbody = document.querySelector('#site2_table tbody');
 
-    fetch(`https://ecaru.xyz/dash_board/tickets/all?siteNo=2&startDate=${startDate}&endDate=${endDate}`)
+    fetch(`http://ecaru.xyz/dash_board/tickets/all?siteNo=2&startDate=${startDate}&endDate=${endDate}`)
         .then(response => response.json())
         .then(data => {
 
@@ -129,7 +129,7 @@ function updateDatatable(startDate, endDate) {
                                     secondWeight: rowData.secondWeight
                                 }
 
-                                fetch(`https://ecaru.xyz/dash_board/tickets/${rowData.ticketId}/2`, {
+                                fetch(`http://ecaru.xyz/dash_board/tickets/${rowData.ticketId}/2`, {
                                     method: 'PUT',
                                     headers: {
                                         'Content-Type': 'application/json'
@@ -211,7 +211,7 @@ function updateDatatable(startDate, endDate) {
 
 //Get list of centers
 function getCenters() {
-    fetch('https://ecaru.xyz/dash_board/centers')
+    fetch('http://ecaru.xyz/dash_board/centers')
         .then(response => response.json())
         .then(data => {
 
@@ -270,7 +270,7 @@ const s2_in_grph = new Chart(document.getElementById('s2-in-grph'), {
 
 function updateIpVillageDropdown(centerId) {
     if (centerId !== "") {
-        fetch(`https://ecaru.xyz/dash_board/villages?centerId=${centerId}`)
+        fetch(`http://ecaru.xyz/dash_board/villages?centerId=${centerId}`)
             .then(response => response.json())
             .then(data => {
 
@@ -304,8 +304,8 @@ function updateInputGraph_s2(isVillage) {
         selectedVillage = "";
     }
 
-    const url1 = `https://ecaru.xyz/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات  تصلح للمعالجة&siteNo=2&startDate=${startDateIPGraph}&endDate=${endDateIPGraph}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات تصلح للمعالجة
-    const url2 = `https://ecaru.xyz/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات لا تصلح للمعالجة&siteNo=2&startDate=${startDateIPGraph}&endDate=${endDateIPGraph}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات لا تصلح للمعالجة
+    const url1 = `http://ecaru.xyz/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات  تصلح للمعالجة&siteNo=2&startDate=${startDateIPGraph}&endDate=${endDateIPGraph}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات تصلح للمعالجة
+    const url2 = `http://ecaru.xyz/dash_board/tickets/itemName-site/weight-date-list?itemName=مخلفات لا تصلح للمعالجة&siteNo=2&startDate=${startDateIPGraph}&endDate=${endDateIPGraph}&centerId=${selectedCenter}&villageId=${selectedVillage}`; //مخلفات لا تصلح للمعالجة
 
     Promise.all([
         fetch(url1).then(response1 => response1.json()).catch(() => 0),
@@ -378,10 +378,10 @@ const s2_out_grph = new Chart(document.getElementById('s2-out-grph'), {
 
 function updateOutputGraph_s2() {
 
-    const waqoodURL = `https://ecaru.xyz/dash_board/tickets/itemName-site/weight-date-list?itemName=وقود بديل&siteNo=2&startDate=${startDateOPGraph}&endDate=${endDateOPGraph}`; // وقود بديل
-    const asmedaURL = `https://ecaru.xyz/dash_board/tickets/itemName-site/weight-date-list?itemName=اسمدة عضوية&siteNo=2&startDate=${startDateOPGraph}&endDate=${endDateOPGraph}`; // اسمدة عضوية
-    const marfoodatURL = `https://ecaru.xyz/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${currentClientType}&startDate=${startDateOPGraph}&endDate=${endDateOPGraph}`; // مرفوضات
-    const mafroozatURL = `https://ecaru.xyz/dash_board/tickets/itemName-site/weight-date-list?itemName=مفروزات&siteNo=2&startDate=${startDateOPGraph}&endDate=${endDateOPGraph}`; //مفروزات
+    const waqoodURL = `http://ecaru.xyz/dash_board/tickets/itemName-site/weight-date-list?itemName=وقود بديل&siteNo=2&startDate=${startDateOPGraph}&endDate=${endDateOPGraph}`; // وقود بديل
+    const asmedaURL = `http://ecaru.xyz/dash_board/tickets/itemName-site/weight-date-list?itemName=اسمدة عضوية&siteNo=2&startDate=${startDateOPGraph}&endDate=${endDateOPGraph}`; // اسمدة عضوية
+    const marfoodatURL = `http://ecaru.xyz/dash_board/tickets/itemName-site/weight-date-list?siteNo=3&clientType=${currentClientType}&startDate=${startDateOPGraph}&endDate=${endDateOPGraph}`; // مرفوضات
+    const mafroozatURL = `http://ecaru.xyz/dash_board/tickets/itemName-site/weight-date-list?itemName=مفروزات&siteNo=2&startDate=${startDateOPGraph}&endDate=${endDateOPGraph}`; //مفروزات
     Promise.all([
         fetch(waqoodURL).then(responseWaqood => responseWaqood.json().catch(() => 0)),
         fetch(asmedaURL).then(responseAsmeda => responseAsmeda.json().catch(() => 0)),
@@ -433,8 +433,8 @@ const initialIPChartData = {
 const s2_ip_chart = c3.generate(initialIPChartData);
 
 function updateIPChartData(startDate, endDate) {
-    const urlIP1 = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const urlIP2 = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات لا تصلح للمعالجة
+    const urlIP1 = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const urlIP2 = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات لا تصلح للمعالجة
     Promise.all([
         fetch(urlIP1).then(response => response.json()).catch(() => 0),
         fetch(urlIP2).then(response => response.json()).catch(() => 0)
@@ -483,10 +483,10 @@ const s2_op_chart = c3.generate(initialOPChartData);
 
 
 function updateOPChartData(startDate, endDate) {
-    const urlOP1 = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
-    const urlOP2 = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=وقود بديل&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
-    const urlOP3 = `https://ecaru.xyz/dash_board/tickets/itemName/weight?siteNo=3&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
-    const urlOP4 = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مفروزات&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مفروزات
+    const urlOP1 = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
+    const urlOP2 = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=وقود بديل&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
+    const urlOP3 = `http://ecaru.xyz/dash_board/tickets/itemName/weight?siteNo=3&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
+    const urlOP4 = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مفروزات&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مفروزات
 
     Promise.all([
         fetch(urlOP1).then(response => response.json()).catch(() => 0),
@@ -519,7 +519,7 @@ function updateOPChartData(startDate, endDate) {
 //// inputs ////
 
 function updateIPBox(startDate, endDate) {
-    const url = `https://ecaru.xyz/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=2&startDate=${startDate}&endDate=${endDate}`;
+    const url = `http://ecaru.xyz/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=2&startDate=${startDate}&endDate=${endDate}`;
 
     fetch(url)
         .then(response => response.json()).catch(() => 0)
@@ -534,7 +534,7 @@ function updateIPBox(startDate, endDate) {
 }
 
 function updateAccIPBox(startDate, endDate) {
-    const url = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const url = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
     fetch(url)
         .then(response => response.json()).catch(() => 0)
         .then(data => {
@@ -547,7 +547,7 @@ function updateAccIPBox(startDate, endDate) {
 }
 
 function updateRejIPBox(startDate, endDate) {
-    const url = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const url = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
     fetch(url)
         .then(response => response.json()).catch(() => 0)
         .then(data => {
@@ -560,9 +560,9 @@ function updateRejIPBox(startDate, endDate) {
 }
 
 function updateRejRateBox(startDate, endDate) {
-    const accUrl = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const rejUrl = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`;
-    const marfoodatURL = `https://ecaru.xyz/dash_board/tickets/itemName/weight?siteNo=3&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
+    const accUrl = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const rejUrl = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`;
+    const marfoodatURL = `http://ecaru.xyz/dash_board/tickets/itemName/weight?siteNo=3&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
 
     Promise.all([
         fetch(accUrl).then(accResponse => accResponse.json()).catch(() => 0),
@@ -583,8 +583,8 @@ function updateRejRateBox(startDate, endDate) {
 }
 
 function updateAccRateBox(startDate, endDate) {
-    const accUrl = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const totInUrl = `https://ecaru.xyz/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=2&startDate=${startDate}&endDate=${endDate}`;
+    const accUrl = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const totInUrl = `http://ecaru.xyz/dash_board/tickets/itemType/weight?itemType=مدخلات&siteNo=2&startDate=${startDate}&endDate=${endDate}`;
 
 
     fetch(accUrl)
@@ -618,13 +618,13 @@ function updateInOperationBox() {
     const startDate = moment().format('DD-MMM-YY');
     const endDate = moment().format('DD-MMM-YY');
 
-    const percentagesURL = 'https://ecaru.xyz/dash_board/accumulated/percentage?siteNo=2';
-    const accumulatedWeightsURL = 'https://ecaru.xyz/dash_board/accumulated/weight?siteNo=2'
-    const acceptedInputURL = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
-    const asmedaURL = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
-    const waqoodURL = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=وقود بديل&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
-    const marfoodatURL = `https://ecaru.xyz/dash_board/tickets/itemName/weight?siteNo=3&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
-    const mafroozatURL = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مفروزات&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مفروزات
+    const percentagesURL = 'http://ecaru.xyz/dash_board/accumulated/percentage?siteNo=2';
+    const accumulatedWeightsURL = 'http://ecaru.xyz/dash_board/accumulated/weight?siteNo=2'
+    const acceptedInputURL = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const asmedaURL = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
+    const waqoodURL = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=وقود بديل&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
+    const marfoodatURL = `http://ecaru.xyz/dash_board/tickets/itemName/weight?siteNo=3&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`; // مرفوضات
+    const mafroozatURL = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مفروزات&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مفروزات
 
 
     Promise.all([
@@ -673,7 +673,7 @@ function updateInOperationBox() {
 //// outputs ////
 
 function updateOPBox(startDate, endDate) {
-    const url = `https://ecaru.xyz/dash_board/tickets/output/weight?itemType=مخرجات&siteNo=2&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`;
+    const url = `http://ecaru.xyz/dash_board/tickets/output/weight?itemType=مخرجات&siteNo=2&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`;
 
     fetch(url)
         .then(response => response.json()).catch(() => 0)
@@ -688,7 +688,7 @@ function updateOPBox(startDate, endDate) {
 }
 
 function updateAsmedaOPBox(startDate, endDate) {
-    const url = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const url = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
     fetch(url)
         .then(response => response.json()).catch(() => 0)
         .then(data => {
@@ -701,7 +701,7 @@ function updateAsmedaOPBox(startDate, endDate) {
 }
 
 function updateWaqoodOPBox(startDate, endDate) {
-    const url = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=وقود بديل&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const url = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=وقود بديل&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
     fetch(url)
         .then(response => response.json()).catch(() => 0)
         .then(data => {
@@ -714,7 +714,7 @@ function updateWaqoodOPBox(startDate, endDate) {
 }
 
 function updateMarfoodatOPBox(startDate, endDate) {
-    const url = `https://ecaru.xyz/dash_board/tickets/itemName/weight?siteNo=3&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`;
+    const url = `http://ecaru.xyz/dash_board/tickets/itemName/weight?siteNo=3&clientType=${currentClientType}&startDate=${startDate}&endDate=${endDate}`;
     fetch(url)
         .then(response => response.json()).catch(() => 0)
         .then(data => {
@@ -727,7 +727,7 @@ function updateMarfoodatOPBox(startDate, endDate) {
 }
 
 function updateMafroozatOPBox(startDate, endDate) {
-    const url = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مفروزات&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
+    const url = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مفروزات&siteNo=2&startDate=${startDate}&endDate=${endDate}`; // مخلفات تصلح للمعالجة
     fetch(url)
         .then(response => response.json()).catch(() => 0)
         .then(data => {
@@ -968,8 +968,8 @@ document.getElementById('openOperationPopupBtn').addEventListener('click', funct
             dataObjectAccuWeight[key] = parseFloat(valueAccuWeight); // Assuming you want to send numeric values
         }
 
-        const urlPercentage = 'https://ecaru.xyz/dash_board/accumulated/update-percentage/2'
-        const urlAccuWeight = 'https://ecaru.xyz/dash_board/accumulated/update-weight/2'
+        const urlPercentage = 'http://ecaru.xyz/dash_board/accumulated/update-percentage/2'
+        const urlAccuWeight = 'http://ecaru.xyz/dash_board/accumulated/update-weight/2'
 
         fetch(urlPercentage, {
             method: 'POST',

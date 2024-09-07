@@ -18,17 +18,17 @@ var totalMafroozat = 0;
 var isFirstLoad = true;
 
 function fetchReusableDataAndUpdateCharts(startDate, endDate) {
-    const acceptedInputsURL = `https://ecaru.xyz/dash_board/tickets/itemName/weight-list?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`;
-    const rejectedInputsURL = `https://ecaru.xyz/dash_board/tickets/itemName/weight-list?itemName=مخلفات لا تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`;
+    const acceptedInputsURL = `http://ecaru.xyz/dash_board/tickets/itemName/weight-list?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`;
+    const rejectedInputsURL = `http://ecaru.xyz/dash_board/tickets/itemName/weight-list?itemName=مخلفات لا تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`;
 
-    const totalInputURL = `https://ecaru.xyz/dash_board/tickets/itemType/weight?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
-    const acceptedInputURL = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`;
-    const rejectedInputURL = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`;
+    const totalInputURL = `http://ecaru.xyz/dash_board/tickets/itemType/weight?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
+    const acceptedInputURL = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`;
+    const rejectedInputURL = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مخلفات لا تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`;
 
-    const asmedaURL = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&startDate=${startDate}&endDate=${endDate}`;
-    const waqoodURL = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=وقود بديل&&startDate=${startDate}&endDate=${endDate}`;
-    const marfoodatURL = `https://ecaru.xyz/dash_board/tickets/output-rejected/weight?startDate=${startDate}&endDate=${endDate}`;
-    const mafroozatURL = `https://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مفروزات&startDate=${startDate}&endDate=${endDate}`;
+    const asmedaURL = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=اسمدة عضوية&startDate=${startDate}&endDate=${endDate}`;
+    const waqoodURL = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=وقود بديل&&startDate=${startDate}&endDate=${endDate}`;
+    const marfoodatURL = `http://ecaru.xyz/dash_board/tickets/output-rejected/weight?startDate=${startDate}&endDate=${endDate}`;
+    const mafroozatURL = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مفروزات&startDate=${startDate}&endDate=${endDate}`;
 
     Promise.all([
         fetch(acceptedInputURL).then(responseAcceptedInput => responseAcceptedInput.json()),
@@ -62,6 +62,7 @@ function fetchReusableDataAndUpdateCharts(startDate, endDate) {
         updateTotRejIPBox();
         updateTotAccRateBox();
         updateTotRejRateBox();
+        updateTotIPBox();
         updateTotAsmedaOPBox();
         updateTotWaqoodOPBox();
         updateTotMarfoodatOPBox();
@@ -74,10 +75,10 @@ function fetchReusableDataAndUpdateCharts(startDate, endDate) {
 //updateTotalOPGraph
 function updateTotalOPGraph(startDate, endDate) {
 
-    const asmedaURL = `https://ecaru.xyz/dash_board/tickets/itemName/weight-list?itemName=اسمدة عضوية&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
-    const waqoodURL = `https://ecaru.xyz/dash_board/tickets/itemName/weight-list?itemName=وقود بديل&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
-    const marfoodatURL = `https://ecaru.xyz/dash_board/tickets/output-rejected/weight-list?startDate=${startDate}&endDate=${endDate}`; // مرفوضات
-    const mafroozatURL = `https://ecaru.xyz/dash_board/tickets/itemName/weight-list?itemName=مفروزات&startDate=${startDate}&endDate=${endDate}`; // مفروزات
+    const asmedaURL = `http://ecaru.xyz/dash_board/tickets/itemName/weight-list?itemName=اسمدة عضوية&startDate=${startDate}&endDate=${endDate}`; // اسمدة عضوية
+    const waqoodURL = `http://ecaru.xyz/dash_board/tickets/itemName/weight-list?itemName=وقود بديل&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
+    const marfoodatURL = `http://ecaru.xyz/dash_board/tickets/output-rejected/weight-list?startDate=${startDate}&endDate=${endDate}`; // مرفوضات
+    const mafroozatURL = `http://ecaru.xyz/dash_board/tickets/itemName/weight-list?itemName=مفروزات&startDate=${startDate}&endDate=${endDate}`; // مفروزات
 
 
     fetch(asmedaURL)
@@ -114,8 +115,8 @@ function updateTotalOPGraph(startDate, endDate) {
 
 //updateTotalIPOPGraph
 function updateTotalIPOPGraph(startDate, endDate) {
-    const ipOpGraphURL1 = `https://ecaru.xyz/dash_board/tickets/itemType/weight-list?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
-    const ipOpGraphURL2 = `https://ecaru.xyz/dash_board/tickets/output/weight-list?startDate=${startDate}&endDate=${endDate}`;
+    const ipOpGraphURL1 = `http://ecaru.xyz/dash_board/tickets/itemType/weight-list?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
+    const ipOpGraphURL2 = `http://ecaru.xyz/dash_board/tickets/output/weight-list?startDate=${startDate}&endDate=${endDate}`;
 
     fetch(ipOpGraphURL1)
         .then(response => response.json())
@@ -155,10 +156,10 @@ function updateCentersInputGraph_total(startDate, endDate) {
     const endDatex = moment(endDate, 'DD-MMM-YY');
     numberOfDays = endDatex.diff(startDatex, 'days') + 1;
 
-    const urlReal = `https://ecaru.xyz/dash_board/tickets/centers-net-weight-list?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
-    const urlAccepted = `https://ecaru.xyz/dash_board/tickets/centers-accepted-net-weight-list?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
-    const urlTarget = `https://ecaru.xyz/dash_board/targets`; // وقود بديل
-    const urlCenters = 'https://ecaru.xyz/dash_board/centers';
+    const urlReal = `http://ecaru.xyz/dash_board/tickets/centers-net-weight-list?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
+    const urlAccepted = `http://ecaru.xyz/dash_board/tickets/centers-accepted-net-weight-list?itemName=مخلفات  تصلح للمعالجة&startDate=${startDate}&endDate=${endDate}`; // وقود بديل
+    const urlTarget = `http://ecaru.xyz/dash_board/targets`; // وقود بديل
+    const urlCenters = 'http://ecaru.xyz/dash_board/centers';
 
     Promise.all([
         fetch(urlReal).then(responseReal => responseReal.json()),
@@ -216,17 +217,8 @@ function updateCentersInputGraph_total(startDate, endDate) {
 
 //Input boxes
 //Total input box
-function updateTotIPBox(startDate, endDate) {
-    const url = `https://ecaru.xyz/dash_board/tickets/itemType/weight?itemType=مدخلات&startDate=${startDate}&endDate=${endDate}`;
-
-    fetch(url)
-        .then(response => response.json()).catch(() => 0)
-        .then(data => {
-            document.getElementById("tot-ip-box").textContent = data + " طن";
-        })
-    // .catch(error => {
-    //     // console.error('Error:', error);
-    // });
+function updateTotIPBox() {
+    document.getElementById("tot-ip-box").textContent = totalInput + " طن";
 }
 
 function updateTotAccIPBox() {
@@ -258,11 +250,11 @@ function updateTotRejRateBox() {
 //Operations box
 function updateInOperationBox() {
 
-    const asmedaPercentagesURL = 'https://ecaru.xyz/dash_board/accumulated/percentage-by-itemname?itemName=اسمدة عضوية';
-    const waqoodPercentagesURL = 'https://ecaru.xyz/dash_board/accumulated/percentage-by-itemname?itemName=وقود بديل';
-    const marfoodatPercentagesURL = 'https://ecaru.xyz/dash_board/accumulated/percentage-by-itemname?itemName=مرفوضات';
-    const mafroozatPercentagesURL = 'https://ecaru.xyz/dash_board/accumulated/percentage-by-itemname?itemName=مفروزات';
-    const accumulatedWeightsURL = 'https://ecaru.xyz/dash_board/accumulated/weight'
+    const asmedaPercentagesURL = 'http://ecaru.xyz/dash_board/accumulated/percentage-by-itemname?itemName=اسمدة عضوية';
+    const waqoodPercentagesURL = 'http://ecaru.xyz/dash_board/accumulated/percentage-by-itemname?itemName=وقود بديل';
+    const marfoodatPercentagesURL = 'http://ecaru.xyz/dash_board/accumulated/percentage-by-itemname?itemName=مرفوضات';
+    const mafroozatPercentagesURL = 'http://ecaru.xyz/dash_board/accumulated/percentage-by-itemname?itemName=مفروزات';
+    const accumulatedWeightsURL = 'http://ecaru.xyz/dash_board/accumulated/weight'
 
     Promise.all([
         fetch(asmedaPercentagesURL).then(responseAsmedaPercentages => responseAsmedaPercentages.json()).catch(() => 0),
@@ -312,7 +304,7 @@ function updateInOperationBox() {
 //Output boxes
 //Total output box
 function updateTotOPBox(startDate, endDate) {
-    const url = `https://ecaru.xyz/dash_board/tickets/output/weight?startDate=${startDate}&endDate=${endDate}`;
+    const url = `http://ecaru.xyz/dash_board/tickets/output/weight?startDate=${startDate}&endDate=${endDate}`;
 
     fetch(url)
         .then(response => response.json()).catch(() => 0)
@@ -360,7 +352,6 @@ $(document).ready(function () {
             const endDate = end.format('DD-MMM-YY');
             // updateTotAccBox(startDate, endDate);
             // updateTotRejBox(startDate, endDate);
-            updateTotIPBox(startDate, endDate);
             updateTotOPBox(startDate, endDate);
         }
     });
@@ -516,7 +507,6 @@ $(document).ready(function () {
     updateTotalOPGraph(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateTotalIPOPGraph(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateCentersInputGraph_total(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
-    updateTotIPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     updateTotOPBox(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
     fetchReusableDataAndUpdateCharts(moment().format('DD-MMM-YY'), moment().format('DD-MMM-YY'));
 
@@ -528,7 +518,6 @@ $(document).ready(function () {
         updateTotalOPGraph(startDate, endDate);
         updateTotalIPOPGraph(startDate, endDate);
         updateCentersInputGraph_total(startDate, endDate);
-        updateTotIPBox(startDate, endDate);
         updateTotOPBox(startDate, endDate);
         fetchReusableDataAndUpdateCharts(startDate, endDate);
     });
@@ -587,7 +576,7 @@ document.getElementById('openCentersTargetsPopupBtn').addEventListener('click', 
         }
         valuesTarget = Object.values(dataObject);
 
-        const url = 'https://ecaru.xyz/dash_board/update-targets'
+        const url = 'http://ecaru.xyz/dash_board/update-targets'
 
         fetch(url, {
             method: 'POST',

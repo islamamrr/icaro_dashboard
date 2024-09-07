@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
             password: password
         };
 
-        fetch('https://ecaru.xyz/dash_board/api/signin', {
+        fetch('http://ecaru.xyz/dash_board/api/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
