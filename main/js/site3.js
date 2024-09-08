@@ -71,7 +71,7 @@ function updateDatatable(startDate, endDate) {
 
 
     fetch(`http://ecaru.xyz/dash_board/tickets/all?siteNo=3&startDate=${startDate}&endDate=${endDate}`)
-        .then(response => response.json())
+        .then(response => response.json()).catch(() => 0)
         .then(data => {
 
             dataTableJSONData = data;

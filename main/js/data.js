@@ -31,11 +31,11 @@ function fetchReusableDataAndUpdateCharts(startDate, endDate) {
     const mafroozatURL = `http://ecaru.xyz/dash_board/tickets/itemName/weight?itemName=مفروزات&startDate=${startDate}&endDate=${endDate}`;
 
     Promise.all([
-        fetch(acceptedInputURL).then(responseAcceptedInput => responseAcceptedInput.json()),
-        fetch(acceptedInputsURL).then(responseAcceptedInputs => responseAcceptedInputs.json()),
-        fetch(rejectedInputURL).then(responseRejectedInput => responseRejectedInput.json()),
-        fetch(rejectedInputsURL).then(responseRejectedInputs => responseRejectedInputs.json()),
-        fetch(totalInputURL).then(responseTotalInput => responseTotalInput.json()),
+        fetch(acceptedInputURL).then(responseAcceptedInput => responseAcceptedInput.json()).catch(() => 0),
+        fetch(acceptedInputsURL).then(responseAcceptedInputs => responseAcceptedInputs.json()).catch(() => 0),
+        fetch(rejectedInputURL).then(responseRejectedInput => responseRejectedInput.json()).catch(() => 0),
+        fetch(rejectedInputsURL).then(responseRejectedInputs => responseRejectedInputs.json()).catch(() => 0),
+        fetch(totalInputURL).then(responseTotalInput => responseTotalInput.json()).catch(() => 0),
         fetch(asmedaURL).then(responseAsmeda => responseAsmeda.json()).catch(() => 0),
         fetch(waqoodURL).then(responseWaqood => responseWaqood.json()).catch(() => 0),
         fetch(marfoodatURL).then(responseMarfoodat => responseMarfoodat.json()).catch(() => 0),
@@ -54,8 +54,6 @@ function fetchReusableDataAndUpdateCharts(startDate, endDate) {
         totalWaqood = dataWaqood == null ? 0 : dataWaqood;
         totalMarfoodat = dataMarfoodat == null ? 0 : dataMarfoodat;
         totalMafroozat = dataMafroozat == null ? 0 : dataMafroozat;
-        // console.log("dataMafroozat")
-        // console.log(dataMafroozat)
 
         updateTotalIPGraph();
         updateTotAccIPBox();
@@ -82,22 +80,22 @@ function updateTotalOPGraph(startDate, endDate) {
 
 
     fetch(asmedaURL)
-        .then(response => response.json())
+        .then(response => response.json()).catch(() => 0)
         .then(data => {
             const asmedaValues = data;
 
             fetch(waqoodURL)
-                .then(response => response.json())
+                .then(response => response.json()).catch(() => 0)
                 .then(data => {
                     const waqoodValues = data;
 
                     fetch(marfoodatURL)
-                        .then(response => response.json())
+                        .then(response => response.json()).catch(() => 0)
                         .then(data => {
                             const marfoodatValues = data;
 
                             fetch(mafroozatURL)
-                                .then(response => response.json())
+                                .then(response => response.json()).catch(() => 0)
                                 .then(data => {
                                     const mafroozatValues = data;
 
@@ -119,14 +117,13 @@ function updateTotalIPOPGraph(startDate, endDate) {
     const ipOpGraphURL2 = `http://ecaru.xyz/dash_board/tickets/output/weight-list?startDate=${startDate}&endDate=${endDate}`;
 
     fetch(ipOpGraphURL1)
-        .then(response => response.json())
+        .then(response => response.json()).catch(() => 0)
         .then(data => {
-            // console.log(data);
             const category1Values = data;
 
             // Fetch data for category2 values
             fetch(ipOpGraphURL2)
-                .then(response => response.json())
+                .then(response => response.json()).catch(() => 0)
                 .then(data => {
                     const category2Values = data;
 
@@ -162,10 +159,10 @@ function updateCentersInputGraph_total(startDate, endDate) {
     const urlCenters = 'http://ecaru.xyz/dash_board/centers';
 
     Promise.all([
-        fetch(urlReal).then(responseReal => responseReal.json()),
-        fetch(urlAccepted).then(responseAccepted => responseAccepted.json()),
-        fetch(urlTarget).then(responseTarget => responseTarget.json()),
-        fetch(urlCenters).then(responseCenters => responseCenters.json())
+        fetch(urlReal).then(responseReal => responseReal.json()).catch(() => 0),
+        fetch(urlAccepted).then(responseAccepted => responseAccepted.json()).catch(() => 0),
+        fetch(urlTarget).then(responseTarget => responseTarget.json()).catch(() => 0),
+        fetch(urlCenters).then(responseCenters => responseCenters.json()).catch(() => 0),
     ]).then(([dataReal, dataAccepted, dataTarget, dataCenters]) => {
 
         centersList = dataCenters.map(function (obj) {
@@ -188,8 +185,6 @@ function updateCentersInputGraph_total(startDate, endDate) {
             }
         }
 
-        // console.log('valuesReal')
-        // console.log(valuesReal)
 
         // const valuesReal = Object.values(dataReal);
         // const valuesAccepted = Object.values(dataAccepted);

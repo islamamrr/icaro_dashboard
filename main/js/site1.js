@@ -85,7 +85,7 @@ function updateDatatable(startDate, endDate) {
 
 
     fetch(`http://ecaru.xyz/dash_board/tickets/all?siteNo=1&startDate=${startDate}&endDate=${endDate}`)
-        .then(response => response.json())
+        .then(response => response.json()).catch(() => 0)
         .then(data => {
 
             dataTableJSONData = data;
@@ -215,7 +215,7 @@ function updateDatatable(startDate, endDate) {
 //Get list of centers
 function getCenters() {
     fetch('http://ecaru.xyz/dash_board/centers')
-        .then(response => response.json())
+        .then(response => response.json()).catch(() => 0)
         .then(data => {
 
             const defaultOption = document.createElement('option');
@@ -275,7 +275,7 @@ const s1_in_grph = new Chart(document.getElementById('s1-in-grph'), {
 function updateIpVillageDropdown(centerId) {
     if (centerId !== "") {
         fetch(`http://ecaru.xyz/dash_board/villages?centerId=${centerId}`)
-            .then(response => response.json())
+            .then(response => response.json()).catch(() => 0)
             .then(data => {
 
                 document.getElementById("ip-villageDropdown-s1").style.display = "block";
