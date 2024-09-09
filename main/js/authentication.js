@@ -7,7 +7,7 @@ function isAuthenticated() {
         return Promise.resolve(false);
     }
 
-    return fetch('http://ecaru.xyz/dash_board/api/protected-route', {
+    return fetch('https://ecaru.xyz/dash_board/api/protected-route', {
         headers: {
             'Authorization': 'Bearer ' + token
         }

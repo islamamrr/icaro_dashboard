@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
             password: password
         };
 
-        fetch('http://ecaru.xyz/dash_board/api/signup', {
+        fetch('https://ecaru.xyz/dash_board/api/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
